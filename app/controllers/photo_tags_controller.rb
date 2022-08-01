@@ -7,10 +7,20 @@ class PhotoTagsController < ApplicationController
     render json: photo_tag, status: :created
   end
 
+  def destroy
+    photo = find_photo
+    photo_tag = photo.tags.find_by_tag
+    render json: photo_tag, status: :created
+  end
+
   private
 
   def find_photo
     Photo.find_by(photo_id: params[:id])
+  end
+  
+  def find_by_tag
+    find_by(tag_id: params[:id])
   end
 
   def photo_tag_params

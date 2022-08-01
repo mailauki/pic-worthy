@@ -1,14 +1,17 @@
 Rails.application.routes.draw do
-  resources :friendships
-  resources :likes
-  resources :tags
-  resources :comments
+  resources :photo_tags, only: [:create, :destroy]
+  resources :friendships, only: [:create, :destroy]
+  resources :likes, only: [:create, :destroy]
+  resources :tags, only: [:index, :create]
+  resources :comments, only: [:create]
   resources :photos
   resources :users
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  post '/signup', to: 'users#create'
+  get '/me', to: 'users#me'
+
+  post '/login', to: 'session#create'
+  delete 'logout', to: 'session#destroy'
   
   get '*path',
       to: 'fallback#index',
