@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_07_31_183923) do
+ActiveRecord::Schema[7.0].define(version: 2022_07_31_030504) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -37,12 +37,10 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_31_183923) do
   end
 
   create_table "photo_tags", force: :cascade do |t|
-    t.bigint "photo_id", null: false
-    t.bigint "tag_id", null: false
+    t.integer "photo_id"
+    t.integer "tag_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["photo_id"], name: "index_photo_tags_on_photo_id"
-    t.index ["tag_id"], name: "index_photo_tags_on_tag_id"
   end
 
   create_table "photos", force: :cascade do |t|
@@ -51,11 +49,6 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_31_183923) do
     t.integer "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-  end
-
-  create_table "photos_tags", id: false, force: :cascade do |t|
-    t.bigint "photo_id", null: false
-    t.bigint "tag_id", null: false
   end
 
   create_table "tags", force: :cascade do |t|
@@ -74,6 +67,4 @@ ActiveRecord::Schema[7.0].define(version: 2022_07_31_183923) do
     t.datetime "updated_at", null: false
   end
 
-  add_foreign_key "photo_tags", "photos"
-  add_foreign_key "photo_tags", "tags"
 end

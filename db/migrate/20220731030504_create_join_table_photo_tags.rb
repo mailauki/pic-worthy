@@ -1,8 +1,10 @@
 class CreateJoinTablePhotoTags < ActiveRecord::Migration[7.0]
   def change
-    create_join_table :photos, :tags do |t|
-      # t.index [:photo_id, :tag_id]
-      # t.index [:tag_id, :photo_id]
+    create_table :photo_tags do |t|
+      t.integer :photo_id
+      t.integer :tag_id
+
+      t.timestamps
     end
   end
 end
