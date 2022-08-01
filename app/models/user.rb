@@ -12,6 +12,8 @@ class User < ApplicationRecord
   has_many :following_users, foreign_key: :followee_id, class_name: "Friendship"
   has_many :followers, through: :following_users
 
+  validates :username, presence: true, uniqueness: true, format: { without: /\s/, message: "cannot contain spaces" }
+
   def photos_total
     self.photos.length
   end
