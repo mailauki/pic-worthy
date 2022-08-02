@@ -1,37 +1,43 @@
-import logo from './logo.svg';
+import { useState, useEffect } from 'react';
+import { Switch, Route } from 'react-router-dom';
+import Home from './pages/Home';
+import Signup from './pages/Signup';
+import Login from './pages/Login';
+import Navigation from './components/Navigation';
+import Header from './components/Header';
 import './App.css';
-import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 function App() {
+  const [mobileView, setMoblieView] = useState(window.innerWidth < 600)
+
+  const updateMedia = () => {
+    setMoblieView(window.innerWidth < 600)
+  }
+
+  useEffect(() => {
+    window.addEventListener("resize", updateMedia)
+    return () => window.removeEventListener("resize", updateMedia)
+  })
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header mobileView={mobileView} />
 
-      <BrowserRouter>
-        <div className="App">
-          <Switch>
-            <Route path="/testing">
-              <h1>Test Route</h1>
-            </Route>
-            <Route path="/">
-              <h1>Home Page Route</h1>
-            </Route>
-          </Switch>
-        </div>
-      </BrowserRouter>
+      <div className="Content">
+        <Navigation mobileView={mobileView} />
+
+        <Switch>
+          <Route path="/signup">
+            <Signup />
+          </Route>
+          <Route path="/login">
+            <Login />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </div>
     </div>
   );
 }

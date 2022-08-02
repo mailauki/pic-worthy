@@ -12,7 +12,11 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^5.3.3",
     "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "@emotion/react": "^11.10.0",
+    "@emotion/styled": "^11.10.0",
+    "@mui/icons-material": "^5.8.4",
+    "@mui/material": "^5.9.2"
   },
   "scripts": {
     "start": "PORT=4000 react-scripts start",
