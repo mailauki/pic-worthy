@@ -1,5 +1,5 @@
 import { useHistory } from "react-router";
-import { Button, Avatar, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Switch } from '@mui/material';
+import { Button, Avatar, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Switch, Box } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
@@ -56,7 +56,14 @@ function Menu({ currentUser, checked, setChecked }) {
         </div>
       ) : (
         <>
-          <div className="menu-header">
+          <Box
+            sx={{
+              display: 'flex',
+              width: '100%',
+              justifyContent: 'space-between',
+              backgroundColor: 'neutral.lighter',
+            }}
+          >
             {currentUser.first_name ? <h3>Hello, {currentUser.first_name}</h3> : <h3>Hello</h3>}
             <Avatar 
               alt={currentUser.username} 
@@ -72,7 +79,7 @@ function Menu({ currentUser, checked, setChecked }) {
             >
               {currentUser.username[0]}
             </Avatar>
-          </div>
+          </Box>
           <Button 
             variant="contained" 
             startIcon={<LogoutIcon />}
@@ -117,6 +124,7 @@ function Menu({ currentUser, checked, setChecked }) {
             <ListItemText id="switch-list-label-dark" primary="Dark Mode" />
             <Switch
               edge="end"
+              color="primary"
               onChange={handleToggle('dark')}
               checked={checked.indexOf('dark') !== -1}
               inputProps={{

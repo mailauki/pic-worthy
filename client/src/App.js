@@ -7,6 +7,38 @@ import Menu from './pages/Menu';
 import Navigation from './components/Navigation';
 import Header from './components/Header';
 import './App.css';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
+
+const theme = createTheme({
+  status: {
+    danger: '#e53e3e'
+  },
+  palette: {
+    primary: {
+      main: '#2979ff',
+      darker: '#1c54b2'
+    },
+    neutral: {
+      main: '#64748B',
+      contrastText: '#fff',
+      lighter: '#eee'
+    }
+  }
+})
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+    primary: {
+      main: '#ffc107',
+      darker: '#b28704'
+    },
+    neutral: {
+      lighter: '#333'
+    }
+  }
+})
 
 function App() {
   const [currentUser, setCurrentUser] = useState(null)
@@ -31,40 +63,44 @@ function App() {
   }, [])
 
   return (
-    <div className={darkModeChecked.includes('dark') ? "App dark" : "App"}>
-      <Header mobileView={mobileView} pathname={pathname} />
+    <ThemeProvider theme={darkModeChecked.includes('dark') ? darkTheme : theme}>
+      <CssBaseline />
+      
+      <div className="App">
+        <Header mobileView={mobileView} pathname={pathname} />
 
-      <div className="Body">
-        <Navigation mobileView={mobileView} pathname={pathname} />
+        <div className="Body">
+          <Navigation mobileView={mobileView} pathname={pathname} />
 
-        <div className="Content">
-          <Switch>
-            <Route path="/signup">
-              <Signup onLogin={setCurrentUser} />
-            </Route>
-            <Route path="/login">
-              <Login onLogin={setCurrentUser} />
-            </Route>
-            <Route path="/menu">
-              <Menu currentUser={currentUser} onLogout={setCurrentUser} checked={darkModeChecked} setChecked={setDarkModeChecked} />
-            </Route>
-            <Route path="/add">
-              <h1>Add Photo</h1>
-            </Route>
-            <Route path="/search">
-              <h1>Search</h1>
-            </Route>
-            <Route path="/tags">
-              <h1>Tags</h1>
-            </Route>
-            <Route path="/">
-              <Home />
-            </Route>
-          </Switch>
+          <div className="Content">
+            <Switch>
+              <Route path="/signup">
+                <Signup onLogin={setCurrentUser} />
+              </Route>
+              <Route path="/login">
+                <Login onLogin={setCurrentUser} />
+              </Route>
+              <Route path="/menu">
+                <Menu currentUser={currentUser} onLogout={setCurrentUser} checked={darkModeChecked} setChecked={setDarkModeChecked} />
+              </Route>
+              <Route path="/add">
+                <h1>Add Photo</h1>
+              </Route>
+              <Route path="/search">
+                <h1>Search</h1>
+              </Route>
+              <Route path="/tags">
+                <h1>Tags</h1>
+              </Route>
+              <Route path="/">
+                <Home />
+              </Route>
+            </Switch>
+          </div>
         </div>
       </div>
-    </div>
-  );
+    </ThemeProvider>
+  )
 }
 
 export default App;
