@@ -4,6 +4,19 @@
   flex-direction: column;
 }
 
+.dark, .dark .MuiToolbar-root, .dark .MuiBottomNavigation-root {
+  background-color: #333;
+  color: #eee;
+}
+
+.dark .MuiTab-root, .dark .MuiListItemIcon-root, .dark .MuiBottomNavigationAction-root {
+  color: #eee;
+}
+
+.dark .menu-header {
+  background-color: #222;
+}
+
 .Header {
   z-index: 1;
 }

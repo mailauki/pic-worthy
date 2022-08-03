@@ -12,15 +12,11 @@ function App() {
   const [currentUser, setCurrentUser] = useState(null)
   const [mobileView, setMoblieView] = useState(window.innerWidth < 600)
   let pathname = useLocation().pathname
+  const [darkModeChecked, setDarkModeChecked] = useState([])
 
   function updateMedia() {
     setMoblieView(window.innerWidth < 600)
   }
-
-  useEffect(() => {
-    window.addEventListener("resize", updateMedia)
-    return () => window.removeEventListener("resize", updateMedia)
-  }, [])
 
   useEffect(() => {
     fetch("/me")
@@ -29,10 +25,13 @@ function App() {
           r.json().then((user) => setCurrentUser(user))
         }
       })
+
+    window.addEventListener("resize", updateMedia)
+    return () => window.removeEventListener("resize", updateMedia)
   }, [])
 
   return (
-    <div className="App">
+    <div className={darkModeChecked.includes('dark') ? "App dark" : "App"}>
       <Header mobileView={mobileView} pathname={pathname} />
 
       <div className="Body">
@@ -47,7 +46,16 @@ function App() {
               <Login onLogin={setCurrentUser} />
             </Route>
             <Route path="/menu">
-              <Menu currentUser={currentUser} onLogout={setCurrentUser} />
+              <Menu currentUser={currentUser} onLogout={setCurrentUser} checked={darkModeChecked} setChecked={setDarkModeChecked} />
+            </Route>
+            <Route path="/add">
+              <h1>Add Photo</h1>
+            </Route>
+            <Route path="/search">
+              <h1>Search</h1>
+            </Route>
+            <Route path="/tags">
+              <h1>Tags</h1>
             </Route>
             <Route path="/">
               <Home />

@@ -19,7 +19,6 @@ function Navigation({ mobileView, pathname }) {
     <div className="Navigation">
       { mobileView ? (
         <BottomNavigation
-          // showLabels
           value={value}
           onChange={handleChange}
           style={{ 
@@ -43,8 +42,7 @@ function Navigation({ mobileView, pathname }) {
             aria-label="add"
             style={{ 
               backgroundColor: "#eee", 
-              filter: "drop-shadow( 2px 2px 2px #aaa )", 
-              postion: "absolute", 
+              filter: "drop-shadow( 2px 2px 2px #aaa )",
               bottom: "4px", 
               width: 40, 
               height: 40, 

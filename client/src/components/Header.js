@@ -1,6 +1,9 @@
 import { useHistory } from "react-router";
-import { AppBar, Toolbar, BottomNavigation, BottomNavigationAction } from '@mui/material';
+import { AppBar, Toolbar, BottomNavigation, BottomNavigationAction, Tabs, Tab, IconButton } from '@mui/material';
+import HomeIcon from '@mui/icons-material/Home';
+import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
+import TagIcon from '@mui/icons-material/Tag';
 import MenuIcon from '@mui/icons-material/Menu';
 
 function Header({ mobileView, pathname }) {

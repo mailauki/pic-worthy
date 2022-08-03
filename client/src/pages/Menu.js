@@ -1,13 +1,14 @@
 import { useHistory } from "react-router";
-import { Button, Avatar, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider } from '@mui/material';
+import { Button, Avatar, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Switch } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
 import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PersonOffIcon from '@mui/icons-material/PersonOff';
+import NightlightIcon from '@mui/icons-material/Nightlight';
 
-function Menu({ currentUser }) {
+function Menu({ currentUser, checked, setChecked }) {
   const history = useHistory()
 
   function handleLogout({ onLogout }) {
@@ -20,6 +21,19 @@ function Menu({ currentUser }) {
           history.push("/")
         }
       })
+  }
+
+  const handleToggle = (value) => () => {
+    const currentIndex = checked.indexOf(value)
+    const newChecked = [...checked]
+
+    if (currentIndex === -1) {
+      newChecked.push(value)
+    } else {
+      newChecked.splice(currentIndex, 1)
+    }
+
+    setChecked(newChecked)
   }
 
   return (
@@ -96,6 +110,20 @@ function Menu({ currentUser }) {
             </ListItem>
           </List>
           <Divider />
+          <ListItem>
+            <ListItemIcon>
+              <NightlightIcon />
+            </ListItemIcon>
+            <ListItemText id="switch-list-label-dark" primary="Dark Mode" />
+            <Switch
+              edge="end"
+              onChange={handleToggle('dark')}
+              checked={checked.indexOf('dark') !== -1}
+              inputProps={{
+                'aria-labelledby': 'switch-list-label-dark',
+              }}
+            />
+          </ListItem>
         </>
       )}
     </div>
