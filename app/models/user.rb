@@ -14,15 +14,15 @@ class User < ApplicationRecord
 
   validates :username, presence: true, uniqueness: true, format: { without: /\s/, message: "cannot contain spaces" }
 
-  def photos_total
-    self.photos.length
-  end
+  # def photos_total
+  #   self.photos.length
+  # end
 
-  def followers_total
-    self.followers.length
-  end
+  # def followers_total
+  #   self.followers.length
+  # end
 
-  def followees_total
-    self.followees.length
-  end
+  # def followees_total
+  #   self.followees.length
+  # end
 end

@@ -1,22 +1,17 @@
-import { useState } from 'react';
 import { useHistory } from "react-router";
-import BottomNavigation from '@mui/material/BottomNavigation';
-import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import Tabs from '@mui/material/Tabs';
-import Tab from '@mui/material/Tab';
-import IconButton from '@mui/material/IconButton';
+import { BottomNavigation, BottomNavigationAction, Tabs, Tab, IconButton } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import TagIcon from '@mui/icons-material/Tag';
 import MenuIcon from '@mui/icons-material/Menu';
 
-function Navigation({ mobileView }) {
-  const [value, setValue] = useState("home")
+function Navigation({ mobileView, pathname }) {
+  let activePath = pathname.split("/")[1]
+  let value = activePath === "" ? "home" : activePath
   const history = useHistory()
 
   const handleChange = (event, newValue) => {
-    setValue(newValue)
     newValue === "home" ? history.push('/') : history.push(`/${newValue}`)
   }
 

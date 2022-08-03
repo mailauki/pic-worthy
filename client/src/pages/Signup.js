@@ -9,8 +9,6 @@ function Signup({ onLogin }) {
   const [errors, setErrors] = useState([])
   const history = useHistory()
 
-  console.log(errors)
-
   function handleSubmit(event) {
     event.preventDefault()
 
@@ -21,7 +19,7 @@ function Signup({ onLogin }) {
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(formData)
+      body: JSON.stringify({...formData, dark_mode: false})
     })
       .then((r) => {
         if (r.ok) {
@@ -64,7 +62,7 @@ function Signup({ onLogin }) {
             />
           )
         ))}
-        <Button className="button" onClick={handleSubmit}>Login</Button>
+        <Button className="button" onClick={handleSubmit}>Signup</Button>
       </form>
       <Link to="/login">Already have an account.</Link>
     </div>

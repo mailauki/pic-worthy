@@ -1,12 +1,16 @@
 import { useHistory } from "react-router";
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
+import { AppBar, Toolbar, BottomNavigation, BottomNavigationAction } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import MenuIcon from '@mui/icons-material/Menu';
 
-function Header({ mobileView }) {
+function Header({ mobileView, pathname }) {
   const history = useHistory()
+  let activePath = pathname.split("/")[1]
+  let value = activePath
+
+  const handleChange = (event, newValue) => {
+    history.push(`/${newValue}`)
+  }
 
   return (
     mobileView ? (
@@ -17,26 +21,21 @@ function Header({ mobileView }) {
           <Toolbar style={{ justifyContent: "space-between" }}>
             <h3>Header</h3>
             <div>
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="add"
-                sx={{ mr: 2 }}
-                onClick={() => history.push("/add")}
+              <BottomNavigation
+                value={value}
+                onChange={handleChange}
               >
-                <AddIcon />
-              </IconButton>
-              <IconButton
-                size="large"
-                edge="start"
-                color="inherit"
-                aria-label="menu"
-                sx={{ mr: 2 }}
-                onClick={() => history.push("/menu")}
-              >
-                <MenuIcon />
-              </IconButton>
+                <BottomNavigationAction 
+                  label="Add" 
+                  value="add" 
+                  icon={<AddIcon />} 
+                />
+                <BottomNavigationAction 
+                  label="Menu" 
+                  value="menu" 
+                  icon={<MenuIcon />} 
+                />
+              </BottomNavigation>
             </div>
           </Toolbar>
         </AppBar>

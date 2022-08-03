@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
@@ -11,15 +11,18 @@ import './App.css';
 function App() {
   const [currentUser, setCurrentUser] = useState(null)
   const [mobileView, setMoblieView] = useState(window.innerWidth < 600)
+  let pathname = useLocation().pathname
 
-  const updateMedia = () => {
+  function updateMedia() {
     setMoblieView(window.innerWidth < 600)
   }
 
   useEffect(() => {
     window.addEventListener("resize", updateMedia)
     return () => window.removeEventListener("resize", updateMedia)
+  }, [])
 
+  useEffect(() => {
     fetch("/me")
       .then((r) => {
         if (r.ok) {
@@ -30,10 +33,10 @@ function App() {
 
   return (
     <div className="App">
-      <Header mobileView={mobileView} />
+      <Header mobileView={mobileView} pathname={pathname} />
 
       <div className="Body">
-        <Navigation mobileView={mobileView} />
+        <Navigation mobileView={mobileView} pathname={pathname} />
 
         <div className="Content">
           <Switch>
@@ -44,7 +47,7 @@ function App() {
               <Login onLogin={setCurrentUser} />
             </Route>
             <Route path="/menu">
-              <Menu />
+              <Menu currentUser={currentUser} onLogout={setCurrentUser} />
             </Route>
             <Route path="/">
               <Home />

@@ -7,7 +7,7 @@ class Photo < ApplicationRecord
 
   validates :image, presence: true, uniqueness: true
 
-  def likes_total
-    self.likes.length
-  end
+  # def likes_total
+  #   self.likes.length
+  # end
 end

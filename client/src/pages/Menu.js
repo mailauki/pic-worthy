@@ -1,21 +1,49 @@
 import { useHistory } from "react-router";
-import { Link } from 'react-router-dom';
-import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
+import { Button, Avatar, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider } from '@mui/material';
+import LoginIcon from '@mui/icons-material/Login';
+import LogoutIcon from '@mui/icons-material/Logout';
+import PersonIcon from '@mui/icons-material/Person';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
+import PersonAddIcon from '@mui/icons-material/PersonAdd';
+import PersonOffIcon from '@mui/icons-material/PersonOff';
 
-function Menu() {
+function Menu({ currentUser }) {
   const history = useHistory()
-  // const currentUser = { first_name: "Julie", username: "mailauki", image: "https://images.unsplash.com/photo-1659377229079-8f0b34c64077?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=385&q=80" }
-  const currentUser = null
+
+  function handleLogout({ onLogout }) {
+    fetch("/logout", {
+      method: "DELETE"
+    })
+      .then((r) => {
+        if(r.ok) {
+          onLogout(null)
+          history.push("/")
+        }
+      })
+  }
 
   return (
     <div className="Menu">
       {!currentUser ? (
-        <Button variant="contained" onClick={() => history.push('/login')}>Login</Button>
+        <div>
+          <Button 
+            variant="contained" 
+            onClick={() => history.push('/login')} 
+            startIcon={<LoginIcon />}
+          >
+            Login
+          </Button>
+          <Button 
+            onClick={() => history.push('/signup')} 
+            startIcon={<PersonAddIcon />}
+          >
+            Signup
+          </Button>
+        </div>
       ) : (
         <>
           <div className="menu-header">
-            <h3>Hello, {currentUser.first_name}</h3>
+            {currentUser.first_name ? <h3>Hello, {currentUser.first_name}</h3> : <h3>Hello</h3>}
             <Avatar 
               alt={currentUser.username} 
               src={currentUser.image} 
@@ -31,7 +59,43 @@ function Menu() {
               {currentUser.username[0]}
             </Avatar>
           </div>
-          <Button variant="contained">Logout</Button>
+          <Button 
+            variant="contained" 
+            startIcon={<LogoutIcon />}
+            onClick={handleLogout}
+          >
+            Logout
+          </Button>
+          <List>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <PersonIcon />
+                </ListItemIcon>
+                <ListItemText primary="View My Profile" />
+              </ListItemButton>
+            </ListItem>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <ManageAccountsIcon />
+                </ListItemIcon>
+                <ListItemText primary="Edit Profile" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+          <Divider />
+          <List>
+            <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemIcon>
+                  <PersonOffIcon />
+                </ListItemIcon>
+                <ListItemText primary="Delete Account" />
+              </ListItemButton>
+            </ListItem>
+          </List>
+          <Divider />
         </>
       )}
     </div>

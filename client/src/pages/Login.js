@@ -9,14 +9,12 @@ function Login({ onLogin }) {
   const [errors, setErrors] = useState([])
   const history = useHistory()
 
-  console.log(errors)
-
   function handleSubmit(event) {
     event.preventDefault()
 
     setErrors([])
 
-    fetch("/signup", {
+    fetch("/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -41,7 +39,7 @@ function Login({ onLogin }) {
           {label: "Username", type: null, value: formData.username, name: "username"}, 
           {label: "Password", type: "password", value: formData.password, name: "password"}
         ]).map( item => (
-          errors.length > 0 ? (
+          errors && errors.length > 0 ? (
             <TextField
               error
               label={item.label}
