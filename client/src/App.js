@@ -90,7 +90,7 @@ function App() {
               <Route path="/me">
                 <UserProfile />
               </Route>
-              <Route path="/add">
+              <Route path="/add-photo">
                 <h1>Add Photo</h1>
               </Route>
               <Route path="/search">

@@ -1,15 +1,10 @@
-import { useHistory } from "react-router";
+import { Link } from 'react-router-dom';
 import { AppBar, Toolbar, IconButton } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
 import MenuIcon from '@mui/icons-material/Menu';
 
 function Header({ mobileView, pathname }) {
-  const history = useHistory()
   let activePath = pathname.split("/")[1]
-
-  function handleClick(event) {
-    history.push(event.currentTarget.value)
-  }
 
   return (
     mobileView ? (
@@ -22,17 +17,15 @@ function Header({ mobileView, pathname }) {
             <div>
               <IconButton 
                 aria-label="add a photo" 
-                color={activePath === "add" ? "primary" : "inherit"}
-                value="add" 
-                onClick={handleClick}
+                color={activePath === "add-photo" ? "primary" : "inherit"}
+                component={Link} to="/add-photo"
               >
                 <AddIcon />
               </IconButton>
               <IconButton 
                 aria-label="menu" 
                 color={activePath === "menu" ? "primary" : "inherit"}
-                value="menu" 
-                onClick={handleClick}
+                component={Link} to="/menu"
               >
                 <MenuIcon />
               </IconButton>

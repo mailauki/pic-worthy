@@ -34,20 +34,18 @@
   min-height: 100%;
 }
 
-.Login, .Login form, 
-.Signup, .Signup form {
+.Login, .Signup, .form {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.Login .form, .Signup .form {
-  width: 50%;
+.form {
+  width: 80%;
 }
 
-.Login .form-input, .Login .button, 
-.Signup .form-input, .Signup .button {
+.form-input, .form-button {
   width: 100%;
   margin: 10px auto;
 }

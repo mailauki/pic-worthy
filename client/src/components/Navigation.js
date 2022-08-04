@@ -1,5 +1,5 @@
-import { useHistory } from "react-router";
-import { BottomNavigation, BottomNavigationAction, Tabs, Tab, IconButton } from '@mui/material';
+import { Link } from 'react-router-dom';
+import { BottomNavigation, BottomNavigationAction, Tabs, Tab, Fab } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
@@ -10,26 +10,14 @@ import { styled } from '@mui/material/styles';
 function Navigation({ mobileView, pathname }) {
   let activePath = pathname.split("/")[1]
   let value = activePath === "" ? "home" : activePath
-  const history = useHistory()
 
-  function handleChange(event, newValue) {
-    newValue === "home" ? history.push('/') : history.push(`/${newValue}`)
-  }
-  
-  function handleClick(event) {
-    history.push(event.currentTarget.value)
-  }
-
-  const AddButton = styled(IconButton)(({ theme }) => ({
-    color: theme.palette.getContrastText(theme.palette.neutral.lighter),
-    backgroundColor: theme.palette.neutral.lighter,
+  const AddButton = styled(Fab)(({ theme }) => ({
+    color: theme.palette.getContrastText(activePath === "add-photo" ? theme.palette.primary.main : theme.palette.neutral.lighter),
+    backgroundColor: activePath === "add-photo" ? theme.palette.primary.main : theme.palette.neutral.lighter,
     '&:hover': {
-      backgroundColor: theme.palette.neutral.darker,
+      backgroundColor: activePath === "add-photo" ? theme.palette.primary.darker : theme.palette.neutral.darker,
     },
-    boxShadow: `2px 2px 4px ${theme.palette.neutral.darker}`,
-    width: '45px',
-    height: '45px',
-    bottom: 16, 
+    bottom: 25, 
     margin: 10
   }))
 
@@ -38,39 +26,50 @@ function Navigation({ mobileView, pathname }) {
       { mobileView ? (
         <BottomNavigation
           value={value}
-          onChange={handleChange}
-          style={{ 
+          // onChange={handleChange}
+          sx={{ 
             position: "fixed", 
             bottom: 0, 
-            width: "100%", 
-            minWidth: "400px"
+            width: "100%"
           }}
         >
           <BottomNavigationAction 
             label="Home" 
             value="home" 
+            component={Link} to="/"
             icon={<HomeIcon />}
           />
           <BottomNavigationAction 
             label="Search" 
             value="search" 
+            component={Link} to="/search"
             icon={<SearchIcon />}
           />
           <AddButton
             aria-label="add"
             value="add" 
-            onClick={handleClick}
+            component={Link} to="/add-photo"
+            // onClick={handleClick}
           >
             <AddIcon />
           </AddButton>
+          {/* <Fab 
+            color="neutral" 
+            aria-label="add" 
+            component={Link} to="/add-photo"
+          >
+            <AddIcon />
+          </Fab> */}
           <BottomNavigationAction 
             label="Tags" 
             value="tags" 
+            component={Link} to="/tags"
             icon={<TagIcon />}
           />
           <BottomNavigationAction 
             label="Menu" 
             value="menu" 
+            component={Link} to="/menu"
             icon={<MenuIcon />}
           />
         </BottomNavigation>
@@ -78,7 +77,7 @@ function Navigation({ mobileView, pathname }) {
         <Tabs
           orientation="vertical"
           value={value}
-          onChange={handleChange}
+          // onChange={handleChange}
           aria-label="Vertical tabs"
           sx={{ 
             borderRight: 1, 
@@ -90,18 +89,21 @@ function Navigation({ mobileView, pathname }) {
             icon={<HomeIcon />} 
             label="Home" 
             value="home" 
+            component={Link} to="/"
             iconPosition="start" 
           />
           <Tab 
             icon={<SearchIcon />} 
             label="Search" 
             value="search" 
+            component={Link} to="/search"
             iconPosition="start" 
           />
           <Tab 
             icon={<TagIcon />} 
             label="Tags" 
             value="tags" 
+            component={Link} to="/tags"
             iconPosition="start" 
           />
         </Tabs>
