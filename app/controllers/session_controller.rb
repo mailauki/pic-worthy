@@ -16,4 +16,10 @@ class SessionController < ApplicationController
     session.delete :user_id
     head :no_content
   end
+
+  private
+
+  def find_by_username
+    User.find_by(username: params[:username])
+  end
 end

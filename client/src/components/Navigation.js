@@ -5,15 +5,33 @@ import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import TagIcon from '@mui/icons-material/Tag';
 import MenuIcon from '@mui/icons-material/Menu';
+import { styled } from '@mui/material/styles';
 
 function Navigation({ mobileView, pathname }) {
   let activePath = pathname.split("/")[1]
   let value = activePath === "" ? "home" : activePath
   const history = useHistory()
 
-  const handleChange = (event, newValue) => {
+  function handleChange(event, newValue) {
     newValue === "home" ? history.push('/') : history.push(`/${newValue}`)
   }
+  
+  function handleClick(event) {
+    history.push(event.currentTarget.value)
+  }
+
+  const AddButton = styled(IconButton)(({ theme }) => ({
+    color: theme.palette.getContrastText(theme.palette.neutral.lighter),
+    backgroundColor: theme.palette.neutral.lighter,
+    '&:hover': {
+      backgroundColor: theme.palette.neutral.darker,
+    },
+    boxShadow: `2px 2px 4px ${theme.palette.neutral.darker}`,
+    width: '45px',
+    height: '45px',
+    bottom: 16, 
+    margin: 10
+  }))
 
   return (
     <div className="Navigation">
@@ -25,7 +43,7 @@ function Navigation({ mobileView, pathname }) {
             position: "fixed", 
             bottom: 0, 
             width: "100%", 
-            minWidth: "400px" 
+            minWidth: "400px"
           }}
         >
           <BottomNavigationAction 
@@ -38,19 +56,13 @@ function Navigation({ mobileView, pathname }) {
             value="search" 
             icon={<SearchIcon />}
           />
-          <IconButton
+          <AddButton
             aria-label="add"
-            style={{ 
-              backgroundColor: "#eee", 
-              filter: "drop-shadow( 2px 2px 2px #aaa )",
-              bottom: "4px", 
-              width: 40, 
-              height: 40, 
-              margin: 6 
-            }}
+            value="add" 
+            onClick={handleClick}
           >
             <AddIcon />
-          </IconButton>
+          </AddButton>
           <BottomNavigationAction 
             label="Tags" 
             value="tags" 
@@ -67,9 +79,12 @@ function Navigation({ mobileView, pathname }) {
           orientation="vertical"
           value={value}
           onChange={handleChange}
-          aria-label="Vertical tabs example"
-          sx={{ borderRight: 1, borderColor: 'divider',
-          minHeight: 'calc(100vh - 64px)' }}
+          aria-label="Vertical tabs"
+          sx={{ 
+            borderRight: 1, 
+            borderColor: 'divider',
+            height: '100%'
+          }}
         >
           <Tab 
             icon={<HomeIcon />} 

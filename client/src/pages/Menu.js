@@ -8,10 +8,10 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import PersonOffIcon from '@mui/icons-material/PersonOff';
 import NightlightIcon from '@mui/icons-material/Nightlight';
 
-function Menu({ currentUser, checked, setChecked }) {
+function Menu({ currentUser, onLogout, checked, setChecked }) {
   const history = useHistory()
 
-  function handleLogout({ onLogout }) {
+  function handleLogout() {
     fetch("/logout", {
       method: "DELETE"
     })
@@ -36,10 +36,25 @@ function Menu({ currentUser, checked, setChecked }) {
     setChecked(newChecked)
   }
 
+  function handleClick(event) {
+    switch(event.currentTarget.id) {
+      case "view-profile":
+        history.push("/me")
+        break
+      case "edit-account":
+        history.push("/edit-account")
+        break
+      default:
+        console.log("clicked")
+    }
+  }
+
   return (
     <div className="Menu">
       {!currentUser ? (
-        <div>
+        <Box
+          className="Login-Signup"
+        >
           <Button 
             variant="contained" 
             onClick={() => history.push('/login')} 
@@ -53,7 +68,7 @@ function Menu({ currentUser, checked, setChecked }) {
           >
             Signup
           </Button>
-        </div>
+        </Box>
       ) : (
         <>
           <Box
@@ -89,7 +104,7 @@ function Menu({ currentUser, checked, setChecked }) {
           </Button>
           <List>
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton id="view-profile" onClick={handleClick}>
                 <ListItemIcon>
                   <PersonIcon />
                 </ListItemIcon>
@@ -97,18 +112,18 @@ function Menu({ currentUser, checked, setChecked }) {
               </ListItemButton>
             </ListItem>
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton id="edit-account" onClick={handleClick}>
                 <ListItemIcon>
                   <ManageAccountsIcon />
                 </ListItemIcon>
-                <ListItemText primary="Edit Profile" />
+                <ListItemText primary="Edit Account" />
               </ListItemButton>
             </ListItem>
           </List>
           <Divider />
           <List>
             <ListItem disablePadding>
-              <ListItemButton>
+              <ListItemButton disabled onClick={handleClick}>
                 <ListItemIcon>
                   <PersonOffIcon />
                 </ListItemIcon>

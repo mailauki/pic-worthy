@@ -1,14 +1,16 @@
 import { useState, useEffect } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
+import './App.css';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+import CssBaseline from '@mui/material/CssBaseline';
 import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Menu from './pages/Menu';
+import UserProfile from './pages/UserProfile';
+import EditAccount from './pages/EditAccount';
 import Navigation from './components/Navigation';
 import Header from './components/Header';
-import './App.css';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
 
 const theme = createTheme({
   status: {
@@ -22,7 +24,8 @@ const theme = createTheme({
     neutral: {
       main: '#64748B',
       contrastText: '#fff',
-      lighter: '#eee'
+      lighter: '#eee',
+      darker: '#aaa'
     }
   }
 })
@@ -35,7 +38,8 @@ const darkTheme = createTheme({
       darker: '#b28704'
     },
     neutral: {
-      lighter: '#333'
+      lighter: '#333',
+      darker: '#000'
     }
   }
 })
@@ -65,7 +69,7 @@ function App() {
   return (
     <ThemeProvider theme={darkModeChecked.includes('dark') ? darkTheme : theme}>
       <CssBaseline />
-      
+
       <div className="App">
         <Header mobileView={mobileView} pathname={pathname} />
 
@@ -83,6 +87,9 @@ function App() {
               <Route path="/menu">
                 <Menu currentUser={currentUser} onLogout={setCurrentUser} checked={darkModeChecked} setChecked={setDarkModeChecked} />
               </Route>
+              <Route path="/me">
+                <UserProfile />
+              </Route>
               <Route path="/add">
                 <h1>Add Photo</h1>
               </Route>
@@ -91,6 +98,9 @@ function App() {
               </Route>
               <Route path="/tags">
                 <h1>Tags</h1>
+              </Route>
+              <Route path="/edit-account">
+                <EditAccount />
               </Route>
               <Route path="/">
                 <Home />

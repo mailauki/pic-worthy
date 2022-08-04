@@ -1,25 +1,26 @@
 import { useState } from 'react';
 import { useHistory } from "react-router";
 import { Link } from 'react-router-dom';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import { Button, TextField } from '@mui/material';
 
 function Signup({ onLogin }) {
   const [formData, setFormData] = useState({username: "", password: "", password_confirmation: ""})
   const [errors, setErrors] = useState([])
   const history = useHistory()
 
+  console.log(formData)
+
   function handleSubmit(event) {
     event.preventDefault()
 
-    setErrors([])
+    // setErrors([])
 
     fetch("/signup", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({...formData, dark_mode: false})
+      body: JSON.stringify(formData)
     })
       .then((r) => {
         if (r.ok) {
@@ -40,7 +41,7 @@ function Signup({ onLogin }) {
           {label: "Password", type: "password", value: formData.password, name: "password"}, 
           {label: "Password Confirmation", type: "password", value: formData.password_confirmation, name: "password_confirmation"}
         ]).map( item => (
-          errors.length > 0 ? (
+          errors && errors.length > 0 ? (
             <TextField
               error
               label={item.label}

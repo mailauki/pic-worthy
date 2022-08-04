@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useHistory } from "react-router";
 import { Link } from 'react-router-dom';
-import Button from '@mui/material/Button';
-import TextField from '@mui/material/TextField';
+import { Button, TextField } from '@mui/material';
 
 function Login({ onLogin }) {
   const [formData, setFormData] = useState({username: "", password: ""})
@@ -12,7 +11,7 @@ function Login({ onLogin }) {
   function handleSubmit(event) {
     event.preventDefault()
 
-    setErrors([])
+    // setErrors([])
 
     fetch("/login", {
       method: "POST",
@@ -34,7 +33,7 @@ function Login({ onLogin }) {
   return (
     <div className="Login">
       <h1>Login</h1>
-      <form className="form">
+      <form className="form" onSubmit={handleSubmit}>
         {([
           {label: "Username", type: null, value: formData.username, name: "username"}, 
           {label: "Password", type: "password", value: formData.password, name: "password"}
@@ -61,7 +60,12 @@ function Login({ onLogin }) {
             />
           )
         ))}
-        <Button className="button" onClick={handleSubmit}>Login</Button>
+        <Button 
+          className="button" 
+          onClick={handleSubmit}
+        >
+          Login
+        </Button>
       </form>
       <Link to="/signup">Don't have an account yet.</Link>
     </div>

@@ -5,7 +5,6 @@ class CreateUsers < ActiveRecord::Migration[7.0]
       t.string :password_digest
       t.string :first_name
       t.string :avatar
-      t.boolean :dark_mode
 
       t.timestamps
     end
