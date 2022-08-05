@@ -1,4 +1,5 @@
 class PhotosController < ApplicationController
+  skip_before_action :authorize, only: [:index, :show]
 
   def index
     photos = Photo.all
@@ -12,6 +13,7 @@ class PhotosController < ApplicationController
 
   def create
     photo = @current_user.photos.create!(photo_params)
+    # photo = Photo.create!(photo_params)
     # photo.tags.create!(tag_params)
     render json: photo, status: :created
   end

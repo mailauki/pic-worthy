@@ -26,12 +26,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  /* margin: 10px 20px; */
 }
 
-.Login, .Signup {
-  margin: 10px 20px;
-  width: 100%;
-  min-height: 100%;
+.Content .form-button {
+  margin: 10px auto;
 }
 
 .Login, .Signup, .form {
@@ -47,10 +46,10 @@
 
 .form-input, .form-button {
   width: 100%;
-  margin: 10px auto;
+  margin: 10px;
 }
 
-.Login .button, .Signup .button {
+.form-button {
   height: 50px;
 }
 

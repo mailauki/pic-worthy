@@ -33,7 +33,7 @@ function Signup({ onLogin }) {
   }
 
   return (
-    <div className="Signup">
+    <>
       <h1>Signup</h1>
       <form className="form">
         {([
@@ -46,6 +46,7 @@ function Signup({ onLogin }) {
               error
               label={item.label}
               type={item.type}
+              margin="normal"
               value={item.value}
               onChange={(event) => setFormData({...formData, [item.name]: event.target.value})}
               helperText={errors.filter(err => err.includes(item.label))}
@@ -56,6 +57,7 @@ function Signup({ onLogin }) {
             <TextField
               label={item.label}
               type={item.type}
+              margin="normal"
               value={item.value}
               onChange={(event) => setFormData({...formData, [item.name]: event.target.value})}
               className="form-input"
@@ -63,10 +65,15 @@ function Signup({ onLogin }) {
             />
           )
         ))}
-        <Button className="button" onClick={handleSubmit}>Signup</Button>
+        <Button 
+          className="form-button" 
+          onClick={handleSubmit}
+        >
+          Signup
+        </Button>
       </form>
       <Link to="/login">Already have an account.</Link>
-    </div>
+    </>
   )
 }
 

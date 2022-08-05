@@ -17,8 +17,7 @@ function Navigation({ mobileView, pathname }) {
     '&:hover': {
       backgroundColor: activePath === "add-photo" ? theme.palette.primary.darker : theme.palette.neutral.darker,
     },
-    bottom: 25, 
-    margin: 10
+    bottom: 25
   }))
 
   return (
@@ -26,7 +25,6 @@ function Navigation({ mobileView, pathname }) {
       { mobileView ? (
         <BottomNavigation
           value={value}
-          // onChange={handleChange}
           sx={{ 
             position: "fixed", 
             bottom: 0, 
@@ -45,21 +43,15 @@ function Navigation({ mobileView, pathname }) {
             component={Link} to="/search"
             icon={<SearchIcon />}
           />
-          <AddButton
-            aria-label="add"
-            value="add" 
-            component={Link} to="/add-photo"
-            // onClick={handleClick}
-          >
-            <AddIcon />
-          </AddButton>
-          {/* <Fab 
-            color="neutral" 
-            aria-label="add" 
-            component={Link} to="/add-photo"
-          >
-            <AddIcon />
-          </Fab> */}
+          <div style={{ margin: 10, width: 'fit-content' }}>
+            <AddButton
+              aria-label="add"
+              value="add" 
+              component={Link} to="/add-photo"
+            >
+              <AddIcon />
+            </AddButton>
+          </div>
           <BottomNavigationAction 
             label="Tags" 
             value="tags" 
@@ -77,7 +69,6 @@ function Navigation({ mobileView, pathname }) {
         <Tabs
           orientation="vertical"
           value={value}
-          // onChange={handleChange}
           aria-label="Vertical tabs"
           sx={{ 
             borderRight: 1, 

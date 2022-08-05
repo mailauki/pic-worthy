@@ -11,6 +11,7 @@ import UserProfile from './pages/UserProfile';
 import EditAccount from './pages/EditAccount';
 import Navigation from './components/Navigation';
 import Header from './components/Header';
+import Photos from './features/photos/Photos';
 
 const theme = createTheme({
   status: {
@@ -87,8 +88,8 @@ function App() {
               <Route path="/menu">
                 <Menu currentUser={currentUser} onLogout={setCurrentUser} checked={darkModeChecked} setChecked={setDarkModeChecked} />
               </Route>
-              <Route path="/me">
-                <UserProfile />
+              <Route path="/users/:id">
+                <UserProfile pathname={pathname} />
               </Route>
               <Route path="/add-photo">
                 <h1>Add Photo</h1>
@@ -100,10 +101,11 @@ function App() {
                 <h1>Tags</h1>
               </Route>
               <Route path="/edit-account">
-                <EditAccount />
+                <EditAccount currentUser={currentUser} />
               </Route>
               <Route path="/">
-                <Home />
+                <Photos />
+                {/* <Home /> */}
               </Route>
             </Switch>
           </div>

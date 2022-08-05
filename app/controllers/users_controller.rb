@@ -12,7 +12,8 @@ class UsersController < ApplicationController
   end
 
   def me
-    user = User.find_by!(id: session[:user_id])
+    # user = User.find_by!(id: session[:user_id])
+    user = @current_user
     render json: user
   end
 
@@ -23,7 +24,7 @@ class UsersController < ApplicationController
   end
 
   def update
-    user = find_user
+    user = @current_user
     user.update!(user_params)
     render json: user
   end

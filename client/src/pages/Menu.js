@@ -1,4 +1,6 @@
+import { useEffect } from 'react';
 import { useHistory } from "react-router";
+import { useParams } from 'react-router-dom';
 import { Button, Avatar, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Switch, Box } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -39,7 +41,7 @@ function Menu({ currentUser, onLogout, checked, setChecked }) {
   function handleClick(event) {
     switch(event.currentTarget.id) {
       case "view-profile":
-        history.push("/me")
+        history.push(`/users/${currentUser.id}`)
         break
       case "edit-account":
         history.push("/edit-account")
@@ -80,20 +82,20 @@ function Menu({ currentUser, onLogout, checked, setChecked }) {
             }}
           >
             {currentUser.first_name ? <h3>Hello, {currentUser.first_name}</h3> : <h3>Hello</h3>}
-            <Avatar 
-              alt={currentUser.username} 
-              src={currentUser.image} 
-              sx={{ 
-                width: 60, 
-                height: 60, 
-                postition: "absolute", 
-                top: 30, 
-                right: 20,
-                zIndex: 1
-              }}
-            >
-              {currentUser.username[0]}
-            </Avatar>
+              <Avatar 
+                alt={currentUser.username} 
+                src={currentUser.avatar} 
+                sx={{ 
+                  width: 60, 
+                  height: 60, 
+                  postition: "absolute", 
+                  top: 30, 
+                  right: 20,
+                  zIndex: 1
+                }}
+              >
+                {currentUser.username[0]}
+              </Avatar>
           </Box>
           <Button 
             variant="contained" 
