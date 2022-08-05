@@ -1,9 +1,10 @@
 import { useState } from 'react';
 import { useHistory } from "react-router";
 import { Link } from 'react-router-dom';
+import Form from '../components/Form';
 import { Button, TextField } from '@mui/material';
 
-function EditAccount({ currentUser, onUpdate }) {
+function EditAccount({ currentUser }) {
   const [formData, setFormData] = useState({username: currentUser.username, first_name: currentUser.first_name, avatar: currentUser.avatar})
   const [errors, setErrors] = useState([])
   const history = useHistory()
@@ -31,15 +32,17 @@ function EditAccount({ currentUser, onUpdate }) {
       })
   }
 
+  const formInfo = [
+    {label: "Username", type: null, value: formData.username, name: "username"}, 
+    {label: "First Name", type: null, value: formData.first_name, name: "first_name"}, 
+    {label: "Avatar", type: "url", value: formData.avatar, name: "avatar"}
+  ]
+
   return (
     <>
       <h1>Edit Account</h1>
-      <form className="form" onSubmit={handleSubmit}>
-        {([
-          {label: "Username", type: null, value: formData.username, name: "username"}, 
-          {label: "First Name", type: null, value: formData.first_name, name: "first_name"}, 
-          {label: "Avatar", type: "url", value: formData.avatar, name: "avatar"}
-        ]).map( item => (
+      <div className="form">
+        {/* {(formInfo).map( item => (
           errors && errors.length > 0 ? (
             <TextField
               error
@@ -63,14 +66,16 @@ function EditAccount({ currentUser, onUpdate }) {
               key={`EditAccount.${item.name}`}
             />
           )
-        ))}
+        ))} */}
+        <Form formInfo={formInfo} errors={errors} formData={formData} setFormData={setFormData} />
         <Button 
           className="form-button" 
+          variant="contained"
           onClick={handleSubmit}
         >
           Submit
         </Button>
-      </form>
+      </div>
     </>
   )
 }

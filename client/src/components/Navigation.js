@@ -26,6 +26,7 @@ function Navigation({ mobileView, pathname }) {
         <BottomNavigation
           value={value}
           sx={{ 
+            zIndex: 1,
             position: "fixed", 
             bottom: 0, 
             width: "100%"
@@ -71,9 +72,12 @@ function Navigation({ mobileView, pathname }) {
           value={value}
           aria-label="Vertical tabs"
           sx={{ 
+            zIndex: 1,
             borderRight: 1, 
-            borderColor: 'divider',
-            height: '100%'
+            borderColor: "divider",
+            height: "calc(100vh - 66px)",
+            position: "sticky",
+            top: "66px"
           }}
         >
           <Tab 

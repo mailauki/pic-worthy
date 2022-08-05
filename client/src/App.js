@@ -7,11 +7,13 @@ import Home from './pages/Home';
 import Signup from './pages/Signup';
 import Login from './pages/Login';
 import Menu from './pages/Menu';
+import AddPhoto from './pages/AddPhoto';
 import UserProfile from './pages/UserProfile';
 import EditAccount from './pages/EditAccount';
 import Navigation from './components/Navigation';
 import Header from './components/Header';
 import Photos from './features/photos/Photos';
+import Tags from './features/tags/Tags';
 
 const theme = createTheme({
   status: {
@@ -92,13 +94,13 @@ function App() {
                 <UserProfile pathname={pathname} />
               </Route>
               <Route path="/add-photo">
-                <h1>Add Photo</h1>
+                <AddPhoto currentUser={currentUser} />
               </Route>
               <Route path="/search">
                 <h1>Search</h1>
               </Route>
               <Route path="/tags">
-                <h1>Tags</h1>
+                <Tags />
               </Route>
               <Route path="/edit-account">
                 <EditAccount currentUser={currentUser} />

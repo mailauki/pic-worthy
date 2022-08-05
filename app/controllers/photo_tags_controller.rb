@@ -1,9 +1,11 @@
 class PhotoTagsController < ApplicationController
+  skip_before_action :authorize, only: [:index, :create]
   
   def create
     # photo_tag = PhotoTag.create!(photo_tag_params)
-    photo = find_photo
-    photo_tag = photo.tags.create!(photo_tag_params)
+    # photo = find_photo
+    # photo_tag = photo.tags.create!(photo_tag_params)
+    photo_tag = PhotoTag.create!(photo_tag_params)
     render json: photo_tag, status: :created
   end
 

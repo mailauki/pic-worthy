@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { useHistory } from "react-router";
 import { Link } from 'react-router-dom';
-import { Button, TextField } from '@mui/material';
+import Form from '../components/Form';
+import { Button } from '@mui/material';
 
 function Signup({ onLogin }) {
   const [formData, setFormData] = useState({username: "", password: "", password_confirmation: ""})
@@ -12,8 +13,6 @@ function Signup({ onLogin }) {
 
   function handleSubmit(event) {
     event.preventDefault()
-
-    // setErrors([])
 
     fetch("/signup", {
       method: "POST",
@@ -31,47 +30,26 @@ function Signup({ onLogin }) {
         }
       })
   }
+  
+  const formInfo = [
+    {label: "Username", type: null, value: formData.username, name: "username"}, 
+    {label: "Password", type: "password", value: formData.password, name: "password"}, 
+    {label: "Password Confirmation", type: "password", value: formData.password_confirmation, name: "password_confirmation"}
+  ]
 
   return (
     <>
       <h1>Signup</h1>
-      <form className="form">
-        {([
-          {label: "Username", type: null, value: formData.username, name: "username"}, 
-          {label: "Password", type: "password", value: formData.password, name: "password"}, 
-          {label: "Password Confirmation", type: "password", value: formData.password_confirmation, name: "password_confirmation"}
-        ]).map( item => (
-          errors && errors.length > 0 ? (
-            <TextField
-              error
-              label={item.label}
-              type={item.type}
-              margin="normal"
-              value={item.value}
-              onChange={(event) => setFormData({...formData, [item.name]: event.target.value})}
-              helperText={errors.filter(err => err.includes(item.label))}
-              className="form-input"
-              key={`Signup.${item.name}`}
-            />
-          ) : (
-            <TextField
-              label={item.label}
-              type={item.type}
-              margin="normal"
-              value={item.value}
-              onChange={(event) => setFormData({...formData, [item.name]: event.target.value})}
-              className="form-input"
-              key={`Signup.${item.name}`}
-            />
-          )
-        ))}
+      <div className="form">
+        <Form formInfo={formInfo} errors={errors} formData={formData} setFormData={setFormData} />
         <Button 
           className="form-button" 
+          variant="contained"
           onClick={handleSubmit}
         >
           Signup
         </Button>
-      </form>
+      </div>
       <Link to="/login">Already have an account.</Link>
     </>
   )
