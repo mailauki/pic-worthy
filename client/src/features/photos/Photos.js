@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPhotos } from './photosSlice';
 import { ImageList, ImageListItem, ImageListItemBar, IconButton, Chip } from '@mui/material';
@@ -33,6 +34,7 @@ function Photos() {
                   <IconButton
                     sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
                     aria-label={`info about ${photo.tags[0]}`}
+                    component={Link} to={`/photos/${photo.id}`}
                   >
                     <InfoIcon />
                   </IconButton>

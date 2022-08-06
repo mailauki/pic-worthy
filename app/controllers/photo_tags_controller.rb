@@ -1,5 +1,5 @@
 class PhotoTagsController < ApplicationController
-  skip_before_action :authorize, only: [:index, :create]
+  skip_before_action :authorize, only: :create
   
   def create
     # photo_tag = PhotoTag.create!(photo_tag_params)

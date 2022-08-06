@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useHistory } from "react-router";
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchTags } from '../features/tags/tagsSlice';
+import { fetchTags, tagAdded } from '../features/tags/tagsSlice';
 import Form from '../components/Form';
 import { Button, Autocomplete, Chip, TextField } from '@mui/material';
 
 function AddPhoto({ currentUser }) {
-  // const [formData, setFormData] = useState({image: "", description: "", tags: []})
   const [formData, setFormData] = useState({image: "", description: ""})
   const [selectedTags, setSelectedTags] = useState([])
   const [errors, setErrors] = useState([])
@@ -16,7 +15,7 @@ function AddPhoto({ currentUser }) {
     event.preventDefault()
 
     console.log(formData)
-    console.log(selectedTags)
+    console.log({selectedTags})
 
     fetch("/photos", {
       method: "POST",
@@ -104,6 +103,7 @@ function AddPhoto({ currentUser }) {
                 if (r.ok) {
                   r.json().then((tag) => {
                     console.log(tag)
+                    dispatch(tagAdded(tag))
                   })
                 }
               })
