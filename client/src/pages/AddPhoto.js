@@ -27,6 +27,7 @@ function AddPhoto({ currentUser }) {
     .then((r) => {
       if (r.ok) {
         r.json().then((photo) => {
+          console.log(photo)
           if(selectedTags.length > 0) {
             selectedTags.map( tag => {
               fetch("/photo_tags", {

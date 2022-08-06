@@ -1,18 +1,17 @@
 import { ImageList, ImageListItem } from '@mui/material';
 
-function ImageGrid({ user, photos }) {
+function ImageFeed({ user, photos }) {
   return (
     photos && photos.length > 0 ? (
       <ImageList
         sx={{ width: 500, height: "fit-content" }}
-        cols={3}
-        rowHeight={164}
+        cols={1}
       >
         {photos.map((photo) => (
           <ImageListItem key={photo.id}>
             <img
-              src={`${photo.image}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${photo.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              src={`${photo.image}?w=164&fit=crop&auto=format`}
+              srcSet={`${photo.image}?w=164&fit=crop&auto=format&dpr=2 2x`}
               alt={user.username}
               loading="lazy"
             />
@@ -25,4 +24,4 @@ function ImageGrid({ user, photos }) {
   )
 }
 
-export default ImageGrid;
+export default ImageFeed;
