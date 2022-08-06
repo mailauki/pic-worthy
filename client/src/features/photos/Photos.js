@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPhotos } from './photosSlice';
+import Tags from '../../components/Tags';
 import { ImageList, ImageListItem, ImageListItemBar, IconButton, Chip } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 
@@ -29,7 +30,12 @@ function Photos() {
               />
               <ImageListItemBar
                 title={`@${photo.user.username}`}
-                subtitle={photo.tags.map( tag => <Chip label={tag.name} sx={{ backgroundColor: 'rgba(255, 255, 255, 0.54)' }} /> )}
+                subtitle={photo.tags.map((tag) => 
+                  <Chip 
+                    label={tag.name} 
+                    sx={{ backgroundColor: 'rgba(255, 255, 255, 0.54)' }} 
+                  />
+                )}
                 actionIcon={
                   <IconButton
                     sx={{ color: 'rgba(255, 255, 255, 0.54)' }}

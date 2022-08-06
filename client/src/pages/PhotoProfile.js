@@ -1,0 +1,94 @@
+import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchPhotos } from '../features/photos/photosSlice';
+import PhotoHeader from '../components/PhotoHeader';
+import Likes from '../components/Likes';
+import Tags from '../components/Tags';
+import { Avatar, Tabs, Tab, Box, IconButton } from '@mui/material';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
+
+function PhotoProfile() {
+  const { id } = useParams()
+
+  const [photo, setPhoto] = useState({})
+  const photos = useSelector((state) => state.photos.entities)
+
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(fetchPhotos())
+  }, [dispatch])
+
+  useEffect(() => {
+    fetch(`/photos/${id}`)
+    .then((r) => r.json())
+    .then((data) => setPhoto(data))
+  }, [id])
+
+  return (
+    <>
+      <div 
+        style={{
+          backgroundImage: `url(${photo.image})`, 
+          backgroundSize: "cover", 
+          backgroundRepeat: "no-repeat",
+          backgroundPosition: "center center",
+          width: "100%", 
+          height: "350px"
+        }}
+      >
+        <img 
+          src={photo.image}  
+          style={{
+            backdropFilter: "blur(10px)", 
+            width: "100%", 
+            height: "350px", 
+            objectFit: "contain"
+          }} 
+        />
+      </div>
+      <div 
+        style={{ 
+          display: "flex", 
+          justifyContent: "space-between", 
+          alignItems: "baseline", 
+          width: "100%", 
+          marginTop: "-20px", 
+          paddingLeft: "20px", 
+          paddingRight: "20px",
+        }}
+      >
+        <PhotoHeader user={photo.user} />
+        <Likes likes_total={photo.likes_total} likes={photo.likes} />
+      </div>
+
+      <div
+        style={{ 
+          display: "flex", 
+          justifyContent: "space-between", 
+          width: "100%",
+          paddingLeft: "20px", 
+          paddingRight: "20px"
+        }}
+      >
+        <div>
+          {photo.description ? <p>{photo.description}</p> : <></>}
+          {photo.tags ? <Tags tags={photo.tags} /> : <></>}
+        </div>
+        <div>
+          <IconButton>
+            <EditIcon />
+          </IconButton>
+          <IconButton>
+            <DeleteIcon />
+          </IconButton>
+        </div>
+      </div>
+    </>
+  )
+}
+
+export default PhotoProfile;

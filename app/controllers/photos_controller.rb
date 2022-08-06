@@ -32,6 +32,10 @@ class PhotosController < ApplicationController
 
   private
 
+  def find_photo
+    Photo.find(params[:id])
+  end
+
   def photo_params
     params.permit(:image, :description, :user_id)
   end

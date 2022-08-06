@@ -11,7 +11,8 @@ function UserHeader({ user }) {
             alignItems="center"
             className="UserHeader"
             sx={{
-              width: "100%"
+              width: "100%",
+              marginTop: "20px"
             }}
           >
             {user.username ? (
