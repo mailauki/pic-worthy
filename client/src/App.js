@@ -13,7 +13,6 @@ import PhotoProfile from './pages/PhotoProfile';
 import EditAccount from './pages/EditAccount';
 import Navigation from './components/Navigation';
 import Header from './components/Header';
-import Photos from './features/photos/Photos';
 import TagsPage from './features/tags/TagsPage';
 
 const theme = createTheme({
@@ -23,6 +22,7 @@ const theme = createTheme({
   palette: {
     primary: {
       main: '#2979ff',
+      contrastText: '#000',
       darker: '#1c54b2'
     },
     neutral: {
@@ -110,8 +110,7 @@ function App() {
                 <EditAccount currentUser={currentUser} />
               </Route>
               <Route path="/">
-                <Photos />
-                {/* <Home /> */}
+                <Home />
               </Route>
             </Switch>
           </div>

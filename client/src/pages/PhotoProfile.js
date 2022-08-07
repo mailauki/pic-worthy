@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPhotos } from '../features/photos/photosSlice';
-import PhotoHeader from '../components/PhotoHeader';
+import PhotoUser from '../components/PhotoUser';
 import Likes from '../components/Likes';
 import Tags from '../components/Tags';
-import { Avatar, Tabs, Tab, Box, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -40,15 +39,7 @@ function PhotoProfile() {
           height: "350px"
         }}
       >
-        <img 
-          src={photo.image}  
-          style={{
-            backdropFilter: "blur(10px)", 
-            width: "100%", 
-            height: "350px", 
-            objectFit: "contain"
-          }} 
-        />
+        <img src={photo.image} className="photo" />
       </div>
       <div 
         style={{ 
@@ -61,7 +52,7 @@ function PhotoProfile() {
           paddingRight: "20px",
         }}
       >
-        <PhotoHeader user={photo.user} />
+        <PhotoUser user={photo.user} />
         <Likes likes_total={photo.likes_total} likes={photo.likes} />
       </div>
 

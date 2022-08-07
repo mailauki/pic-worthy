@@ -88,3 +88,11 @@ a {
   padding: 0;
   margin: 6px;
 }
+
+.photo {
+  -webkit-backdropFilter: blur(10px);
+  backdrop-filter: blur(10px);
+  width: 100%;
+  height: 350px;
+  object-fit: contain;
+}

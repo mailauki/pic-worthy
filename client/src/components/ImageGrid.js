@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { ImageList, ImageListItem } from '@mui/material';
 
 function ImageGrid({ user, photos }) {
@@ -9,7 +10,7 @@ function ImageGrid({ user, photos }) {
         rowHeight={164}
       >
         {photos.map((photo) => (
-          <ImageListItem key={photo.id}>
+          <ImageListItem key={photo.id} component={Link} to={`/photos/${photo.id}`}>
             <img
               src={`${photo.image}?w=164&h=164&fit=crop&auto=format`}
               srcSet={`${photo.image}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}

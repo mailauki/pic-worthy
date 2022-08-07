@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Chip } from '@mui/material';
 
 function Tags({ tags }) {
@@ -6,7 +7,8 @@ function Tags({ tags }) {
       {tags.map((tag) => 
         <Chip 
           label={tag.name} 
-          // sx={{ backgroundColor: 'rgba(255, 255, 255, 0.54)' }} 
+          component={Link} to={`/tags/${tag.id}`} 
+          sx={{cursor: "pointer"}}
         />
       )}
     </>

@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { ImageList, ImageListItem } from '@mui/material';
 
 function ImageQuilt({ user, photos }) {
@@ -35,7 +36,7 @@ function ImageQuilt({ user, photos }) {
         rowHeight={164}
       >
         {quiltedPhotos.map((photo) => (
-          <ImageListItem key={photo.id} cols={photo.cols || 1} rows={photo.rows || 1}>
+          <ImageListItem key={photo.id} cols={photo.cols || 1} rows={photo.rows || 1} component={Link} to={`/photos/${photo.id}`}>
             <img
               {...srcset(photo.image, 164, photo.rows, photo.cols)}
               alt={user.username}

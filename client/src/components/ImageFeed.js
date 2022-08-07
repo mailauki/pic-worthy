@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { ImageList, ImageListItem } from '@mui/material';
 
 function ImageFeed({ user, photos }) {
@@ -8,7 +9,7 @@ function ImageFeed({ user, photos }) {
         cols={1}
       >
         {photos.map((photo) => (
-          <ImageListItem key={photo.id}>
+          <ImageListItem key={photo.id} component={Link} to={`/photos/${photo.id}`}>
             <img
               src={`${photo.image}?w=164&fit=crop&auto=format`}
               srcSet={`${photo.image}?w=164&fit=crop&auto=format&dpr=2 2x`}

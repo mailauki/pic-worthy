@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPhotos } from './photosSlice';
-import Tags from '../../components/Tags';
+import Anchor from '../../components/Links';
 import { ImageList, ImageListItem, ImageListItemBar, IconButton, Chip } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 
@@ -16,7 +16,7 @@ function Photos() {
   }, [dispatch])
 
   return (
-    <div>
+    <>
       <h1>Photos</h1>
       {photos.length > 0 ? (
         <ImageList cols={1}>
@@ -29,11 +29,12 @@ function Photos() {
                 loading="lazy"
               />
               <ImageListItemBar
-                title={`@${photo.user.username}`}
+                title={<Anchor name={`@${photo.user.username}`} to={`/users/${photo.user.id}`} />}
                 subtitle={photo.tags.map((tag) => 
                   <Chip 
                     label={tag.name} 
-                    sx={{ backgroundColor: 'rgba(255, 255, 255, 0.54)' }} 
+                    component={Link} to={`/tags/${tag.id}`}
+                    sx={{backgroundColor: 'rgba(255, 255, 255, 0.54)', color: 'primary.contrastText', cursor: "pointer"}} 
                   />
                 )}
                 actionIcon={
@@ -49,10 +50,10 @@ function Photos() {
             </ImageListItem>
           ))}
         </ImageList>
-        ) : (
-          <></>
-        )}
-    </div>
+      ) : (
+        <h1>Nothing Here Yet</h1>
+      )}
+    </>
   )
 }
 

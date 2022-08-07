@@ -1,7 +1,7 @@
-import { Avatar, Box, IconButton } from '@mui/material';
-import FavoriteIcon from '@mui/icons-material/Favorite';
+import Anchor from '../components/Links';
+import { Avatar } from '@mui/material';
 
-function PhotoHeader({ user }) {
+function PhotoUser({ user }) {
   return (
     <>
       {user ? (
@@ -16,13 +16,11 @@ function PhotoHeader({ user }) {
           >
             {user.username[0]}
           </Avatar>
-          <p>@{user.username}</p>
+          <Anchor name={`@${user.username}`} to={`/users/${user.id}`} />
         </div>
       ) : (
         <div style={{ display: "flex", alignItems: "baseline", width: "fit-content" }}>
           <Avatar 
-            // alt={user.username} 
-            // src={user.avatar} 
             sx={{ 
               width: 60, 
               height: 60
@@ -35,4 +33,4 @@ function PhotoHeader({ user }) {
   )
 }
 
-export default PhotoHeader;
+export default PhotoUser;
