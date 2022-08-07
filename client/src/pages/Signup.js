@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useHistory } from "react-router";
 import { Link } from 'react-router-dom';
-import Form from '../components/Form';
+import FormInput from '../components/FormInput';
 import { Button } from '@mui/material';
 
 function Signup({ onLogin }) {
@@ -32,16 +32,16 @@ function Signup({ onLogin }) {
   }
   
   const formInfo = [
-    {label: "Username", type: null, value: formData.username, name: "username"}, 
-    {label: "Password", type: "password", value: formData.password, name: "password"}, 
-    {label: "Password Confirmation", type: "password", value: formData.password_confirmation, name: "password_confirmation"}
+    {label: "Username", type: null, value: formData.username, name: "username", helper: " "}, 
+    {label: "Password", type: "password", value: formData.password, name: "password", helper: " "}, 
+    {label: "Password Confirmation", type: "password", value: formData.password_confirmation, name: "password_confirmation", helper: " "}
   ]
 
   return (
     <>
       <h1>Signup</h1>
       <div className="form">
-        <Form formInfo={formInfo} errors={errors} formData={formData} setFormData={setFormData} />
+        {formInfo.map( item => <FormInput errors={errors.filter((err) => err.includes(item.label))} item={item} formData={formData} setFormData={setFormData} /> )}
         <Button 
           className="form-button" 
           variant="contained"

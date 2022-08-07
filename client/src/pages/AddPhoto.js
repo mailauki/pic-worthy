@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useHistory } from "react-router";
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchTags, tagAdded } from '../features/tags/tagsSlice';
-import Form from '../components/Form';
+import FormInput from '../components/FormInput';
 import { Button, Autocomplete, Chip, TextField } from '@mui/material';
 
 function AddPhoto({ currentUser }) {
@@ -10,6 +10,8 @@ function AddPhoto({ currentUser }) {
   const [selectedTags, setSelectedTags] = useState([])
   const [errors, setErrors] = useState([])
   const history = useHistory()
+
+  console.log(errors)
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -52,8 +54,8 @@ function AddPhoto({ currentUser }) {
   }
 
   const formInfo = [
-    {label: "Image Url", type: "url", value: formData.image, name: "image"}, 
-    {label: "Description", type: null, value: formData.description, name: "description"}
+    {label: "Image", type: "url", value: formData.image, name: "image", helper: "Copy image address"}, 
+    {label: "Description", type: null, value: formData.description, name: "description", helper: " "}
   ]
 
   const tags = useSelector((state) => state.tags.entities)
@@ -68,13 +70,13 @@ function AddPhoto({ currentUser }) {
     <>
       <h1>Add Photo</h1>
       <div className="form">
-        <Form formInfo={formInfo} errors={errors} formData={formData} setFormData={setFormData} />
+        {formInfo.map( item => <FormInput errors={errors.filter((err) => err.includes(item.label))} item={item} formData={formData} setFormData={setFormData} /> )}
         <Autocomplete
           multiple
           id="tags"
           className="form-input"
           Tags
-          defaultValue={selectedTags}
+          // defaultValue={selectedTags}}
           options={tags.map((option) => option.name)}
           onChange={(event, newValue) => {
             tags.filter( tag => {
@@ -105,12 +107,10 @@ function AddPhoto({ currentUser }) {
                     console.log(tag)
                     dispatch(tagAdded(tag))
                   })
+                } else {
+                  r.json().then((err) => setErrors(err.errors))
                 }
               })
-              console.log(event.target.value)
-              // add value to tags
-              // make sure tags updates
-              // iterate thru tags to check if already exists just in case
             }
           }}
           renderTags={(value, getTagProps) => 
