@@ -14,9 +14,6 @@ function AddPhoto({ currentUser }) {
   function handleSubmit(event) {
     event.preventDefault()
 
-    console.log(formData)
-    console.log({selectedTags})
-
     fetch("/photos", {
       method: "POST",
       headers: {
@@ -27,7 +24,6 @@ function AddPhoto({ currentUser }) {
     .then((r) => {
       if (r.ok) {
         r.json().then((photo) => {
-          console.log(photo)
           if(selectedTags.length > 0) {
             selectedTags.map( tag => {
               fetch("/photo_tags", {
@@ -46,6 +42,7 @@ function AddPhoto({ currentUser }) {
               })
             })
           }
+        }).then(() => {
           history.push(`/users/${currentUser.id}`)
         })
       } else {
@@ -67,8 +64,6 @@ function AddPhoto({ currentUser }) {
     dispatch(fetchTags())
   }, [dispatch])
 
-  console.log({tags})
-
   return (
     <>
       <h1>Add Photo</h1>
@@ -84,7 +79,11 @@ function AddPhoto({ currentUser }) {
           onChange={(event, newValue) => {
             tags.filter( tag => {
               newValue.length > 0 ? (
-                setSelectedTags(newValue.map( value => value === tag.name ? tag : null))
+                newValue.filter( value => {
+                  if(value === tag.name) {
+                    setSelectedTags([...selectedTags, tag])
+                  }
+                } )
               ) : (
                 setSelectedTags([])
               )
