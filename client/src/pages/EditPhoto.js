@@ -3,10 +3,9 @@ import { useHistory } from "react-router";
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchTags, tagAdded } from '../features/tags/tagsSlice';
-import { selectedTagAdded, selectedTagDeleted } from '../features/tags/selectedTagsSlice';
 import { fetchPhoto } from '../features/photos/photosSlice';
 import FormInput from '../components/FormInput';
-import { Button, Autocomplete, Chip, TextField } from '@mui/material';
+import { Button, Autocomplete, TextField } from '@mui/material';
 
 function EditPhoto({ currentUser }) {
   const { id } = useParams()

@@ -15,6 +15,7 @@ import EditAccount from './pages/EditAccount';
 import Navigation from './components/Navigation';
 import Header from './components/Header';
 import TagsPage from './features/tags/TagsPage';
+import Tag from './features/tags/Tag';
 
 const theme = createTheme({
   status: {
@@ -106,6 +107,9 @@ function App() {
               </Route>
               <Route path="/search">
                 <h1>Search</h1>
+              </Route>
+              <Route path="/tags/:id">
+                <Tag />
               </Route>
               <Route path="/tags">
                 <TagsPage />

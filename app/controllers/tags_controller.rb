@@ -1,9 +1,14 @@
 class TagsController < ApplicationController
-  skip_before_action :authorize, only: [:index, :create]
+  skip_before_action :authorize, only: [:index, :show]
 
   def index
     tags = Tag.all
     render json: tags
+  end
+
+  def show
+    tag = find_tag
+    render json: tag
   end
 
   def create
@@ -12,6 +17,10 @@ class TagsController < ApplicationController
   end
 
   private
+
+  def find_tag
+    Tag.find(params[:id])
+  end
 
   def tag_params
     params.permit(:name)

@@ -14,7 +14,6 @@ function PhotoProfile({ currentUser }) {
   const { id } = useParams()
   const [photo, setPhoto] = useState({})
   const dispatch = useDispatch()
-  const photos = useSelector((state) => state.photos.entities)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
