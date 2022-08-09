@@ -1,5 +1,5 @@
 class PhotoTagsController < ApplicationController
-  skip_before_action :authorize, only: :create
+  skip_before_action :authorize, only: [:create, :destroy]
   
   def create
     # photo_tag = PhotoTag.create!(photo_tag_params)
@@ -11,14 +11,19 @@ class PhotoTagsController < ApplicationController
 
   def destroy
     photo = find_photo
-    photo_tag = photo.tags.find_by_tag
-    render json: photo_tag, status: :created
+    # photo_tag = photo.photo_tags.find_by_tag
+    photo_tag = photo.photo_tags.all.select do |tag|
+      tag.destroy
+    end
+    photo_tag = PhotoTag.find(params[:id])
+    photo_tag.destroy
+    head :no_content
   end
 
   private
 
   def find_photo
-    Photo.find_by(photo_id: params[:id])
+    Photo.find(params[:id])
   end
   
   def find_by_tag

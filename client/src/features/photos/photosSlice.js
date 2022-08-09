@@ -6,6 +6,12 @@ export const fetchPhotos = createAsyncThunk("photos/fetchPhotos", () => {
     .then((data) => data)
 })
 
+export const fetchPhoto = createAsyncThunk("photos/fetchPhoto", (id) => {
+  return fetch(`/photos/${id}`)
+    .then((r) => r.json())
+    .then((data) => data)
+})
+
 const photosSlice = createSlice({
   name: 'photos',
   initialState: {
@@ -18,11 +24,13 @@ const photosSlice = createSlice({
     },
     userUpdated(state, action) {
       const photo = state.entities.find((photo) => photo.id === action.payload.id)
-      photo.url = action.payload.url
+      photo.image = action.payload.image
+      photo.description = action.payload.description
     },
     userDeleted(state, action) {
       const photo = state.entities.find((photo) => photo.id == action.payload.id)
-      photo.url = action.payload.url
+      const index = state.entities.findIndex((photo) => photo.id === action.payload)
+      state.entities.splice(index, 1)
     }
   },
   extraReducers: {
@@ -30,6 +38,13 @@ const photosSlice = createSlice({
       state.status = "loading"
     },
     [fetchPhotos.fulfilled](state, action) {
+      state.entities = action.payload
+      state.status = "idle"
+    },
+    [fetchPhoto.pending](state) {
+      state.status = "loading"
+    },
+    [fetchPhoto.fulfilled](state, action) {
       state.entities = action.payload
       state.status = "idle"
     }

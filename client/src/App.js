@@ -10,6 +10,7 @@ import Menu from './pages/Menu';
 import AddPhoto from './pages/AddPhoto';
 import UserProfile from './pages/UserProfile';
 import PhotoProfile from './pages/PhotoProfile';
+import EditPhoto from './pages/EditPhoto';
 import EditAccount from './pages/EditAccount';
 import Navigation from './components/Navigation';
 import Header from './components/Header';
@@ -93,6 +94,9 @@ function App() {
               </Route>
               <Route path="/users/:id">
                 <UserProfile pathname={pathname} />
+              </Route>
+              <Route path="/photos/:id/edit">
+                <EditPhoto currentUser={currentUser} />
               </Route>
               <Route path="/photos/:id">
                 <PhotoProfile />

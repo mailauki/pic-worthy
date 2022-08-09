@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchUser } from '../features/users/userSlice';
+import { fetchUser } from '../features/users/usersSlice';
 import UserHeader from '../components/UserHeader';
 import ViewMode from '../components/ViewMode';
 import ImageGrid from '../components/ImageGrid';
@@ -12,20 +12,12 @@ import { Tabs, Tab, Box } from '@mui/material';
 
 function UserProfile() {
   const { id } = useParams()
-  // const [user, setUser] = useState({})
-  const user = useSelector((state) => state.user.entities)
-
   const dispatch = useDispatch()
+  const user = useSelector((state) => state.users.entities)
 
   useEffect(() => {
     dispatch(fetchUser(id))
   }, [dispatch])
-
-  // useEffect(() => {
-  //   fetch(`/users/${id}`)
-  //   .then((r) => r.json())
-  //   .then((data) => setUser(data))
-  // }, [id])
 
   const [activeViewMode, setActiveViewMode] = useState("grid")
   const [tab, setTab] = useState("photos")

@@ -5,7 +5,7 @@ function ImageFeed({ user, photos }) {
   return (
     photos && photos.length > 0 ? (
       <ImageList
-        sx={{ width: 500, height: "fit-content" }}
+        sx={{ width: 350 }}
         cols={1}
       >
         {photos.map((photo) => (

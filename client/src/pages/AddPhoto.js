@@ -10,8 +10,12 @@ function AddPhoto({ currentUser }) {
   const [selectedTags, setSelectedTags] = useState([])
   const [errors, setErrors] = useState([])
   const history = useHistory()
+  const dispatch = useDispatch()
+  const tags = useSelector((state) => state.tags.entities)
 
-  console.log(errors)
+  useEffect(() => {
+    dispatch(fetchTags())
+  }, [dispatch])
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -57,14 +61,6 @@ function AddPhoto({ currentUser }) {
     {label: "Image", type: "url", value: formData.image, name: "image", helper: "Copy image address"}, 
     {label: "Description", type: null, value: formData.description, name: "description", helper: " "}
   ]
-
-  const tags = useSelector((state) => state.tags.entities)
-
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    dispatch(fetchTags())
-  }, [dispatch])
 
   return (
     <>

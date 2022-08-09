@@ -1,8 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 export const fetchUsers = createAsyncThunk("users/fetchUsers", () => {
-  // return a Promise containing the data we want
   return fetch("/users")
+    .then((r) => r.json())
+    .then((data) => data)
+})
+
+export const fetchUser = createAsyncThunk("users/fetchUser", (id) => {
+  return fetch(`/users/${id}`)
     .then((r) => r.json())
     .then((data) => data)
 })
@@ -10,8 +15,8 @@ export const fetchUsers = createAsyncThunk("users/fetchUsers", () => {
 const usersSlice = createSlice({
   name: 'users',
   initialState: {
-    entities: [], // array of users
-    status: "idle", // loading state
+    entities: [],
+    status: "idle"
   },
   reducers: {
     userAdded(state, action) {
@@ -27,11 +32,17 @@ const usersSlice = createSlice({
     }
   },
   extraReducers: {
-    // handle async actions: pending, fulfilled, rejected (for errors)
     [fetchUsers.pending](state) {
       state.status = "loading"
     },
     [fetchUsers.fulfilled](state, action) {
+      state.entities = action.payload
+      state.status = "idle"
+    },
+    [fetchUser.pending](state) {
+      state.status = "loading"
+    },
+    [fetchUser.fulfilled](state, action) {
       state.entities = action.payload
       state.status = "idle"
     }

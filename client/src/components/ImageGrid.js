@@ -5,9 +5,9 @@ function ImageGrid({ user, photos }) {
   return (
     photos && photos.length > 0 ? (
       <ImageList
-        sx={{ width: 500, height: "fit-content" }}
+        sx={{ width: 350 }}
         cols={3}
-        rowHeight={164}
+        rowHeight={(350 / 3)}
       >
         {photos.map((photo) => (
           <ImageListItem key={photo.id} component={Link} to={`/photos/${photo.id}`}>

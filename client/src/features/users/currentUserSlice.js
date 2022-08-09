@@ -1,14 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-export const fetchUser = createAsyncThunk("users/fetchUser", (id) => {
-  // return a Promise containing the data we want
-  return fetch(`/users/${id}`)
+export const fetchCurrentUser = createAsyncThunk("users/fetchCurrentUser", () => {
+  return fetch("/me")
     .then((r) => r.json())
     .then((data) => data)
 })
 
-const userSlice = createSlice({
-  name: 'user',
+const currentUserSlice = createSlice({
+  name: 'currentUser',
   initialState: {
     entities: {},
     status: "idle"
@@ -27,16 +26,15 @@ const userSlice = createSlice({
     }
   },
   extraReducers: {
-    // handle async actions: pending, fulfilled, rejected (for errors)
-    [fetchUser.pending](state) {
+    [fetchCurrentUser.pending](state) {
       state.status = "loading"
     },
-    [fetchUser.fulfilled](state, action) {
+    [fetchCurrentUser.fulfilled](state, action) {
       state.entities = action.payload
       state.status = "idle"
     }
   }
 })
 
-export const { userAdded, userUpdated, userDeleted } = userSlice.actions
-export default userSlice.reducer
+export const { userAdded, userUpdated, userDeleted } = currentUserSlice.actions
+export default currentUserSlice.reducer

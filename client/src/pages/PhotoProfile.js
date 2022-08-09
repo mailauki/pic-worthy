@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPhotos } from '../features/photos/photosSlice';
+import { fetchPhotos, photoDeleted } from '../features/photos/photosSlice';
 import PhotoUser from '../components/PhotoUser';
 import Likes from '../components/Likes';
 import Tags from '../components/Tags';
@@ -11,11 +12,9 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 function PhotoProfile() {
   const { id } = useParams()
-
   const [photo, setPhoto] = useState({})
-  const photos = useSelector((state) => state.photos.entities)
-
   const dispatch = useDispatch()
+  const photos = useSelector((state) => state.photos.entities)
 
   useEffect(() => {
     dispatch(fetchPhotos())
@@ -70,7 +69,7 @@ function PhotoProfile() {
           {photo.tags ? <Tags tags={photo.tags} /> : <></>}
         </div>
         <div>
-          <IconButton>
+          <IconButton component={Link} to={`/photos/${photo.id}/edit`}>
             <EditIcon />
           </IconButton>
           <IconButton>

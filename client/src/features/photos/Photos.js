@@ -1,15 +1,14 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPhotos } from './photosSlice';
+import { fetchPhotos, photoDeleted } from './photosSlice';
 import Anchor from '../../components/Links';
 import { ImageList, ImageListItem, ImageListItemBar, IconButton, Chip } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 
 function Photos() {
-  const photos = useSelector((state) => state.photos.entities)
-
   const dispatch = useDispatch()
+  const photos = useSelector((state) => state.photos.entities)
 
   useEffect(() => {
     dispatch(fetchPhotos())

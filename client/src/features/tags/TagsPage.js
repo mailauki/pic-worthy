@@ -18,8 +18,12 @@ function Tags() {
     <>
       <h1>Tags</h1>
       {tags.length > 0 ? (
-        <ImageList sx={{ width: 500, height: "fit-content" }} cols={3} rowHeight={208}>
-          {tags.map(tag => (
+        <ImageList 
+          sx={{ width: "90%" }} 
+          cols={3} 
+          rowHeight="calc(30% + 44px)"
+        >
+          {tags.map((tag) => (
             <ImageListItem key={tag.id} component={Link} to={`/tags/${tag.id}`}>
               {tag.photos.length > 0 ? (
                 <img
