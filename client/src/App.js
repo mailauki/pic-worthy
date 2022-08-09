@@ -99,7 +99,7 @@ function App() {
                 <EditPhoto currentUser={currentUser} />
               </Route>
               <Route path="/photos/:id">
-                <PhotoProfile />
+                <PhotoProfile currentUser={currentUser} />
               </Route>
               <Route path="/add-photo">
                 <AddPhoto currentUser={currentUser} />

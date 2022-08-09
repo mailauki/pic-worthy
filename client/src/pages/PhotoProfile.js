@@ -6,15 +6,16 @@ import { fetchPhotos, photoDeleted } from '../features/photos/photosSlice';
 import PhotoUser from '../components/PhotoUser';
 import Likes from '../components/Likes';
 import Tags from '../components/Tags';
-import { IconButton } from '@mui/material';
+import { IconButton, Skeleton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-function PhotoProfile() {
+function PhotoProfile({ currentUser }) {
   const { id } = useParams()
   const [photo, setPhoto] = useState({})
   const dispatch = useDispatch()
   const photos = useSelector((state) => state.photos.entities)
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     dispatch(fetchPhotos())
@@ -23,23 +24,30 @@ function PhotoProfile() {
   useEffect(() => {
     fetch(`/photos/${id}`)
     .then((r) => r.json())
-    .then((data) => setPhoto(data))
+    .then((data) => {
+      setPhoto(data)
+      setLoading(false)
+    })
   }, [id])
 
   return (
     <>
-      <div 
-        style={{
-          backgroundImage: `url(${photo.image})`, 
-          backgroundSize: "cover", 
-          backgroundRepeat: "no-repeat",
-          backgroundPosition: "center center",
-          width: "100%", 
-          height: "350px"
-        }}
-      >
-        <img src={photo.image} className="photo" />
-      </div>
+      {loading ? (
+        <Skeleton variant="rectangular" width="100%" height={350} />
+      ) : (
+        <div 
+          style={{
+            backgroundImage: `url(${photo.image})`, 
+            backgroundSize: "cover", 
+            backgroundRepeat: "no-repeat",
+            backgroundPosition: "center center",
+            width: "100%", 
+            height: "350px"
+          }}
+        >
+          <img src={photo.image} className="photo" />
+        </div>
+      )}
       <div 
         style={{ 
           display: "flex", 
@@ -68,14 +76,18 @@ function PhotoProfile() {
           {photo.description ? <p>{photo.description}</p> : <></>}
           {photo.tags ? <Tags tags={photo.tags} /> : <></>}
         </div>
-        <div>
-          <IconButton component={Link} to={`/photos/${photo.id}/edit`}>
-            <EditIcon />
-          </IconButton>
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
-        </div>
+        {currentUser && photo.user && currentUser.id === photo.user.id ? (
+          <div>
+            <IconButton component={Link} to={`/photos/${photo.id}/edit`}>
+              <EditIcon />
+            </IconButton>
+            <IconButton>
+              <DeleteIcon />
+            </IconButton>
+          </div>
+        ) : (
+          <></>
+        )}
       </div>
     </>
   )
