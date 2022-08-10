@@ -1,8 +1,13 @@
 class PhotosController < ApplicationController
-  skip_before_action :authorize, only: [:index, :show]
+  skip_before_action :authorize, only: [:index, :show, :random_five]
 
   def index
     photos = Photo.all
+    render json: photos
+  end
+
+  def random_five
+    photos = Photo.all.shuffle.take(5)
     render json: photos
   end
 
