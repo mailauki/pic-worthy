@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPhotos, photoDeleted } from './photosSlice';
-import Anchor from '../../components/Links';
+import { fetchPhotos } from './photosSlice';
+import Anchor from '../../components/Anchor';
 import { ImageList, ImageListItem, ImageListItemBar, IconButton, Chip } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 
@@ -16,9 +16,12 @@ function Photos() {
 
   return (
     <>
-      <h1>Photos</h1>
+      <h3>Photos</h3>
       {photos.length > 0 ? (
-        <ImageList cols={1}>
+        <ImageList
+          sx={{ width: 350 }}
+          cols={1}
+        >
           {photos.map(photo => (
             <ImageListItem key={photo.id}>
               <img
@@ -39,7 +42,7 @@ function Photos() {
                 actionIcon={
                   <IconButton
                     sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
-                    aria-label={`info about ${photo.tags[0]}`}
+                    aria-label={`info about ${photo.id}`}
                     component={Link} to={`/photos/${photo.id}`}
                   >
                     <InfoIcon />

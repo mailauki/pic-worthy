@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchTags } from './tagsSlice';
-import Anchor from '../../components/Links';
+import Anchor from '../../components/Anchor';
 import { ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
 
 function Tags() {

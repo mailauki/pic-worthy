@@ -1,4 +1,4 @@
-import Anchor from '../components/Links';
+import Anchor from '../components/Anchor';
 import { Avatar } from '@mui/material';
 
 function PhotoUser({ user }) {
