@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import SkeletonGrid from './SkeletonGrid';
 import { ImageList, ImageListItem } from '@mui/material';
 
 function ImageQuilt({ user, photos }) {
@@ -11,7 +12,7 @@ function ImageQuilt({ user, photos }) {
     }
   }
 
-  const quiltedPhotos = photos.map( (photo, index) => {
+  const quiltedPhotos = photos.map((photo, index) => {
     if (index % 6 === 0 || index % 6 === 6 -1) {
       return {...photo, rows: 2, cols: 2}
     } 
@@ -50,7 +51,7 @@ function ImageQuilt({ user, photos }) {
         ))}
       </ImageList>
     ) : (
-      <h1>Nothing Here Yet</h1>
+      <SkeletonGrid />
     )
   )
 }

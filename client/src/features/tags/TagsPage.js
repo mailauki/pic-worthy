@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchTags } from './tagsSlice';
 import Anchor from '../../components/Anchor';
-import { ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
+import SkeletonGrid from '../../components/SkeletonGrid';
+import { ImageList, ImageListItem, ImageListItemBar, Skeleton, Grid, Box } from '@mui/material';
 
 function Tags() {
   const tags = useSelector((state) => state.tags.entities)
@@ -48,9 +49,9 @@ function Tags() {
             </ImageListItem>
           ))}
         </ImageList>
-        ) : (
-          <h1>Nothing Here Yet</h1>
-        )}
+      ) : (
+        <SkeletonGrid />
+      )}
     </>
   )
 }

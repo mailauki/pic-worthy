@@ -7,7 +7,7 @@ function UserHeader({ user }) {
         <>
           <Stack
             direction="row"
-            justifyContent="space-between"
+            justifyContent="space-evenly"
             alignItems="center"
             className="UserHeader"
             sx={{
@@ -36,27 +36,18 @@ function UserHeader({ user }) {
                 }}
               />
             )}
-            <Stack
-              direction="row"
-              justifyContent="space-evenly"
-              alignItems="center"
-              sx={{
-                width: "100%"
-              }}
-            >
-              <div className="header-box">
-                <p>Photos</p>
-                <h4>{user.photos_total}</h4>
-              </div>
-              <div className="header-box">
-                <p>Following</p>
-                <h4>{user.followees_total}</h4>
-              </div>
-              <div className="header-box">
-                <p>Followers</p>
-                <h4>{user.followers_total}</h4>
-              </div>
-            </Stack>
+            <div className="header-box">
+              <p>Photos</p>
+              <h4>{user.photos_total}</h4>
+            </div>
+            <div className="header-box">
+              <p>Following</p>
+              <h4>{user.followees_total}</h4>
+            </div>
+            <div className="header-box">
+              <p>Followers</p>
+              <h4>{user.followers_total}</h4>
+            </div>
           </Stack>
           <Stack
             direction="row"
@@ -64,7 +55,9 @@ function UserHeader({ user }) {
             alignItems="center"
             className="UserHeader"
             sx={{
-              width: "100%"
+              width: "100%",
+              paddingLeft: "15%",
+              paddingRight: "15%"
             }}
           >
             <Box>
@@ -72,16 +65,10 @@ function UserHeader({ user }) {
                 @{user.username}
               </Typography>
               <Typography variant="h6" gutterBottom>
-                {user.first_name ? user.first_name : ""}
+                {user.first_name ? user.first_name : " "}
               </Typography>
             </Box>
-            <Box sx={{
-              width: "100%",
-              display: "flex",
-              justifyContent: "center"
-            }}>
-              <Button variant="contained">Follow</Button>
-            </Box>
+            <Button variant="contained">Follow</Button>
           </Stack>
         </>
       ) : (

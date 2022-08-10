@@ -8,6 +8,7 @@ import ViewMode from '../components/ViewMode';
 import ImageGrid from '../components/ImageGrid';
 import ImageQuilt from '../components/ImageQuilt';
 import ImageFeed from '../components/ImageFeed';
+import SkeletonGrid from '../components/SkeletonGrid';
 import { Tabs, Tab, Box } from '@mui/material';
 
 function UserProfile() {
@@ -57,7 +58,7 @@ function UserProfile() {
               case "list":
                 return <ImageFeed user={user} photos={tabPhotos} />
             default:
-              return <ImageGrid user={user} photos={tabPhotos} />
+              return <SkeletonGrid />
           }
       })()}
     </>

@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+import SkeletonGrid from './SkeletonGrid';
 import { ImageList, ImageListItem } from '@mui/material';
 
 function ImageFeed({ user, photos }) {
@@ -20,7 +21,7 @@ function ImageFeed({ user, photos }) {
         ))}
       </ImageList>
     ) : (
-      <h1>Nothing Here Yet</h1>
+      <SkeletonGrid />
     )
   )
 }

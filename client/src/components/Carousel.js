@@ -10,6 +10,7 @@ function Carousel() {
   const [activeStep, setActiveStep] = useState(0)
   const maxSteps = photos.length
   const activePhoto = photos[activeStep]
+  const [slide, setSlide] = useState("slide-left")
 
   useEffect(() => {
     fetch("/feature")
@@ -29,6 +30,7 @@ function Carousel() {
     else {
       setActiveStep((prevActiveStep) => prevActiveStep + 1)
     }
+    setSlide("slide-left")
   }
 
   function handleBack() {
@@ -38,6 +40,7 @@ function Carousel() {
     else {
       setActiveStep((prevActiveStep) => prevActiveStep - 1)
     }
+    setSlide("slide-right")
   }
 
   return (
@@ -69,57 +72,58 @@ function Carousel() {
           <KeyboardArrowRight />
         </IconButton>
       </div>
-      {activePhoto ? (
-        // <img src={photos[activeStep].image} />
-        <ImageList 
-          sx={{ 
-            width: "100%", 
-            height: 350, 
-            // marginTop: "-35px", 
-            position: "relative", 
-            top: "-56px" 
-          }}
-          cols={1}
-          rowHeight={350}
-        >
-          <ImageListItem 
-            key={activePhoto.id}
-            sx={{ width: "100%", height: 350 }} 
-            component={Link} to={`/photos/${activePhoto.id}`}
+        {activePhoto ? (
+          <ImageList 
+            sx={{ 
+              width: "100%", 
+              height: 350, 
+              // marginTop: "-35px", 
+              position: "relative", 
+              top: "-56px" 
+            }}
+            cols={1}
+            rowHeight={350}
           >
-            <img
-              src={`${activePhoto.image}?w=248&fit=crop&auto=format`}
-              srcSet={`${activePhoto.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
-              alt={activePhoto.description}
-              loading="lazy"
-              style={{ width: "100%", height: 350 }}
-            />
-            <ImageListItemBar
-              title={<Anchor name={`@${activePhoto.user.username}`} to={`/users/${activePhoto.user.id}`} />}
-              actionIcon={
-                <MobileStepper
-                  variant="dots"
-                  steps={maxSteps}
-                  position="static"
-                  activeStep={activeStep}
-                  sx={{ 
-                    backgroundColor: "rgba(0,0,0,0)"
-                  }}
-                />
-              }
-            />
-          </ImageListItem>
-        </ImageList>
-      ) : (
-        <Skeleton 
-          variant="rectangular" 
-          width="100%" height={350} 
-          sx={{ 
-            position: "relative", 
-            top: "-56px" 
-          }}
-        />
-      )}
+            <ImageListItem 
+              key={activePhoto.id}
+              sx={{ width: "100%", height: 350 }} 
+              component={Link} to={`/photos/${activePhoto.id}`}
+            >
+              <img
+                src={`${activePhoto.image}?w=350&fit=crop&auto=format`}
+                srcSet={`${activePhoto.image}?w=350&fit=crop&auto=format&dpr=2 2x`}
+                alt={activePhoto.description}
+                loading="lazy"
+                style={{ width: "100%", height: 350 }}
+                className={slide}
+              />
+              <ImageListItemBar
+                title={<Anchor name={`@${activePhoto.user.username}`} to={`/users/${activePhoto.user.id}`} />}
+                actionIcon={
+                  <MobileStepper
+                    variant="dots"
+                    steps={maxSteps}
+                    position="static"
+                    activeStep={activeStep}
+                    sx={{ 
+                      backgroundColor: "rgba(0,0,0,0)"
+                    }}
+                  />
+                }
+              />
+            </ImageListItem>
+          </ImageList>
+        ) : (
+          <Skeleton 
+            variant="rectangular" 
+            width="100%" height={350} 
+            animation="wave"
+            sx={{ 
+              position: "relative", 
+              top: "-56px" 
+            }}
+          />
+        )}
     </>
   )
 }
