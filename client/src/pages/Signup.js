@@ -2,14 +2,13 @@ import { useState } from 'react';
 import { useHistory } from "react-router";
 import { Link } from 'react-router-dom';
 import FormInput from '../components/FormInput';
+import Anchor from '../components/Anchor';
 import { Button } from '@mui/material';
 
 function Signup({ onLogin }) {
   const [formData, setFormData] = useState({username: "", password: "", password_confirmation: ""})
   const [errors, setErrors] = useState([])
   const history = useHistory()
-
-  console.log(formData)
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -50,7 +49,7 @@ function Signup({ onLogin }) {
           Signup
         </Button>
       </div>
-      <Link to="/login">Already have an account.</Link>
+      <Anchor name="Already have an account?" to="/login" />
     </>
   )
 }

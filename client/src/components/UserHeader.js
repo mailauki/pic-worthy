@@ -61,10 +61,10 @@ function UserHeader({ user }) {
             }}
           >
             <Box>
-              <Typography variant="h6" color="text.secondary" gutterBottom>
+              <Typography variant="subtitle1" color="text.secondary" gutterBottom>
                 @{user.username}
               </Typography>
-              <Typography variant="h6" gutterBottom>
+              <Typography variant="subtitle1" gutterBottom>
                 {user.first_name ? user.first_name : " "}
               </Typography>
             </Box>

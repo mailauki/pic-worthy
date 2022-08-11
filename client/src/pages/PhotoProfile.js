@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPhotos, photoDeleted } from '../features/photos/photosSlice';
+import { fetchPhoto, photoDeleted } from '../features/photos/photosSlice';
 import PhotoUser from '../components/PhotoUser';
 import Likes from '../components/Likes';
 import Tags from '../components/Tags';
@@ -12,27 +12,29 @@ import DeleteIcon from '@mui/icons-material/Delete';
 
 function PhotoProfile({ currentUser }) {
   const { id } = useParams()
-  const [photo, setPhoto] = useState({})
+  // const [photo, setPhoto] = useState({})
+  const photo = useSelector((state) => state.photos.entities)
   const dispatch = useDispatch()
-  const [loading, setLoading] = useState(true)
+  // const [loading, setLoading] = useState(true)
+  const loading = useSelector((state) => state.photos.status)
+
+  // useEffect(() => {
+  //   fetch(`/photos/${id}`)
+  //   .then((r) => r.json())
+  //   .then((data) => {
+  //     setPhoto(data)
+  //     setLoading(false)
+  //   })
+  // }, [id])
 
   useEffect(() => {
-    dispatch(fetchPhotos())
+    dispatch(fetchPhoto(id))
   }, [dispatch])
-
-  useEffect(() => {
-    fetch(`/photos/${id}`)
-    .then((r) => r.json())
-    .then((data) => {
-      setPhoto(data)
-      setLoading(false)
-    })
-  }, [id])
 
   return (
     <>
-      {loading ? (
-        <Skeleton variant="rectangular" width="100%" height={350} />
+      {loading === "loading" ? (
+        <Skeleton variant="rectangular" animation="wave" width="100%" height={350} />
       ) : (
         <div 
           style={{
@@ -59,7 +61,7 @@ function PhotoProfile({ currentUser }) {
         }}
       >
         <PhotoUser user={photo.user} />
-        <Likes likes_total={photo.likes_total} likes={photo.likes} />
+        <Likes likes_total={photo.likes_total} likes={photo.likes} currentUser={currentUser} id={photo.id} photo={photo} />
       </div>
 
       <div

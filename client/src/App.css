@@ -97,16 +97,6 @@ a {
   object-fit: contain;
 }
 
-.fade {
-  animation-name: fade;
-  animation-duration: 1.5s;
-}
-
-@keyframes fade {
-  from {opacity: 0.4}
-  to {opacity: 1}
-}
-
 .slide-left {
   animation-name: slide-left;
   animation-duration: 1.5s;

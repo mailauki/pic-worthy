@@ -19,18 +19,25 @@ const photosSlice = createSlice({
     status: "idle"
   },
   reducers: {
-    userAdded(state, action) {
+    photoAdded(state, action) {
       state.entities.push(action.payload)
     },
-    userUpdated(state, action) {
+    photoUpdated(state, action) {
       const photo = state.entities.find((photo) => photo.id === action.payload.id)
       photo.image = action.payload.image
       photo.description = action.payload.description
     },
-    userDeleted(state, action) {
-      const photo = state.entities.find((photo) => photo.id == action.payload.id)
+    photoDeleted(state, action) {
       const index = state.entities.findIndex((photo) => photo.id === action.payload)
       state.entities.splice(index, 1)
+    },
+    likeAdded(state, action) {
+      const photo = state.entities
+      photo.likes_total = photo.likes_total + 1
+    },
+    likeDeleted(state, action) {
+      const photo = state.entities
+      photo.likes_total = photo.likes_total - 1
     }
   },
   extraReducers: {
@@ -51,5 +58,5 @@ const photosSlice = createSlice({
   }
 })
 
-export const { photoAdded, photoUpdated, photoDeleted } = photosSlice.actions
+export const { photoAdded, photoUpdated, photoDeleted, likeAdded, likeDeleted } = photosSlice.actions
 export default photosSlice.reducer

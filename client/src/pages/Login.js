@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useHistory } from "react-router";
 import { Link } from 'react-router-dom';
 import FormInput from '../components/FormInput';
+import Anchor from '../components/Anchor';
 import { Button } from '@mui/material';
 
 function Login({ onLogin }) {
@@ -47,7 +48,7 @@ function Login({ onLogin }) {
           Login
         </Button>
       </div>
-      <Link to="/signup">Don't have an account yet.</Link>
+      <Anchor name="Don't have an account yet?" to="/signup" />
     </>
   )
 }
