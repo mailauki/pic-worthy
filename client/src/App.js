@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
 import './App.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchCurrentUser } from './features/users/currentUserSlice';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Home from './pages/Home';
@@ -62,26 +64,33 @@ const darkTheme = createTheme({
 })
 
 function App() {
-  const [currentUser, setCurrentUser] = useState(null)
+  // const [currentUser, setCurrentUser] = useState(null)
   const [mobileView, setMoblieView] = useState(window.innerWidth < 600)
   let pathname = useLocation().pathname
   const [darkModeChecked, setDarkModeChecked] = useState([])
+  const currentUser = useSelector((state) => state.currentUser.entities)
+  const loading = useSelector((state) => state.currentUser.status)
+  const dispatch = useDispatch()
 
   function updateMedia() {
     setMoblieView(window.innerWidth < 600)
   }
 
   useEffect(() => {
-    fetch("/me")
-      .then((r) => {
-        if (r.ok) {
-          r.json().then((user) => setCurrentUser(user))
-        }
-      })
+    // fetch("/me")
+    //   .then((r) => {
+    //     if (r.ok) {
+    //       r.json().then((user) => setCurrentUser(user))
+    //     }
+    //   })
 
     window.addEventListener("resize", updateMedia)
     return () => window.removeEventListener("resize", updateMedia)
   }, [])
+
+  useEffect(() => {
+    dispatch(fetchCurrentUser())
+  }, [dispatch])
 
   return (
     <ThemeProvider theme={darkModeChecked.includes('dark') ? darkTheme : theme}>
@@ -96,13 +105,13 @@ function App() {
           <div className="Content">
             <Switch>
               <Route path="/signup">
-                <Signup onLogin={setCurrentUser} />
+                <Signup onLogin={() => console.log("logout")} />
               </Route>
               <Route path="/login">
-                <Login onLogin={setCurrentUser} />
+                <Login onLogin={() => console.log("logout")} />
               </Route>
               <Route path="/menu">
-                <Menu currentUser={currentUser} onLogout={setCurrentUser} checked={darkModeChecked} setChecked={setDarkModeChecked} />
+                <Menu currentUser={currentUser} onLogout={() => console.log("logout")} checked={darkModeChecked} setChecked={setDarkModeChecked} />
               </Route>
               <Route path="/users/:id">
                 <UserProfile pathname={pathname} />

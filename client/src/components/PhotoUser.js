@@ -26,7 +26,6 @@ function PhotoUser({ user }) {
               height: 60
             }}
           />
-          <p></p>
         </div>
       )}
     </>

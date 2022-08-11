@@ -1,22 +1,29 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPhoto, likeAdded, likeDeleted } from '../features/photos/photosSlice';
+import { likeAdded, likeDeleted } from '../features/photos/photosSlice';
 import { IconButton, Typography } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
-function Likes({currentUser }) {
+function Likes() {
+  const currentUser = useSelector((state) => state.currentUser.entities)
   const photo = useSelector((state) => state.photos.entities)
   const { id, likes_total } = photo
   const dispatch = useDispatch()
 
-  const findLike = currentUser ? currentUser.liked_photos.find((photo) => photo.id === id) : null
-  const foundLike = findLike ? true : false
-  const [liked, setLiked] = useState(foundLike)
+  const [foundLike, setFoundLike] = useState(null)
+  const [likeData, setLikeData] = useState({})
+  const [liked, setLiked] = useState(false)
+
+  useEffect(() => {
+    currentUser.liked_photos ? setFoundLike(currentUser.liked_photos.find((photo) => photo.id === id)) : setFoundLike(null)
+
+    foundLike ? setLiked(true) : setLiked(false)
+
+    currentUser ? setLikeData({user_id: currentUser.id, photo_id: id}) : setLikeData({})
+  }, [currentUser, foundLike])
 
   function handleLike(event) {
-    const likeData = currentUser ? {user_id: currentUser.id, photo_id: id} : null
-    
     !liked ? (
       fetch("/likes", {
         method: "POST",

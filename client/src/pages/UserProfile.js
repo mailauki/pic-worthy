@@ -13,8 +13,9 @@ import { Tabs, Tab, Box } from '@mui/material';
 
 function UserProfile() {
   const { id } = useParams()
-  const dispatch = useDispatch()
   const user = useSelector((state) => state.users.entities)
+  const userStatus = useSelector((state) => state.users.status)
+  const dispatch = useDispatch()
 
   useEffect(() => {
     dispatch(fetchUser(id))
@@ -49,7 +50,10 @@ function UserProfile() {
       </Box>
 
       <ViewMode active={activeViewMode} handleViewMode={handleViewMode} />
-      {(() => {
+      {userStatus === "loading" ? (
+        <SkeletonGrid />
+      ) : (
+        (() => {
           switch(activeViewMode) {
             case "grid": 
               return <ImageGrid user={user} photos={tabPhotos} />
@@ -60,7 +64,8 @@ function UserProfile() {
             default:
               return <SkeletonGrid />
           }
-      })()}
+        })()
+      )}
     </>
   )
 }

@@ -1,27 +1,26 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchFeaturedPhotos } from '../features/photos/featuredPhotosSlice';
 import Anchor from './Anchor';
 import { MobileStepper, ImageList, ImageListItem, ImageListItemBar, IconButton, Skeleton } from '@mui/material';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
 function Carousel() {
-  const [photos, setPhotos] = useState([])
+  const featuredPhotos = useSelector((state) => state.featuredPhotos.entities)
+  const featuredStatus = useSelector((state) => state.featuredPhotos.status)
+  const dispatch = useDispatch()
+
   const [activeStep, setActiveStep] = useState(0)
-  const maxSteps = photos.length
-  const activePhoto = photos[activeStep]
+  const maxSteps = featuredPhotos.length
+  const activePhoto = featuredPhotos[activeStep]
+
   const [slide, setSlide] = useState("slide-left")
 
   useEffect(() => {
-    fetch("/feature")
-    .then((r) => {
-      if (r.ok) {
-        r.json().then((data) => {
-          setPhotos(data)
-        })
-      }
-    })
-  }, [])
+    dispatch(fetchFeaturedPhotos())
+  }, [dispatch])
 
   function handleNext() {
     if(activeStep === maxSteps - 1) {
@@ -72,12 +71,11 @@ function Carousel() {
           <KeyboardArrowRight />
         </IconButton>
       </div>
-        {activePhoto ? (
+        {featuredStatus === "idle" && activePhoto ? (
           <ImageList 
             sx={{ 
               width: "100%", 
-              height: 350, 
-              // marginTop: "-35px", 
+              height: 350,  
               position: "relative", 
               top: "-56px" 
             }}

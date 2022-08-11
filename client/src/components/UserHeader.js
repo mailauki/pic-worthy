@@ -1,6 +1,14 @@
-import { Button, Avatar, Box, Stack, Typography } from '@mui/material';
+import { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import FollowBtn from './FollowBtn.js';
+import { Avatar, Box, Stack, Typography, Skeleton } from '@mui/material';
 
-function UserHeader({ user }) {
+function UserHeader() {
+  const user = useSelector((state) => state.users.entities)
+  const currentUser = useSelector((state) => state.currentUser.entities)
+  const userStatus = useSelector((state) => state.users.status)
+  const dispatch = useDispatch()
+
   return (
     <>
       {user !== {} ? (
@@ -15,7 +23,7 @@ function UserHeader({ user }) {
               marginTop: "20px"
             }}
           >
-            {user.username ? (
+            {userStatus === "idle" && user.username ? (
               <Avatar 
                 alt={user.username} 
                 src={user.avatar} 
@@ -27,27 +35,53 @@ function UserHeader({ user }) {
                 {user.username[0]}
               </Avatar>
             ) : (
-              <Avatar 
-                alt={user.username} 
-                src={user.avatar} 
+              <Avatar  
                 sx={{ 
                   width: 60, 
                   height: 60
                 }}
               />
             )}
-            <div className="header-box">
-              <p>Photos</p>
-              <h4>{user.photos_total}</h4>
-            </div>
-            <div className="header-box">
-              <p>Following</p>
-              <h4>{user.followees_total}</h4>
-            </div>
-            <div className="header-box">
-              <p>Followers</p>
-              <h4>{user.followers_total}</h4>
-            </div>
+            {userStatus === "idle" ? (
+              <>
+                <div className="header-box">
+                  <p>Photos</p>
+                  <h4>{user.photos_total}</h4>
+                </div>
+                <div className="header-box">
+                  <p>Following</p>
+                  <h4>{user.followees_total}</h4>
+                </div>
+                <div className="header-box">
+                  <p>Followers</p>
+                  <h4>{user.followers_total}</h4>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="header-box">
+                  <Skeleton 
+                    animation="wave" 
+                    variant="rectangular" 
+                    width="60px" height="60px"
+                  />
+                </div>
+                <div className="header-box">
+                  <Skeleton 
+                    animation="wave" 
+                    variant="rectangular" 
+                    width="60px" height="60px"
+                  />
+                </div>
+                <div className="header-box">
+                  <Skeleton 
+                    animation="wave" 
+                    variant="rectangular" 
+                    width="60px" height="60px"
+                  />
+                </div>
+              </>
+            )}
           </Stack>
           <Stack
             direction="row"
@@ -60,15 +94,30 @@ function UserHeader({ user }) {
               paddingRight: "15%"
             }}
           >
-            <Box>
-              <Typography variant="subtitle1" color="text.secondary" gutterBottom>
-                @{user.username}
-              </Typography>
-              <Typography variant="subtitle1" gutterBottom>
-                {user.first_name ? user.first_name : " "}
-              </Typography>
-            </Box>
-            <Button variant="contained">Follow</Button>
+            {userStatus === "idle" ? (
+              <Box>
+                <Typography variant="subtitle1" color="text.secondary" gutterBottom>
+                  @{user.username}
+                </Typography>
+                <Typography variant="subtitle1" gutterBottom>
+                  {user.first_name ? user.first_name : " "}
+                </Typography>
+              </Box>
+            ) : (
+              <Box>
+                <Typography variant="subtitle1" color="text.secondary" gutterBottom>
+                  <Skeleton animation="wave" width={(350 /3)} />
+                </Typography>
+                <Typography variant="subtitle1" gutterBottom>
+                  <Skeleton animation="wave" width={(350 /3)} />
+                </Typography>
+              </Box>
+            )}
+            {userStatus === "loading" || currentUser.id === user.id ? (
+              <></>
+            ) : (
+              <FollowBtn />
+            )}
           </Stack>
         </>
       ) : (

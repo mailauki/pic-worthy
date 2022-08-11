@@ -29,6 +29,14 @@ const usersSlice = createSlice({
     userDeleted(state, action) {
       const user = state.entities.find((user) => user.id == action.payload.id)
       user.url = action.payload.url
+    },
+    followAdded(state, action) {
+      const user = state.entities
+      user.followers_total = user.followers_total + 1
+    },
+    followDeleted(state, action) {
+      const user = state.entities
+      user.followers_total = user.followers_total - 1
     }
   },
   extraReducers: {
@@ -49,5 +57,5 @@ const usersSlice = createSlice({
   }
 })
 
-export const { userAdded, userUpdated, userDeleted } = usersSlice.actions
+export const { userAdded, userUpdated, userDeleted, followAdded, followDeleted } = usersSlice.actions
 export default usersSlice.reducer

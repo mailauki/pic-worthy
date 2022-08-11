@@ -4,28 +4,18 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPhoto, photoDeleted } from '../features/photos/photosSlice';
 import PhotoUser from '../components/PhotoUser';
-import Likes from '../components/Likes';
+import LikeBtn from '../components/LikeBtn';
 import Tags from '../components/Tags';
 import { IconButton, Skeleton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-function PhotoProfile({ currentUser }) {
+function PhotoProfile() {
   const { id } = useParams()
-  // const [photo, setPhoto] = useState({})
   const photo = useSelector((state) => state.photos.entities)
+  const currentUser = useSelector((state) => state.currentUser.entities)
+  const photoStatus = useSelector((state) => state.photos.status)
   const dispatch = useDispatch()
-  // const [loading, setLoading] = useState(true)
-  const loading = useSelector((state) => state.photos.status)
-
-  // useEffect(() => {
-  //   fetch(`/photos/${id}`)
-  //   .then((r) => r.json())
-  //   .then((data) => {
-  //     setPhoto(data)
-  //     setLoading(false)
-  //   })
-  // }, [id])
 
   useEffect(() => {
     dispatch(fetchPhoto(id))
@@ -33,7 +23,7 @@ function PhotoProfile({ currentUser }) {
 
   return (
     <>
-      {loading === "loading" ? (
+      {photoStatus === "loading" ? (
         <Skeleton variant="rectangular" animation="wave" width="100%" height={350} />
       ) : (
         <div 
@@ -61,7 +51,7 @@ function PhotoProfile({ currentUser }) {
         }}
       >
         <PhotoUser user={photo.user} />
-        <Likes likes_total={photo.likes_total} likes={photo.likes} currentUser={currentUser} id={photo.id} photo={photo} />
+        <LikeBtn />
       </div>
 
       <div

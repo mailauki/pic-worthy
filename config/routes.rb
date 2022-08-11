@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   post '/login', to: 'session#create'
   delete '/logout', to: 'session#destroy'
   
-  get "/feature", to: "photos#random_five"
+  get "/featured", to: "photos#random_five"
   
   get '*path',
       to: 'fallback#index',
