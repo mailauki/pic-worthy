@@ -11,7 +11,7 @@ import ImageFeed from '../components/ImageFeed';
 import SkeletonGrid from '../components/SkeletonGrid';
 import { Tabs, Tab, Box } from '@mui/material';
 
-function UserProfile() {
+function UserProfile({ currentUser }) {
   const { id } = useParams()
   const user = useSelector((state) => state.users.entities)
   const userStatus = useSelector((state) => state.users.status)
@@ -35,7 +35,7 @@ function UserProfile() {
 
   return (
     <>
-      <UserHeader user={user} />
+      <UserHeader user={user} currentUser={currentUser} />
 
       <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%' }}>
         <Tabs 

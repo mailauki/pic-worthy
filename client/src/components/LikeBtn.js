@@ -5,8 +5,7 @@ import { IconButton, Typography } from '@mui/material';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
-function Likes() {
-  const currentUser = useSelector((state) => state.currentUser.entities)
+function LikeBtn({ currentUser }) {
   const photo = useSelector((state) => state.photos.entities)
   const { id, likes_total } = photo
   const dispatch = useDispatch()
@@ -16,7 +15,7 @@ function Likes() {
   const [liked, setLiked] = useState(false)
 
   useEffect(() => {
-    currentUser.liked_photos ? setFoundLike(currentUser.liked_photos.find((photo) => photo.id === id)) : setFoundLike(null)
+    currentUser && currentUser.liked_photos ? setFoundLike(currentUser.liked_photos.find((photo) => photo.id === id)) : setFoundLike(null)
 
     foundLike ? setLiked(true) : setLiked(false)
 
@@ -68,4 +67,4 @@ function Likes() {
   )
 }
 
-export default Likes;
+export default LikeBtn;

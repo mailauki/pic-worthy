@@ -1,17 +1,15 @@
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import FollowBtn from './FollowBtn.js';
 import { Avatar, Box, Stack, Typography, Skeleton } from '@mui/material';
 
-function UserHeader() {
+function UserHeader({ currentUser }) {
   const user = useSelector((state) => state.users.entities)
-  const currentUser = useSelector((state) => state.currentUser.entities)
   const userStatus = useSelector((state) => state.users.status)
-  const dispatch = useDispatch()
 
   return (
     <>
-      {user !== {} ? (
+      {user ? (
         <>
           <Stack
             direction="row"
@@ -32,7 +30,7 @@ function UserHeader() {
                   height: 60
                 }}
               >
-                {user.username[0]}
+                {user.username ? user.username[0].toUpperCase() : ""}
               </Avatar>
             ) : (
               <Avatar  
@@ -42,44 +40,62 @@ function UserHeader() {
                 }}
               />
             )}
-            {userStatus === "idle" ? (
+            {userStatus === "idle" && user ? (
               <>
-                <div className="header-box">
-                  <p>Photos</p>
-                  <h4>{user.photos_total}</h4>
-                </div>
-                <div className="header-box">
-                  <p>Following</p>
-                  <h4>{user.followees_total}</h4>
-                </div>
-                <div className="header-box">
-                  <p>Followers</p>
-                  <h4>{user.followers_total}</h4>
-                </div>
+                <Box className="header-box">
+                  <Typography variant="subtitle1" color="text.secondary">
+                    Photos
+                  </Typography>
+                  <Typography variant="h6" color="text.primary">
+                    {user.photos_total}
+                  </Typography>
+                </Box>
+                <Box 
+                  className="header-box" 
+                  component={Link} to={`/users/${user.id}/followees`}
+                >
+                  <Typography variant="subtitle1" color="text.secondary">
+                    Following
+                  </Typography>
+                  <Typography variant="h6" color="text.primary">
+                    {user.followees_total}
+                  </Typography>
+                </Box>
+                <Box 
+                  className="header-box" 
+                  component={Link} to={`/users/${user.id}/followers`}
+                >
+                  <Typography variant="subtitle1" color="text.secondary">
+                    Followers
+                  </Typography>
+                  <Typography variant="h6" color="text.primary">
+                    {user.followers_total}
+                  </Typography>
+                </Box>
               </>
             ) : (
               <>
-                <div className="header-box">
+                <Box className="header-box">
                   <Skeleton 
                     animation="wave" 
                     variant="rectangular" 
                     width="60px" height="60px"
                   />
-                </div>
-                <div className="header-box">
+                </Box>
+                <Box className="header-box">
                   <Skeleton 
                     animation="wave" 
                     variant="rectangular" 
                     width="60px" height="60px"
                   />
-                </div>
-                <div className="header-box">
+                </Box>
+                <Box className="header-box">
                   <Skeleton 
                     animation="wave" 
                     variant="rectangular" 
                     width="60px" height="60px"
                   />
-                </div>
+                </Box>
               </>
             )}
           </Stack>
@@ -94,7 +110,7 @@ function UserHeader() {
               paddingRight: "15%"
             }}
           >
-            {userStatus === "idle" ? (
+            {userStatus === "idle" && user ? (
               <Box>
                 <Typography variant="subtitle1" color="text.secondary" gutterBottom>
                   @{user.username}
@@ -113,10 +129,10 @@ function UserHeader() {
                 </Typography>
               </Box>
             )}
-            {userStatus === "loading" || currentUser.id === user.id ? (
+            {userStatus === "loading" || currentUser && currentUser.id === user.id ? (
               <></>
             ) : (
-              <FollowBtn />
+              <FollowBtn currentUser={currentUser} />
             )}
           </Stack>
         </>

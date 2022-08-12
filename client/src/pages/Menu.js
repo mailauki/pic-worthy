@@ -1,6 +1,4 @@
-import { useEffect } from 'react';
 import { useHistory } from "react-router";
-import { useParams } from 'react-router-dom';
 import { Button, Avatar, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Switch, Box } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -17,12 +15,12 @@ function Menu({ currentUser, onLogout, checked, setChecked }) {
     fetch("/logout", {
       method: "DELETE"
     })
-      .then((r) => {
-        if(r.ok) {
-          onLogout(null)
-          history.push("/")
-        }
-      })
+    .then((r) => {
+      if(r.ok) {
+        onLogout(null)
+        history.push("/")
+      }
+    })
   }
 
   const handleToggle = (value) => () => {
@@ -82,6 +80,18 @@ function Menu({ currentUser, onLogout, checked, setChecked }) {
             }}
           >
             {currentUser.first_name ? <h3>Hello, {currentUser.first_name}</h3> : <h3>Hello</h3>}
+            {!currentUser ? (
+              <Avatar 
+                sx={{ 
+                  width: 60, 
+                  height: 60, 
+                  postition: "absolute", 
+                  top: 30, 
+                  right: 20,
+                  zIndex: 1
+                }}
+              />
+            ) : (
               <Avatar 
                 alt={currentUser.username} 
                 src={currentUser.avatar} 
@@ -94,8 +104,9 @@ function Menu({ currentUser, onLogout, checked, setChecked }) {
                   zIndex: 1
                 }}
               >
-                {currentUser.username[0]}
+                {currentUser.username ? currentUser.username[0].toUpperCase() : ""}
               </Avatar>
+            )}
           </Box>
           <Button 
             variant="contained" 

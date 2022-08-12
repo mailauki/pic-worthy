@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPhoto, photoDeleted } from '../features/photos/photosSlice';
+import User from '../features/users/User';
 import PhotoUser from '../components/PhotoUser';
 import LikeBtn from '../components/LikeBtn';
 import Tags from '../components/Tags';
@@ -10,10 +11,9 @@ import { IconButton, Skeleton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-function PhotoProfile() {
+function PhotoProfile({ currentUser }) {
   const { id } = useParams()
   const photo = useSelector((state) => state.photos.entities)
-  const currentUser = useSelector((state) => state.currentUser.entities)
   const photoStatus = useSelector((state) => state.photos.status)
   const dispatch = useDispatch()
 
@@ -50,8 +50,8 @@ function PhotoProfile() {
           paddingRight: "20px",
         }}
       >
-        <PhotoUser user={photo.user} />
-        <LikeBtn />
+        <User user={photo.user} />
+        <LikeBtn currentUser={currentUser} />
       </div>
 
       <div

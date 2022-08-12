@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Switch, Route, useLocation } from 'react-router-dom';
 import './App.css';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchCurrentUser } from './features/users/currentUserSlice';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Home from './pages/Home';
@@ -11,6 +9,7 @@ import Login from './pages/Login';
 import Menu from './pages/Menu';
 import AddPhoto from './pages/AddPhoto';
 import UserProfile from './pages/UserProfile';
+import Follows from './pages/Follows';
 import PhotoProfile from './pages/PhotoProfile';
 import EditPhoto from './pages/EditPhoto';
 import EditAccount from './pages/EditAccount';
@@ -57,6 +56,7 @@ const darkTheme = createTheme({
       darker: '#b28704'
     },
     neutral: {
+      main: '#64748B',
       lighter: '#333',
       darker: '#000'
     }
@@ -64,33 +64,26 @@ const darkTheme = createTheme({
 })
 
 function App() {
-  // const [currentUser, setCurrentUser] = useState(null)
+  const [currentUser, setCurrentUser] = useState(null)
   const [mobileView, setMoblieView] = useState(window.innerWidth < 600)
   let pathname = useLocation().pathname
   const [darkModeChecked, setDarkModeChecked] = useState([])
-  const currentUser = useSelector((state) => state.currentUser.entities)
-  const loading = useSelector((state) => state.currentUser.status)
-  const dispatch = useDispatch()
 
   function updateMedia() {
     setMoblieView(window.innerWidth < 600)
   }
 
   useEffect(() => {
-    // fetch("/me")
-    //   .then((r) => {
-    //     if (r.ok) {
-    //       r.json().then((user) => setCurrentUser(user))
-    //     }
-    //   })
+    fetch("/me")
+      .then((r) => {
+        if (r.ok) {
+          r.json().then((user) => setCurrentUser(user))
+        }
+      })
 
     window.addEventListener("resize", updateMedia)
     return () => window.removeEventListener("resize", updateMedia)
   }, [])
-
-  useEffect(() => {
-    dispatch(fetchCurrentUser())
-  }, [dispatch])
 
   return (
     <ThemeProvider theme={darkModeChecked.includes('dark') ? darkTheme : theme}>
@@ -105,16 +98,30 @@ function App() {
           <div className="Content">
             <Switch>
               <Route path="/signup">
-                <Signup onLogin={() => console.log("logout")} />
+                <Signup onLogin={setCurrentUser} />
               </Route>
               <Route path="/login">
-                <Login onLogin={() => console.log("logout")} />
+                <Login onLogin={setCurrentUser} />
               </Route>
               <Route path="/menu">
-                <Menu currentUser={currentUser} onLogout={() => console.log("logout")} checked={darkModeChecked} setChecked={setDarkModeChecked} />
+                <Menu 
+                  currentUser={currentUser} 
+                  onLogout={setCurrentUser} 
+                  checked={darkModeChecked} 
+                  setChecked={setDarkModeChecked} 
+                />
+              </Route>
+              <Route path="/users/:id/followers">
+                <Follows pathname={pathname} />
+              </Route>
+              <Route path="/users/:id/followees">
+                <Follows pathname={pathname} />
               </Route>
               <Route path="/users/:id">
-                <UserProfile pathname={pathname} />
+                <UserProfile 
+                  pathname={pathname} 
+                  currentUser={currentUser} 
+                />
               </Route>
               <Route path="/photos/:id/edit">
                 <EditPhoto currentUser={currentUser} />

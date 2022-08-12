@@ -1,4 +1,25 @@
 class FriendshipsController < ApplicationController
+  skip_before_action :authorize, only: :index
+
+  def followers
+    if params[:user_id]
+      user = User.find(params[:user_id])
+      followers = user.followers
+    else
+      followers = Friendship.all
+    end
+    render json: followers
+  end
+
+  def followees
+    if params[:user_id]
+      user = User.find(params[:user_id])
+      followees = user.followees
+    else
+      followees = Friendship.all
+    end
+    render json: followees
+  end
 
   def create
     friendship = Friendship.create!(friendship_params)

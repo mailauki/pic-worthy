@@ -3,9 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { followAdded, followDeleted } from '../features/users/usersSlice';
 import { Button } from '@mui/material';
 
-function FollowBtn() {
+function FollowBtn({ currentUser }) {
   const user = useSelector((state) => state.users.entities)
-  const currentUser = useSelector((state) => state.currentUser.entities)
   const dispatch = useDispatch()
 
   const [foundFollow, setFoundFollow] = useState(null)
@@ -13,7 +12,7 @@ function FollowBtn() {
   const [followed, setFollowed] = useState(false)
 
   useEffect(() => {
-    currentUser.followees ? setFoundFollow(currentUser.followees.find(followee => followee.id === user.id)) : setFoundFollow(null)
+    currentUser && currentUser.followees ? setFoundFollow(currentUser.followees.find(followee => followee.id === user.id)) : setFoundFollow(null)
 
     foundFollow ? setFollowed(true) : setFollowed(false)
 
@@ -56,7 +55,13 @@ function FollowBtn() {
   }
 
   return (
-    <Button variant="contained" onClick={handleFollow}>{followed ? "Unfollow" : "Follow"}</Button>
+    <Button 
+      variant="contained" 
+      onClick={handleFollow} 
+      color={followed ? "neutral" : "primary"}
+    >
+      {followed ? "Unfollow" : "Follow"}
+    </Button>
   )
 }
 
