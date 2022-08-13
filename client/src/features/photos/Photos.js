@@ -36,16 +36,22 @@ function Photos() {
                   <Chip 
                     label={tag.name} 
                     component={Link} to={`/tags/${tag.id}`}
-                    sx={{backgroundColor: 'rgba(255, 255, 255, 0.54)', color: 'primary.contrastText', cursor: "pointer"}} 
+                    sx={{
+                      backgroundColor: 'rgba(255, 255, 255, 0.54)', 
+                      color: 'primary.contrastText', 
+                      cursor: "pointer",
+                      mr: 1
+                    }} 
                   />
                 )}
                 actionIcon={
                   <IconButton
-                    sx={{ color: 'rgba(255, 255, 255, 0.54)' }}
+                    sx={{color: 'rgba(255, 255, 255, 0.54)', mr: 1}}
                     aria-label={`info about ${photo.id}`}
                     component={Link} to={`/photos/${photo.id}`}
+                    size="large"
                   >
-                    <InfoIcon />
+                    <InfoIcon fontSize="inherit" />
                   </IconButton>
                 }
               />

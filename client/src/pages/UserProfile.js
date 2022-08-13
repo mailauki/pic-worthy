@@ -23,7 +23,7 @@ function UserProfile({ currentUser }) {
 
   const [activeViewMode, setActiveViewMode] = useState("grid")
   const [tab, setTab] = useState("photos")
-  let tabPhotos = tab === "likes" ? user.liked_photos : user.photos
+  const tabPhotos = tab === "likes" ? user.liked_photos : user.photos
 
   function handleViewMode(event, newValue) {
     setActiveViewMode(newValue)

@@ -11,7 +11,8 @@ function User({ user }) {
             src={user.avatar} 
             sx={{ 
               width: 60, 
-              height: 60
+              height: 60, 
+              mr: 2
             }}
           >
             {user.username ? user.username[0].toUpperCase() : ""}

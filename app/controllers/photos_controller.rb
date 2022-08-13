@@ -2,7 +2,7 @@ class PhotosController < ApplicationController
   skip_before_action :authorize, only: [:index, :show, :random_five]
 
   def index
-    photos = Photo.all
+    photos = Photo.all.reverse()
     render json: photos
   end
 

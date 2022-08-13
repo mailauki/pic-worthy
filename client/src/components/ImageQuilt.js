@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import SkeletonGrid from './SkeletonGrid';
-import { ImageList, ImageListItem } from '@mui/material';
+import { ImageList, ImageListItem, Typography } from '@mui/material';
 
 function ImageQuilt({ user, photos }) {
   function srcset(image, size, rows = 1, cols = 1) {
@@ -28,28 +28,32 @@ function ImageQuilt({ user, photos }) {
   })
 
   return (
-    photos && photos.length > 0 ? (
-      <ImageList
-        sx={{ width: 350 }}
-        cols={3}
-        rowHeight={(350 / 3)}
-        variant="quilted"
-      >
-        {quiltedPhotos.map((photo) => (
-          <ImageListItem 
-            key={photo.id} 
-            cols={photo.cols || 1} 
-            rows={photo.rows || 1} 
-            component={Link} to={`/photos/${photo.id}`}
-          >
-            <img
-              {...srcset(photo.image, 164, photo.rows, photo.cols)}
-              alt={user.username}
-              loading="lazy"
-            />
-          </ImageListItem>
-        ))}
-      </ImageList>
+    photos ? (
+      photos.length > 0 ? (
+        <ImageList
+          sx={{ width: 350 }}
+          cols={3}
+          rowHeight={(350 / 3)}
+          variant="quilted"
+        >
+          {quiltedPhotos.map((photo) => (
+            <ImageListItem 
+              key={photo.id} 
+              cols={photo.cols || 1} 
+              rows={photo.rows || 1} 
+              component={Link} to={`/photos/${photo.id}`}
+            >
+              <img
+                {...srcset(photo.image, 164, photo.rows, photo.cols)}
+                alt={user.username}
+                loading="lazy"
+              />
+            </ImageListItem>
+          ))}
+        </ImageList>
+      ) : (
+        <Typography variant="h6">Nothing Here Yet</Typography>
+      )
     ) : (
       <SkeletonGrid />
     )

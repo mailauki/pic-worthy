@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchFeaturedPhotos } from '../features/photos/featuredPhotosSlice';
 import Anchor from './Anchor';
-import { MobileStepper, ImageList, ImageListItem, ImageListItemBar, IconButton, Skeleton } from '@mui/material';
+import { MobileStepper, ImageList, ImageListItem, ImageListItemBar, IconButton, Skeleton, Box } from '@mui/material';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 
@@ -43,48 +43,63 @@ function Carousel() {
   }
 
   return (
-    <>
-      <div 
-        style={{
-          width: "90%",
-          display: "flex",
-          justifyContent: "space-between",
-          position: "relative",
-          top: 145,
-          zIndex: 1,
-          
-        }}
-        className="arrow-buttons"
-      >
-        <IconButton 
-          aria-label="back"
-          onClick={handleBack} 
-          color="primary"
-        >
-          <KeyboardArrowLeft />
-        </IconButton>
-        <IconButton 
-          aria-label="next"
-          onClick={handleNext}
-          color="primary"
-        >
-          <KeyboardArrowRight />
-        </IconButton>
-      </div>
-        {featuredStatus === "idle" && activePhoto ? (
+    <div 
+      style={{
+        width: "100%",
+        height: 350,
+        position: "relative",
+        top: 0
+      }}
+    >
+      {featuredStatus === "idle" && activePhoto ? (
+        <>
+          <Box
+            sx={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              position: "absolute",
+              top: 0,
+              zIndex: 1,
+              pointerEvents: "none"
+            }}
+          >
+            <IconButton 
+              aria-label="back"
+              onClick={handleBack} 
+              color="primary"
+              size="large"
+              sx={{ml: 1, zIndex: 2, pointerEvents: "auto"}}
+            >
+              <KeyboardArrowLeft fontSize="inherit" />
+            </IconButton>
+            <IconButton 
+              aria-label="next"
+              onClick={handleNext}
+              color="primary"
+              size="large"
+              sx={{mr: 1, zIndex: 2, pointerEvents: "auto"}}
+            >
+              <KeyboardArrowRight fontSize="inherit" />
+            </IconButton>
+          </Box>
+
           <ImageList 
             sx={{ 
               width: "100%", 
-              height: 350,  
-              position: "relative", 
-              top: "-56px" 
+              height: "100%", 
+              position: "absolute",
+              top: 0,
+              margin: 0
             }}
             cols={1}
             rowHeight={350}
           >
             <ImageListItem 
               key={activePhoto.id}
-              sx={{ width: "100%", height: 350 }} 
+              sx={{ width: "100%", height: "100%" }} 
               component={Link} to={`/photos/${activePhoto.id}`}
             >
               <img
@@ -92,7 +107,7 @@ function Carousel() {
                 srcSet={`${activePhoto.image}?w=350&fit=crop&auto=format&dpr=2 2x`}
                 alt={activePhoto.description}
                 loading="lazy"
-                style={{ width: "100%", height: 350 }}
+                style={{ width: "100%", height: "100%" }}
                 className={slide}
               />
               <ImageListItemBar
@@ -104,25 +119,36 @@ function Carousel() {
                     position="static"
                     activeStep={activeStep}
                     sx={{ 
-                      backgroundColor: "rgba(0,0,0,0)"
+                      backgroundColor: "rgba(0,0,0,0)",
+                      mr: 1
                     }}
                   />
                 }
+                sx={{
+                  background:
+                    'linear-gradient(to top, rgba(0,0,0,0.7) 0%, ' +
+                    'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+                  zIndex: 2
+                }}
               />
             </ImageListItem>
           </ImageList>
-        ) : (
-          <Skeleton 
-            variant="rectangular" 
-            width="100%" height={350} 
-            animation="wave"
-            sx={{ 
-              position: "relative", 
-              top: "-56px" 
-            }}
-          />
-        )}
-    </>
+        </>
+      ) : (
+        <Skeleton 
+          variant="rectangular" 
+          // width="100%" height={350} 
+          width="100%" height="100%"
+          animation="wave"
+          sx={{ 
+            // position: "relative", 
+            // top: "-56px", 
+            position: "absolute",
+            top: 0
+          }}
+        />
+      )}
+    </div>
   )
 }
 

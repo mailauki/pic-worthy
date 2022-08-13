@@ -49,8 +49,7 @@ function Follows({ pathname }) {
                   {user.followees && user.followees.length > 0  ? (
                     user.followees.map((follow) => (
                       <ListItem disablePadding>
-                        <ListItemButton 
-                          sx={{alignItems: "baseline"}} 
+                        <ListItemButton  
                           component={Link} to={`/users/${follow.id}`}
                         >
                           <User user={follow} />
@@ -59,7 +58,7 @@ function Follows({ pathname }) {
                     )) 
                   ) : (
                     <ListItem disablePadding>
-                      <ListItemButton disabled sx={{alignItems: "baseline"}}>
+                      <ListItemButton disabled>
                         <ListItemAvatar>
                           <Avatar sx={{width: 60, height: 60, mr: 2}} />
                         </ListItemAvatar>
@@ -76,7 +75,6 @@ function Follows({ pathname }) {
                     user.followers.map((follow) => (
                       <ListItem disablePadding>
                         <ListItemButton 
-                          sx={{alignItems: "baseline"}} 
                           component={Link} to={`/users/${follow.id}`}
                         >
                           <User user={follow} />
@@ -85,7 +83,7 @@ function Follows({ pathname }) {
                     )) 
                   ) : (
                     <ListItem disablePadding>
-                      <ListItemButton disabled sx={{alignItems: "baseline"}}>
+                      <ListItemButton disabled>
                         <ListItemAvatar>
                           <Avatar sx={{width: 60, height: 60, mr: 2}} />
                         </ListItemAvatar>

@@ -8,7 +8,7 @@ function Tags({ tags }) {
         <Chip 
           label={tag.name} 
           component={Link} to={`/tags/${tag.id}`} 
-          sx={{cursor: "pointer"}}
+          sx={{cursor: "pointer", mr: 1}}
         />
       )}
     </>

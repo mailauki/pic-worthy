@@ -4,10 +4,9 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPhoto, photoDeleted } from '../features/photos/photosSlice';
 import User from '../features/users/User';
-import PhotoUser from '../components/PhotoUser';
 import LikeBtn from '../components/LikeBtn';
 import Tags from '../components/Tags';
-import { IconButton, Skeleton } from '@mui/material';
+import { IconButton, Skeleton, List, ListItem, ListItemAvatar, ListItemText, Avatar } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
@@ -39,26 +38,25 @@ function PhotoProfile({ currentUser }) {
           <img src={photo.image} className="photo" />
         </div>
       )}
-      <div 
-        style={{ 
-          display: "flex", 
-          justifyContent: "space-between", 
-          alignItems: "baseline", 
-          width: "100%", 
-          marginTop: "-20px", 
-          paddingLeft: "20px", 
-          paddingRight: "20px",
+      <List 
+        sx={{
+          width: "100%",
+          mt: "-30px",
         }}
       >
-        <User user={photo.user} />
-        <LikeBtn currentUser={currentUser} />
-      </div>
+        <ListItem 
+          sx={{alignItems: "baseline"}}
+        >
+          <User user={photo.user} />
+          <LikeBtn currentUser={currentUser} photo={photo} />
+        </ListItem>
+      </List>
 
       <div
         style={{ 
+          width: "100%",
           display: "flex", 
           justifyContent: "space-between", 
-          width: "100%",
           paddingLeft: "20px", 
           paddingRight: "20px"
         }}

@@ -9,18 +9,15 @@ function LikeBtn({ currentUser }) {
   const photo = useSelector((state) => state.photos.entities)
   const { id, likes_total } = photo
   const dispatch = useDispatch()
+  
+  const foundLike = currentUser && currentUser.liked_photos ? currentUser.liked_photos.find((likedPhoto) => likedPhoto.id === id) : null
+  const likeData = currentUser ? {user_id: currentUser.id, photo_id: id} : {}
 
-  const [foundLike, setFoundLike] = useState(null)
-  const [likeData, setLikeData] = useState({})
   const [liked, setLiked] = useState(false)
 
   useEffect(() => {
-    currentUser && currentUser.liked_photos ? setFoundLike(currentUser.liked_photos.find((photo) => photo.id === id)) : setFoundLike(null)
-
-    foundLike ? setLiked(true) : setLiked(false)
-
-    currentUser ? setLikeData({user_id: currentUser.id, photo_id: id}) : setLikeData({})
-  }, [currentUser, foundLike])
+    setLiked(foundLike ? true : false)
+  }, [foundLike])
 
   function handleLike(event) {
     !liked ? (
@@ -36,6 +33,7 @@ function LikeBtn({ currentUser }) {
             r.json().then((data) => {
               dispatch(likeAdded())
               setLiked(true)
+              // setFoundLike(data)
             })
           } else {
             r.json().then((err) => console.log(err.errors))
@@ -51,6 +49,7 @@ function LikeBtn({ currentUser }) {
         .then((data) => {
           dispatch(likeDeleted())
           setLiked(false)
+          // setFoundLike(null)
         })
     )
   }
