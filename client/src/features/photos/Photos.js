@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchPhotos } from './photosSlice';
 import Anchor from '../../components/Anchor';
-import { ImageList, ImageListItem, ImageListItemBar, IconButton, Chip } from '@mui/material';
+import { ImageList, ImageListItem, ImageListItemBar, IconButton, Chip, Skeleton } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 
 function Photos() {
@@ -59,7 +59,11 @@ function Photos() {
           ))}
         </ImageList>
       ) : (
-        <h1>Nothing Here Yet</h1>
+        <Skeleton 
+          variant="rectangular" 
+          width={350} height={350} 
+          animation="wave"
+        />
       )}
     </>
   )

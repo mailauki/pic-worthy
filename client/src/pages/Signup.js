@@ -22,8 +22,10 @@ function Signup({ onLogin }) {
     })
       .then((r) => {
         if (r.ok) {
-          r.json().then((user) => onLogin(user))
-          history.push("/")
+          r.json().then((user) => {
+            onLogin(user)
+            history.push("/")
+          })
         } else {
           r.json().then((err) => setErrors(err.errors))
         }

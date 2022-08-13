@@ -28,7 +28,6 @@ function User({ user }) {
         <ListItemText primary={<Skeleton animation="wave" width={(350 /3)} />} />
       </>
     )
-    
   )
 }
 

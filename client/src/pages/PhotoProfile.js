@@ -1,11 +1,12 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
+import { useHistory } from "react-router";
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPhoto, photoDeleted } from '../features/photos/photosSlice';
-import User from '../features/users/User';
+import { fetchPhoto} from '../features/photos/photosSlice';
 import LikeBtn from '../components/LikeBtn';
 import Tags from '../components/Tags';
+import Anchor from '../components/Anchor';
 import { IconButton, Skeleton, List, ListItem, ListItemAvatar, ListItemText, Avatar } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -15,10 +16,21 @@ function PhotoProfile({ currentUser }) {
   const photo = useSelector((state) => state.photos.entities)
   const photoStatus = useSelector((state) => state.photos.status)
   const dispatch = useDispatch()
+  const history = useHistory()
 
   useEffect(() => {
     dispatch(fetchPhoto(id))
   }, [dispatch])
+
+  function handleDelete() {
+    fetch(`/photos/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    history.push("/")
+  }
 
   return (
     <>
@@ -41,13 +53,39 @@ function PhotoProfile({ currentUser }) {
       <List 
         sx={{
           width: "100%",
-          mt: "-30px",
+          mt: "-10px"
         }}
       >
-        <ListItem 
-          sx={{alignItems: "baseline"}}
-        >
-          <User user={photo.user} />
+        <ListItem>
+          {photo.user ? (
+            <>
+              <ListItemAvatar>
+                <Avatar 
+                  alt={photo.user.username} 
+                  src={photo.user.avatar} 
+                  sx={{ 
+                    width: 60, 
+                    height: 60, 
+                    mr: 2,
+                    mt: "-30px"
+                  }}
+                >
+                  {photo.user.username ? photo.user.username[0].toUpperCase() : ""}
+                </Avatar>
+              </ListItemAvatar>
+              <ListItemText primary={<Anchor name={`@${photo.user.username}`} to={`/users/${photo.user.id}`} />} />
+            </>
+          ) : (
+            <>
+              <ListItemAvatar>
+                <Avatar 
+                  sx={{width: 60, height: 60, mr: 2, mt: "-30px"}} 
+                />
+              </ListItemAvatar>
+              <ListItemText primary={<Skeleton animation="wave" width={(350 /3)} />} />
+            </>
+          )}
+
           <LikeBtn currentUser={currentUser} photo={photo} />
         </ListItem>
       </List>
@@ -70,7 +108,7 @@ function PhotoProfile({ currentUser }) {
             <IconButton component={Link} to={`/photos/${photo.id}/edit`}>
               <EditIcon />
             </IconButton>
-            <IconButton>
+            <IconButton onClick={handleDelete}>
               <DeleteIcon />
             </IconButton>
           </div>
