@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Alert from './Alert';
 import { useSelector, useDispatch } from 'react-redux';
 import { followAdded, followDeleted } from '../features/users/usersSlice';
 import { Button } from '@mui/material';
@@ -10,6 +11,7 @@ function FollowBtn({ currentUser }) {
   const [foundFollow, setFoundFollow] = useState(null)
   const [followData, setFollowData] = useState({})
   const [followed, setFollowed] = useState(false)
+  const [errors, setErrors] = useState([])
 
   useEffect(() => {
     currentUser && currentUser.followees ? setFoundFollow(currentUser.followees.find(followee => followee.id === user.id)) : setFoundFollow(null)
@@ -20,6 +22,8 @@ function FollowBtn({ currentUser }) {
   }, [currentUser, foundFollow])
 
   function handleFollow() {
+    setErrors([])
+
     !followed ? (
       fetch("/friendships", {
         method: "POST",
@@ -36,7 +40,7 @@ function FollowBtn({ currentUser }) {
           })
         } else {
           r.json().then((err) => {
-            console.log(err.errors)
+            setErrors(err.errors)
           })
         }
       })
@@ -55,14 +59,17 @@ function FollowBtn({ currentUser }) {
   }
 
   return (
-    <Button 
-      variant="contained" 
-      onClick={handleFollow} 
-      color={followed ? "neutral" : "primary"}
-      size="large"
-    >
-      {followed ? "Unfollow" : "Follow"}
-    </Button>
+    <>
+      <Button 
+        variant="contained" 
+        onClick={handleFollow} 
+        color={followed ? "neutral" : "primary"}
+        size="large"
+      >
+        {followed ? "Unfollow" : "Follow"}
+      </Button>
+      <Alert errors={errors} />
+    </>
   )
 }
 

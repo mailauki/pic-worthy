@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import Alert from './Alert';
 import { useSelector, useDispatch } from 'react-redux';
 import { likeAdded, likeDeleted } from '../features/photos/photosSlice';
 import { IconButton, Typography } from '@mui/material';
@@ -14,6 +15,7 @@ function LikeBtn({ currentUser }) {
   const likeData = currentUser ? {user_id: currentUser.id, photo_id: id} : {}
 
   const [liked, setLiked] = useState(false)
+  const [errors, setErrors] = useState(false)
 
   useEffect(() => {
     setLiked(foundLike ? true : false)
@@ -28,17 +30,16 @@ function LikeBtn({ currentUser }) {
         },
         body: JSON.stringify(likeData)
       })
-        .then((r) => {
-          if (r.ok) {
-            r.json().then((data) => {
-              dispatch(likeAdded())
-              setLiked(true)
-              // setFoundLike(data)
-            })
-          } else {
-            r.json().then((err) => console.log(err.errors))
-          }
-        })
+      .then((r) => {
+        if (r.ok) {
+          r.json().then((data) => {
+            dispatch(likeAdded())
+            setLiked(true)
+          })
+        } else {
+          r.json().then((err) => setErrors(err.errors))
+        }
+      })
     ) : (
       fetch(`/likes/${id}`, {
         method: "DELETE",
@@ -46,11 +47,16 @@ function LikeBtn({ currentUser }) {
           "Content-Type": "application/json",
         }
       })
-        .then((data) => {
-          dispatch(likeDeleted())
-          setLiked(false)
-          // setFoundLike(null)
-        })
+      .then((r) => {
+        if (r.ok) {
+          r.json().then((data) => {
+            dispatch(likeDeleted())
+            setLiked(false)
+          })
+        } else {
+          r.json().then((err) => setErrors(err.errors))
+        }
+      })
     )
   }
 
@@ -62,6 +68,7 @@ function LikeBtn({ currentUser }) {
           {liked ? <FavoriteIcon color="primary" /> : <FavoriteBorderIcon />}
         </IconButton>
       </div>
+      <Alert errors={errors} />
     </>
   )
 }

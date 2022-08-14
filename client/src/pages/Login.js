@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useHistory } from "react-router";
-import { Link } from 'react-router-dom';
 import FormInput from '../components/FormInput';
 import Anchor from '../components/Anchor';
 import { Button } from '@mui/material';
@@ -27,7 +26,7 @@ function Login({ onLogin }) {
           history.push("/")
         })
       } else {
-        r.json().then((err) => setErrors(err.errors))
+        r.json().then((err) => setErrors(err.errors.map((error) => error.toLowerCase())))
       }
     })
   }
@@ -41,7 +40,7 @@ function Login({ onLogin }) {
     <div className="Login">
       <h1>Login</h1>
       <div className="form">
-        {formInfo.map( item => <FormInput errors={errors.filter((err) => err.includes(item.label))} item={item} formData={formData} setFormData={setFormData} /> )}
+        {formInfo.map( item => <FormInput errors={errors.filter((err) => err.includes(item.name))} item={item} formData={formData} setFormData={setFormData} /> )}
         <Button 
           className="form-button" 
           variant="contained"

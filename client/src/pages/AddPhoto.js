@@ -13,6 +13,8 @@ function AddPhoto({ currentUser }) {
   const dispatch = useDispatch()
   const tags = useSelector((state) => state.tags.entities)
 
+  console.log(errors)
+
   useEffect(() => {
     dispatch(fetchTags())
   }, [dispatch])
@@ -45,6 +47,9 @@ function AddPhoto({ currentUser }) {
                     console.log(photoTag)
                   })
                 }
+                else {
+                  r.json().then((err) => setErrors(err.errors))
+                }
               })
             })
           }
@@ -72,7 +77,6 @@ function AddPhoto({ currentUser }) {
           id="tags"
           className="form-input"
           Tags
-          // defaultValue={selectedTags}}
           options={tags.map((option) => option.name)}
           onChange={(event, newValue) => {
             tags.filter( tag => {
@@ -100,7 +104,6 @@ function AddPhoto({ currentUser }) {
               .then((r) => {
                 if (r.ok) {
                   r.json().then((tag) => {
-                    console.log(tag)
                     dispatch(tagAdded(tag))
                   })
                 } else {

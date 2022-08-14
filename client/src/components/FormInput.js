@@ -9,9 +9,8 @@ function FormInput({ errors, item, formData, setFormData }) {
         type={item.type} 
         margin="normal"
         value={item.value}
-        // defaultValue={item.value}
         onChange={(event) => setFormData({...formData, [item.name]: event.target.value})}
-        helperText={errors.filter((err) => err.includes(item.label))}
+        helperText={errors.filter((err) => err.includes(item.name))}
         className="form-input"
         key={item.name}
       />
@@ -21,7 +20,6 @@ function FormInput({ errors, item, formData, setFormData }) {
         type={item.type}
         margin="normal"
         value={item.value}
-        // defaultValue={item.value}
         onChange={(event) => setFormData({...formData, [item.name]: event.target.value})}
         helperText={item.helper}
         className="form-input"

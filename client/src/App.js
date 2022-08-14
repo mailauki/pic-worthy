@@ -33,7 +33,7 @@ const theme = createTheme({
       main: '#64748B',
       contrastText: '#fff',
       lighter: '#eee',
-      darker: '#aaa'
+      darker: '#ccc'
     }
   },
   components: {
@@ -61,7 +61,7 @@ const darkTheme = createTheme({
     neutral: {
       main: '#64748B',
       lighter: '#222',
-      darker: '#000'
+      darker: '#424242'
     }
   }
 })
