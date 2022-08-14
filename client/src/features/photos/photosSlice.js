@@ -6,6 +6,12 @@ export const fetchPhotos = createAsyncThunk("photos/fetchPhotos", () => {
     .then((data) => data)
 })
 
+export const fetchMostRecentPhotos = createAsyncThunk("photos/fetchMostRecentPhotos", () => {
+  return fetch("/most_recent")
+    .then((r) => r.json())
+    .then((data) => data)
+})
+
 export const fetchPhoto = createAsyncThunk("photos/fetchPhoto", (id) => {
   return fetch(`/photos/${id}`)
     .then((r) => r.json())
@@ -19,18 +25,6 @@ const photosSlice = createSlice({
     status: "idle"
   },
   reducers: {
-    photoAdded(state, action) {
-      state.entities.push(action.payload)
-    },
-    photoUpdated(state, action) {
-      const photo = state.entities.find((photo) => photo.id === action.payload.id)
-      photo.image = action.payload.image
-      photo.description = action.payload.description
-    },
-    photoDeleted(state, action) {
-      const index = state.entities.findIndex((photo) => photo.id === action.payload)
-      state.entities.splice(index, 1)
-    },
     likeAdded(state, action) {
       const photo = state.entities
       photo.likes_total = photo.likes_total + 1
@@ -41,22 +35,22 @@ const photosSlice = createSlice({
     }
   },
   extraReducers: {
-    [fetchPhotos.pending](state) {
-      state.status = "loading"
-    },
-    [fetchPhotos.fulfilled](state, action) {
-      state.entities = action.payload
-      state.status = "idle"
-    },
     [fetchPhoto.pending](state) {
       state.status = "loading"
     },
     [fetchPhoto.fulfilled](state, action) {
       state.entities = action.payload
       state.status = "idle"
+    },
+    [fetchMostRecentPhotos.pending](state) {
+      state.status = "loading"
+    },
+    [fetchMostRecentPhotos.fulfilled](state, action) {
+      state.entities = action.payload
+      state.status = "idle"
     }
   }
 })
 
-export const { photoAdded, photoUpdated, photoDeleted, likeAdded, likeDeleted } = photosSlice.actions
+export const { likeAdded, likeDeleted } = photosSlice.actions
 export default photosSlice.reducer

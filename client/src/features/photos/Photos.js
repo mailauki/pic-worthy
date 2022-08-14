@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPhotos } from './photosSlice';
+import { fetchMostRecentPhotos } from './photosSlice';
 import Anchor from '../../components/Anchor';
 import { ImageList, ImageListItem, ImageListItemBar, IconButton, Chip, Skeleton } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
@@ -11,16 +11,17 @@ function Photos() {
   const photos = useSelector((state) => state.photos.entities)
 
   useEffect(() => {
-    dispatch(fetchPhotos())
+    dispatch(fetchMostRecentPhotos())
   }, [dispatch])
 
   return (
     <>
-      <h3>Photos</h3>
+      <h3>Most Recent</h3>
       {photos.length > 0 ? (
         <ImageList
           sx={{ width: 350 }}
           cols={1}
+          rowHeight={350}
         >
           {photos.map(photo => (
             <ImageListItem key={photo.id}>

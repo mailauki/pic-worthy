@@ -83,8 +83,8 @@ function Menu({ currentUser, onLogout, checked, setChecked }) {
             {!currentUser ? (
               <Avatar 
                 sx={{ 
-                  width: 60, 
-                  height: 60, 
+                  width: 80, 
+                  height: 80, 
                   postition: "absolute", 
                   top: 30, 
                   right: 20,
@@ -96,8 +96,8 @@ function Menu({ currentUser, onLogout, checked, setChecked }) {
                 alt={currentUser.username} 
                 src={currentUser.avatar} 
                 sx={{ 
-                  width: 60, 
-                  height: 60, 
+                  width: 80, 
+                  height: 80, 
                   postition: "absolute", 
                   top: 30, 
                   right: 20,
@@ -112,6 +112,7 @@ function Menu({ currentUser, onLogout, checked, setChecked }) {
             variant="contained" 
             startIcon={<LogoutIcon />}
             onClick={handleLogout}
+            size="large"
           >
             Logout
           </Button>

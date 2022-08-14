@@ -23,7 +23,9 @@ function Results({tab, results, searchStatus}) {
                 case "description": 
                   return (
                     <ListItem disablePadding>
-                      <ListItemButton>
+                      <ListItemButton
+                        component={Link} to={`/photos/${result.id}`}
+                      >
                         <ListItemAvatar>
                           <Avatar 
                             alt={result.description} 
@@ -36,7 +38,7 @@ function Results({tab, results, searchStatus}) {
                             variant="square"
                           />
                         </ListItemAvatar>
-                        <ListItemText primary={result.description} />
+                        <ListItemText primary={<Anchor name={result.description} to={`/photos/${result.id}`} />} />
                       </ListItemButton>
                     </ListItem>
                   )
@@ -49,7 +51,7 @@ function Results({tab, results, searchStatus}) {
                         <ListItemAvatar>
                           <Avatar 
                             alt={result.name} 
-                            src={result.photos.at(-1).image} 
+                            src={result.photos ? result.photos.at(-1).image : ""} 
                             sx={{ 
                               width: 60, 
                               height: 60, 
@@ -73,7 +75,16 @@ function Results({tab, results, searchStatus}) {
                       </ListItem>
                     )
                 default:
-                  return <></>
+                  return (
+                    <ListItem disablePadding>
+                      <ListItemButton disabled>
+                        <ListItemAvatar>
+                          <Avatar sx={{width: 60, height: 60, mr: 2}} />
+                        </ListItemAvatar>
+                        <ListItemText primary="Nothing Here Yet" />
+                      </ListItemButton>
+                    </ListItem>
+                  )
               }
             })()
           ))
@@ -88,7 +99,14 @@ function Results({tab, results, searchStatus}) {
               </ListItemButton>
             </ListItem>
           ) : (
-            <></>
+            <ListItem disablePadding>
+              <ListItemButton disabled>
+                <ListItemAvatar>
+                  <Avatar sx={{width: 60, height: 60, mr: 2}} />
+                </ListItemAvatar>
+                <ListItemText primary="Nothing Found" />
+              </ListItemButton>
+            </ListItem>
           )
         )
       )}

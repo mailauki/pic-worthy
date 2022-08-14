@@ -1,18 +1,13 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchSearch } from '../features/search/searchSlice';
-import User from '../features/users/User';
 import Results from '../components/Results';
-import Anchor from '../components/Anchor';
-import { Box, InputBase, Tabs, Tab, List, ListItem, ListItemButton, ListItemAvatar, ListItemText, Avatar } from '@mui/material';
+import { Box, InputBase, Tabs, Tab } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 
 function Search() {
   const [tab, setTab] = useState("users")
   const [keyword, setKeyword] = useState("")
-  // const [results, setResults] = useState([])
-  // const [errors, setErrors] = useState([])
   const results = useSelector((state) => state.results.entities)
   const searchStatus = useSelector((state) => state.results.status)
   const dispatch = useDispatch()
@@ -24,21 +19,6 @@ function Search() {
   useEffect(() => {
     dispatch(fetchSearch({tab: tab, keyword: keyword}))
   }, [dispatch, keyword, tab])
-
-  // useEffect(() => {
-  //   setErrors([])
-
-  //   fetch(`/${tab}/search/${keyword}`)
-  //   // .then((r) => r.json())
-  //   // .then((data) => setResults(data))
-  //   .then((r) => {
-  //     if (r.ok) {
-  //       r.json().then((data) => setResults(data))
-  //     } else {
-  //       r.json().then((err) => setErrors(err.errors))
-  //     }
-  //   })
-  // }, [keyword])
 
   return (
     <>
@@ -81,16 +61,16 @@ function Search() {
           variant="fullWidth" 
         >
           <Tab 
-            label="Description" 
-            value="description" 
+            label="Users" 
+            value="users" 
           />
           <Tab 
             label="Tags" 
             value="tags" 
           />
           <Tab 
-            label="Users" 
-            value="users" 
+            label="Description" 
+            value="description" 
           />
         </Tabs>
       </Box>

@@ -13,7 +13,7 @@ function Header({ mobileView, pathname }) {
       <div className="Header">
         <AppBar position="static" color="inherit">
           <Toolbar style={{ justifyContent: "space-between" }}>
-            <h3>Header</h3>
+            <h3>PicWorthy</h3>
             <div>
               <IconButton 
                 aria-label="add a photo" 

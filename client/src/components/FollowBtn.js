@@ -59,6 +59,7 @@ function FollowBtn({ currentUser }) {
       variant="contained" 
       onClick={handleFollow} 
       color={followed ? "neutral" : "primary"}
+      size="large"
     >
       {followed ? "Unfollow" : "Follow"}
     </Button>

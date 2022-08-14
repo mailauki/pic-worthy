@@ -1,5 +1,5 @@
 class PhotosController < ApplicationController
-  skip_before_action :authorize, only: [:index, :search, :random_five, :show]
+  skip_before_action :authorize, only: [:index, :search, :random_five, :most_recent, :show]
 
   def index
     photos = Photo.all.reverse()
@@ -14,6 +14,11 @@ class PhotosController < ApplicationController
 
   def random_five
     photos = Photo.all.shuffle.take(5)
+    render json: photos
+  end
+
+  def most_recent
+    photos = Photo.all.reverse().take(6)
     render json: photos
   end
 

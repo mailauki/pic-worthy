@@ -31,14 +31,13 @@ a {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
-  /* margin: 10px 40px; */
   margin-bottom: 40px;
+  /* padding-top: 20px; */
 }
 
 .Content .form-button {
-  margin: 10px auto;
+  margin: 20px auto;
 }
 
 .Login, .Signup, .form {
