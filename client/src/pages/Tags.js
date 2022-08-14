@@ -1,9 +1,9 @@
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchTags } from './tagsSlice';
-import Anchor from '../../components/Anchor';
-import SkeletonGrid from '../../components/SkeletonGrid';
+import { fetchTags } from '../features/tags/tagsSlice';
+import Anchor from '../components/Anchor';
+import SkeletonGrid from '../components/SkeletonGrid';
 import { ImageList, ImageListItem, ImageListItemBar, Skeleton, Grid, Box } from '@mui/material';
 
 function Tags() {
@@ -16,7 +16,7 @@ function Tags() {
   }, [dispatch])
 
   return (
-    <>
+    <div className="Tags">
       {tags.length > 0 ? (
         <ImageList 
           sx={{ width: 350 }}
@@ -51,7 +51,7 @@ function Tags() {
       ) : (
         <SkeletonGrid />
       )}
-    </>
+    </div>
   )
 }
 

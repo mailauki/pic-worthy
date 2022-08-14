@@ -33,17 +33,28 @@ a {
   flex-direction: column;
   align-items: center;
   margin-bottom: 40px;
-  /* padding-top: 20px; */
+}
+
+.Login-Signup {
+  justify-content: center;
 }
 
 .Content .form-button {
   margin: 20px auto;
 }
 
-.Login, .Signup, .form {
+.Home, .Login, .Signup, .Menu, .EditAccount, .UserProfile, .Follows, .AddPhoto, .EditPhoto, .PhotoProfile, .Search {
+  width: 100%;
+}
+
+.Login, .Signup, .Tags, .Tag, .Follows, .AddPhoto, .EditPhoto, .EditAccount {
+  margin-top: 30px;
+}
+
+.Login, .Signup, .AddPhoto, .EditPhoto, .EditAccount, .Home, .Tags, .Tag, .UserProfile, .form {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
 }
 
@@ -64,7 +75,7 @@ a {
   margin: 20px;
 }
 
-.Menu h3, .UserHeader {
+.Menu h3 {
   padding: 0 20px;
 }
 

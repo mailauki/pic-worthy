@@ -8,7 +8,6 @@ function Follows({ pathname }) {
   const { id } = useParams()
   const [tab, setTab] = useState("following")
   const user = useSelector((state) => state.users.entities)
-  const userStatus = useSelector((state) => state.users.status)
 
   useEffect(() => {
     pathname ? setTab(pathname.split("/")[3]) : setTab("followees")
@@ -19,8 +18,8 @@ function Follows({ pathname }) {
   }
 
   return (
-    <>
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%' }}>
+    <div className="Follows">
+      <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%', height: '48px' }}>
         <Tabs 
           value={tab} 
           onChange={handleTabChange} 
@@ -94,7 +93,7 @@ function Follows({ pathname }) {
               )
           }
         })()}
-    </>
+    </div>
   )
 }
 

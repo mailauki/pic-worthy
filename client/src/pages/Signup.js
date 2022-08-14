@@ -38,7 +38,7 @@ function Signup({ onLogin }) {
   ]
 
   return (
-    <>
+    <div className="Signup">
       <h1>Signup</h1>
       <div className="form">
         {formInfo.map( item => <FormInput errors={errors.filter((err) => err.includes(item.label))} item={item} formData={formData} setFormData={setFormData} /> )}
@@ -51,7 +51,7 @@ function Signup({ onLogin }) {
         </Button>
       </div>
       <Anchor name="Already have an account?" to="/login" />
-    </>
+    </div>
   )
 }
 

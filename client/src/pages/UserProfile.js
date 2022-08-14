@@ -34,7 +34,7 @@ function UserProfile({ currentUser }) {
   }
 
   return (
-    <>
+    <div className="UserProfile">
       <UserHeader user={user} currentUser={currentUser} />
 
       <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%' }}>
@@ -66,7 +66,7 @@ function UserProfile({ currentUser }) {
           }
         })()
       )}
-    </>
+    </div>
   )
 }
 

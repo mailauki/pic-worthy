@@ -12,10 +12,11 @@ function Navigation({ mobileView, pathname }) {
   let value = activePath === "" ? "home" : activePath
 
   const AddButton = styled(Fab)(({ theme }) => ({
-    color: theme.palette.getContrastText(activePath === "add-photo" ? theme.palette.primary.main : theme.palette.neutral.lighter),
+    // color: theme.palette.getContrastText(activePath === "add-photo" ? theme.palette.primary.main : theme.palette.neutral.lighter),
+    color: theme.palette.text.secondary,
     backgroundColor: activePath === "add-photo" ? theme.palette.primary.main : theme.palette.neutral.lighter,
     '&:hover': {
-      backgroundColor: activePath === "add-photo" ? theme.palette.primary.darker : theme.palette.neutral.darker,
+      backgroundColor: activePath === "add-photo" ? theme.palette.primary.darker : theme.palette.divider,
     },
     bottom: 25
   }))

@@ -14,9 +14,9 @@ import PhotoProfile from './pages/PhotoProfile';
 import EditPhoto from './pages/EditPhoto';
 import EditAccount from './pages/EditAccount';
 import Search from './pages/Search';
+import Tags from './pages/Tags';
 import Navigation from './components/Navigation';
 import Header from './components/Header';
-import TagsPage from './features/tags/TagsPage';
 import Tag from './features/tags/Tag';
 
 const theme = createTheme({
@@ -60,7 +60,7 @@ const darkTheme = createTheme({
     },
     neutral: {
       main: '#64748B',
-      lighter: '#333',
+      lighter: '#222',
       darker: '#000'
     }
   }
@@ -142,7 +142,7 @@ function App() {
                 <Tag />
               </Route>
               <Route path="/tags">
-                <TagsPage />
+                <Tags />
               </Route>
               <Route path="/edit-account">
                 <EditAccount currentUser={currentUser} />

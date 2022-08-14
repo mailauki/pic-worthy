@@ -3,10 +3,10 @@ import Photos from '../features/photos/Photos';
 
 function Home() {
   return (
-    <>
+    <div className="Home">
       <Carousel />
       <Photos />
-    </>
+    </div>
   )
 }
 

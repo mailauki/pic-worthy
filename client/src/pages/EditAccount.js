@@ -35,7 +35,7 @@ function EditAccount({ currentUser }) {
   ]
 
   return (
-    <>
+    <div className="EditAccount">
       <h1>Edit Account</h1>
       <div className="form">
         {formInfo.map( item => <FormInput errors={errors.filter((err) => err.includes(item.label))} item={item} formData={formData} setFormData={setFormData} /> )}
@@ -47,7 +47,7 @@ function EditAccount({ currentUser }) {
           Submit
         </Button>
       </div>
-    </>
+    </div>
   )
 }
 

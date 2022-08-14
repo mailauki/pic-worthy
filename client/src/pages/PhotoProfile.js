@@ -33,7 +33,7 @@ function PhotoProfile({ currentUser }) {
   }
 
   return (
-    <>
+    <div className="PhotoProfile">
       {photoStatus === "loading" ? (
         <Skeleton variant="rectangular" animation="wave" width="100%" height={350} />
       ) : (
@@ -116,7 +116,7 @@ function PhotoProfile({ currentUser }) {
           <></>
         )}
       </div>
-    </>
+    </div>
   )
 }
 

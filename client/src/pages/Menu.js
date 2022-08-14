@@ -1,5 +1,5 @@
 import { useHistory } from "react-router";
-import { Button, Avatar, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Switch, Box } from '@mui/material';
+import { Button, Avatar, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Switch, Box, Typography } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
@@ -59,12 +59,14 @@ function Menu({ currentUser, onLogout, checked, setChecked }) {
             variant="contained" 
             onClick={() => history.push('/login')} 
             startIcon={<LoginIcon />}
+            size="large"
           >
             Login
           </Button>
           <Button 
             onClick={() => history.push('/signup')} 
             startIcon={<PersonAddIcon />}
+            size="large"
           >
             Signup
           </Button>
@@ -76,10 +78,27 @@ function Menu({ currentUser, onLogout, checked, setChecked }) {
               display: 'flex',
               width: '100%',
               justifyContent: 'space-between',
+              alignItems: "center",
               backgroundColor: 'divider',
             }}
           >
-            {currentUser.first_name ? <h3>Hello, {currentUser.first_name}</h3> : <h3>Hello</h3>}
+            {currentUser.first_name ? (
+              <Typography 
+                variant="h3" 
+                component="h3"
+                sx={{fontSize: 24}}
+              >
+                Hello, {currentUser.first_name}
+              </Typography>
+            ) : (
+              <Typography 
+                variant="h3" 
+                component="h3"
+                sx={{fontSize: 24}}
+              >
+                Hello
+              </Typography>
+            )}
             {!currentUser ? (
               <Avatar 
                 sx={{ 

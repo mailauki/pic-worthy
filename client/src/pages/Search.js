@@ -21,7 +21,7 @@ function Search() {
   }, [dispatch, keyword, tab])
 
   return (
-    <>
+    <div className="Search">
       <Box
         sx={{
           display: 'flex',
@@ -76,7 +76,7 @@ function Search() {
       </Box>
 
       <Results tab={tab} results={results} searchStatus={searchStatus} />
-    </>
+    </div>
   )
 }
 

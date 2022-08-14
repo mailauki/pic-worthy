@@ -106,8 +106,8 @@ function UserHeader({ currentUser }) {
             className="UserHeader"
             sx={{
               width: "100%",
-              paddingLeft: "15%",
-              paddingRight: "15%"
+              paddingLeft: "12%",
+              paddingRight: "12%"
             }}
           >
             {userStatus === "idle" && user ? (

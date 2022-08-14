@@ -26,8 +26,8 @@ function Photos() {
           {photos.map(photo => (
             <ImageListItem key={photo.id}>
               <img
-                src={`${photo.image}?w=248&fit=crop&auto=format`}
-                srcSet={`${photo.image}?w=248&fit=crop&auto=format&dpr=2 2x`}
+                src={`${photo.image}?w=350&h=350&fit=crop&auto=format`}
+                srcSet={`${photo.image}?w=350&h=350&fit=crop&auto=format&dpr=2 2x`}
                 alt={photo.description}
                 loading="lazy"
               />

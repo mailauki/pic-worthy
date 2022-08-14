@@ -16,7 +16,7 @@ function Tag() {
   }, [id])
 
   return (
-    <>
+    <div className="Tag">
       <h1># {tag.name}</h1>
       {tag.photos && tag.photos.length > 0 ? (
         <ImageList
@@ -38,7 +38,7 @@ function Tag() {
       ) : (
         <SkeletonGrid />
       )}
-    </>
+    </div>
   )
 }
 
