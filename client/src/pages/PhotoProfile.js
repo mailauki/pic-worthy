@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPhoto} from '../features/photos/photosSlice';
+import { fetchPhoto } from '../features/photos/photosSlice';
 import LikeBtn from '../components/LikeBtn';
 import Tags from '../components/Tags';
 import Anchor from '../components/Anchor';

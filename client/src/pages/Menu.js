@@ -76,7 +76,7 @@ function Menu({ currentUser, onLogout, checked, setChecked }) {
               display: 'flex',
               width: '100%',
               justifyContent: 'space-between',
-              backgroundColor: 'neutral.lighter',
+              backgroundColor: 'divider',
             }}
           >
             {currentUser.first_name ? <h3>Hello, {currentUser.first_name}</h3> : <h3>Hello</h3>}

@@ -17,6 +17,10 @@ Rails.application.routes.draw do
   delete '/logout', to: 'session#destroy'
   
   get '/featured', to: 'photos#random_five'
+
+  get '/users/search/:keyword', to: 'users#search'
+  get '/tags/search/:keyword', to: 'tags#search'
+  get '/description/search/:keyword', to: 'photos#search'
   
   get '*path',
       to: 'fallback#index',

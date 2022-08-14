@@ -1,8 +1,14 @@
 class PhotosController < ApplicationController
-  skip_before_action :authorize, only: [:index, :show, :random_five]
+  skip_before_action :authorize, only: [:index, :search, :random_five, :show]
 
   def index
     photos = Photo.all.reverse()
+    render json: photos
+  end
+
+  def search
+    keyword = params[:keyword]
+    photos = Photo.where("description like ?", "%#{keyword}%")
     render json: photos
   end
 
@@ -18,8 +24,6 @@ class PhotosController < ApplicationController
 
   def create
     photo = @current_user.photos.create!(photo_params)
-    # photo = Photo.create!(photo_params)
-    # photo.tags.create!(tag_params)
     render json: photo, status: :created
   end
 

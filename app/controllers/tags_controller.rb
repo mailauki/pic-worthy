@@ -1,8 +1,14 @@
 class TagsController < ApplicationController
-  skip_before_action :authorize, only: [:index, :show]
+  skip_before_action :authorize, only: [:index, :search, :show]
 
   def index
-    tags = Tag.all
+    tags = Tag.all.reverse()
+    render json: tags
+  end
+
+  def search
+    keyword = params[:keyword]
+    tags = Tag.where("name like ?", "%#{keyword}%")
     render json: tags
   end
 

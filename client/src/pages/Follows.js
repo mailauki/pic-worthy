@@ -20,7 +20,6 @@ function Follows({ pathname }) {
 
   return (
     <>
-      <h1>Follows</h1>
       <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%' }}>
         <Tabs 
           value={tab} 

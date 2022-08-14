@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { useHistory } from "react-router";
-import { Link } from 'react-router-dom';
 import FormInput from '../components/FormInput';
 import Anchor from '../components/Anchor';
 import { Button } from '@mui/material';
@@ -20,16 +19,16 @@ function Signup({ onLogin }) {
       },
       body: JSON.stringify(formData)
     })
-      .then((r) => {
-        if (r.ok) {
-          r.json().then((user) => {
-            onLogin(user)
-            history.push("/")
-          })
-        } else {
-          r.json().then((err) => setErrors(err.errors))
-        }
-      })
+    .then((r) => {
+      if (r.ok) {
+        r.json().then((user) => {
+          onLogin(user)
+          history.push("/")
+        })
+      } else {
+        r.json().then((err) => setErrors(err.errors))
+      }
+    })
   }
   
   const formInfo = [

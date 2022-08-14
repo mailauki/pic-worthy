@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import SkeletonGrid from '../../components/SkeletonGrid';
 import { ImageList, ImageListItem } from '@mui/material';
 
 function Tag() {
@@ -35,7 +36,7 @@ function Tag() {
           ))}
         </ImageList>
       ) : (
-        <h1>Nothing Here Yet</h1>
+        <SkeletonGrid />
       )}
     </>
   )

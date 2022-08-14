@@ -13,6 +13,7 @@ import Follows from './pages/Follows';
 import PhotoProfile from './pages/PhotoProfile';
 import EditPhoto from './pages/EditPhoto';
 import EditAccount from './pages/EditAccount';
+import Search from './pages/Search';
 import Navigation from './components/Navigation';
 import Header from './components/Header';
 import TagsPage from './features/tags/TagsPage';
@@ -25,7 +26,8 @@ const theme = createTheme({
   palette: {
     primary: {
       main: '#2979ff',
-      darker: '#1c54b2'
+      darker: '#1c54b2',
+      box: '#fafafa'
     },
     neutral: {
       main: '#64748B',
@@ -53,7 +55,8 @@ const darkTheme = createTheme({
     mode: 'dark',
     primary: {
       main: '#ffc107',
-      darker: '#b28704'
+      darker: '#b28704',
+      box: '#424242'
     },
     neutral: {
       main: '#64748B',
@@ -133,7 +136,7 @@ function App() {
                 <AddPhoto currentUser={currentUser} />
               </Route>
               <Route path="/search">
-                <h1>Search</h1>
+                <Search />
               </Route>
               <Route path="/tags/:id">
                 <Tag />
