@@ -12,7 +12,7 @@ function Navigation({ mobileView, pathname }) {
   let value = activePath === "" ? "home" : activePath
 
   const AddButton = styled(Fab)(({ theme }) => ({
-    color: theme.palette.text.secondary,
+    color: activePath === "add-photo" ? theme.palette.getContrastText(theme.palette.primary.main) : theme.palette.text.secondary,
     backgroundColor: activePath === "add-photo" ? theme.palette.primary.main : theme.palette.neutral.lighter,
     '&:hover': {
       backgroundColor: activePath === "add-photo" ? theme.palette.primary.darker : theme.palette.neutral.darker,

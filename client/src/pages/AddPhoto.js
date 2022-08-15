@@ -3,17 +3,22 @@ import { useHistory } from "react-router";
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchTags, tagAdded } from '../features/tags/tagsSlice';
 import FormInput from '../components/FormInput';
+import Alert from '../components/Alert';
 import { Button, Autocomplete, Chip, TextField } from '@mui/material';
 
 function AddPhoto({ currentUser }) {
   const [formData, setFormData] = useState({image: "", description: ""})
   const [selectedTags, setSelectedTags] = useState([])
   const [errors, setErrors] = useState([])
+  const [alert, setAlert] = useState("")
+  const [errorHelper, setErrorHelper] = useState("")
   const history = useHistory()
   const dispatch = useDispatch()
   const tags = useSelector((state) => state.tags.entities)
 
   console.log(errors)
+  console.log(alert)
+  console.log(errorHelper)
 
   useEffect(() => {
     dispatch(fetchTags())
@@ -57,13 +62,16 @@ function AddPhoto({ currentUser }) {
           history.push(`/users/${currentUser.id}`)
         })
       } else {
-        r.json().then((err) => setErrors(err.errors))
+        r.json().then((err) => {
+          setErrors(err.errors.map((error) => error.toLowerCase()))
+          setAlert(err.errors.filter((error) => error.includes("logged in")))
+        })
       }
     })
   }
 
   const formInfo = [
-    {label: "Image", type: "url", value: formData.image, name: "image", helper: "Copy image address"}, 
+    {label: "Image", type: "url", value: formData.image, name: "image", helper: "copy image address or url"}, 
     {label: "Description", type: null, value: formData.description, name: "description", helper: " "}
   ]
 
@@ -71,7 +79,7 @@ function AddPhoto({ currentUser }) {
     <div className="AddPhoto">
       <h1>Add Photo</h1>
       <div className="form">
-        {formInfo.map( item => <FormInput errors={errors.filter((err) => err.includes(item.label))} item={item} formData={formData} setFormData={setFormData} /> )}
+        {formInfo.map( item => <FormInput errors={errors.filter((err) => err.includes(item.name))} item={item} formData={formData} setFormData={setFormData} /> )}
         <Autocomplete
           multiple
           id="tags"
@@ -94,6 +102,7 @@ function AddPhoto({ currentUser }) {
           onKeyDown={(event) => {
             if (event.key === 'Enter') {
               event.defaultMuiPrevented = true
+
               fetch("/tags", {
                 method: "POST",
                 headers: {
@@ -104,10 +113,13 @@ function AddPhoto({ currentUser }) {
               .then((r) => {
                 if (r.ok) {
                   r.json().then((tag) => {
+                    // if(tag.id !== null) {
+                    //   dispatch(tagAdded(tag))
+                    // }
                     dispatch(tagAdded(tag))
                   })
                 } else {
-                  r.json().then((err) => setErrors(err.errors))
+                  r.json().then((err) => setErrorHelper(err.errors[0].split(" ").slice(1).join(" ")))
                 }
               })
             }
@@ -117,11 +129,21 @@ function AddPhoto({ currentUser }) {
               <Chip label={option} {...getTagProps({ index })} />
             ))}
           renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Tags"
-              placeholder="add tags"
-            />
+            errorHelper ? (
+              <TextField
+                {...params}
+                error
+                label="Tags"
+                placeholder="add tags"
+                helperText={errorHelper}
+              />
+            ) : (
+              <TextField
+                {...params}
+                label="Tags"
+                placeholder="add tags"
+              />
+            )
           )}
         />
         <Button 
@@ -132,6 +154,7 @@ function AddPhoto({ currentUser }) {
           Submit
         </Button>
       </div>
+      <Alert errors={alert} />
     </div>
   )
 }

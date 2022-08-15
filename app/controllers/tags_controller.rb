@@ -18,7 +18,7 @@ class TagsController < ApplicationController
   end
 
   def create
-    tag = Tag.create(tag_params)
+    tag = Tag.create!(tag_params)
     render json: tag, status: :created
   end
 
