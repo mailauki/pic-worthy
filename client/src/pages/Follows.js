@@ -58,7 +58,7 @@ function Follows({ pathname }) {
                     <ListItem disablePadding>
                       <ListItemButton disabled>
                         <ListItemAvatar>
-                          <Avatar sx={{width: 60, height: 60, mr: 2}} />
+                          <Avatar sx={{ width: 60, height: 60, mr: 2 }} />
                         </ListItemAvatar>
                         <ListItemText primary="Nothing Here Yet" />
                       </ListItemButton>
@@ -83,7 +83,7 @@ function Follows({ pathname }) {
                     <ListItem disablePadding>
                       <ListItemButton disabled>
                         <ListItemAvatar>
-                          <Avatar sx={{width: 60, height: 60, mr: 2}} />
+                          <Avatar sx={{ width: 60, height: 60, mr: 2 }} />
                         </ListItemAvatar>
                         <ListItemText primary="Nothing Here Yet" />
                       </ListItemButton>

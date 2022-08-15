@@ -37,7 +37,7 @@ function Search() {
             width: '100%'
           }}
         >
-          <SearchIcon sx={{color: "text.secondary"}} />
+          <SearchIcon sx={{ color: "text.secondary" }} />
           <InputBase
             placeholder="Search here..."
             inputProps={{ 'aria-label': 'search' }}
@@ -53,7 +53,7 @@ function Search() {
         </Box>
       </Box>
 
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%', height: '48px' }}>
         <Tabs 
           value={tab} 
           onChange={handleTabChange} 

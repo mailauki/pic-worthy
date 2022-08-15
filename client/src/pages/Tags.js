@@ -8,7 +8,6 @@ import { ImageList, ImageListItem, ImageListItemBar, Skeleton, Grid, Box } from 
 
 function Tags() {
   const tags = useSelector((state) => state.tags.entities)
-
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -42,7 +41,7 @@ function Tags() {
               )}
               <ImageListItemBar 
                 position="below"
-                sx={{color: "text.secondary", textAlign: "center"}}
+                sx={{ color: "text.secondary", textAlign: "center" }}
                 title={<Anchor name={`# ${tag.name}`} to={`/tags/${tag.id}`} />} 
               />
             </ImageListItem>

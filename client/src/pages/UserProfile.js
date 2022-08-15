@@ -37,7 +37,7 @@ function UserProfile({ currentUser }) {
     <div className="UserProfile">
       <UserHeader user={user} currentUser={currentUser} />
 
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%', height: '48px' }}>
         <Tabs 
           value={tab} 
           onChange={handleTabChange} 

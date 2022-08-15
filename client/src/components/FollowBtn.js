@@ -61,7 +61,7 @@ function FollowBtn({ currentUser }) {
   return (
     <>
       <Button 
-        variant="contained" 
+        variant={followed ? "outlined" : "contained"} 
         onClick={handleFollow} 
         color={followed ? "neutral" : "primary"}
         size="large"

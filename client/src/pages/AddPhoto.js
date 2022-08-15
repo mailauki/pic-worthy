@@ -16,10 +16,6 @@ function AddPhoto({ currentUser }) {
   const dispatch = useDispatch()
   const tags = useSelector((state) => state.tags.entities)
 
-  console.log(errors)
-  console.log(alert)
-  console.log(errorHelper)
-
   useEffect(() => {
     dispatch(fetchTags())
   }, [dispatch])
@@ -44,7 +40,7 @@ function AddPhoto({ currentUser }) {
                 headers: {
                   "Content-Type": "application/json"
                 },
-                body: JSON.stringify({photo_id: photo.id, tag_id: tag.id})
+                body: JSON.stringify({ photo_id: photo.id, tag_id: tag.id })
               })
               .then((r) => {
                 if (r.ok) {
@@ -113,9 +109,6 @@ function AddPhoto({ currentUser }) {
               .then((r) => {
                 if (r.ok) {
                   r.json().then((tag) => {
-                    // if(tag.id !== null) {
-                    //   dispatch(tagAdded(tag))
-                    // }
                     dispatch(tagAdded(tag))
                   })
                 } else {

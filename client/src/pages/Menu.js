@@ -64,6 +64,7 @@ function Menu({ currentUser, onLogout, checked, setChecked }) {
             Login
           </Button>
           <Button 
+            variant="outlined" 
             onClick={() => history.push('/signup')} 
             startIcon={<PersonAddIcon />}
             size="large"
@@ -86,7 +87,7 @@ function Menu({ currentUser, onLogout, checked, setChecked }) {
               <Typography 
                 variant="h3" 
                 component="h3"
-                sx={{fontSize: 24}}
+                sx={{ fontSize: 24 }}
               >
                 Hello, {currentUser.first_name}
               </Typography>
@@ -94,7 +95,7 @@ function Menu({ currentUser, onLogout, checked, setChecked }) {
               <Typography 
                 variant="h3" 
                 component="h3"
-                sx={{fontSize: 24}}
+                sx={{ fontSize: 24 }}
               >
                 Hello
               </Typography>

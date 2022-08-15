@@ -7,9 +7,11 @@ import { fetchPhoto } from '../features/photos/photosSlice';
 import LikeBtn from '../components/LikeBtn';
 import Tags from '../components/Tags';
 import Anchor from '../components/Anchor';
-import { IconButton, Skeleton, List, ListItem, ListItemAvatar, ListItemText, Avatar } from '@mui/material';
+import Comments from '../components/Comments';
+import { IconButton, Skeleton, List, ListItem, ListItemAvatar, ListItemText, Avatar, Box, InputBase, Divider } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
+import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
 function PhotoProfile({ currentUser }) {
   const { id } = useParams()
@@ -116,6 +118,26 @@ function PhotoProfile({ currentUser }) {
           <></>
         )}
       </div>
+
+      <Comments currentUser={currentUser} />
+
+      <Box
+        sx={{
+          display: 'flex',
+          width: '100%',
+          justifyContent: 'center',
+          alignItems: "center",
+          padding: "10px",
+          mt: "10px",
+          fontSize: "14px",
+          borderBottom: 1, 
+          borderColor: 'divider',
+          position: 'relative',
+          bottom: 0
+        }}
+      >
+        <Anchor name="Image Source" to={{ pathname: photo.image }} />
+      </Box>
     </div>
   )
 }

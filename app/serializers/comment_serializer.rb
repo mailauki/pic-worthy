@@ -1,3 +1,14 @@
 class CommentSerializer < ActiveModel::Serializer
-  attributes :id, :text, :user_id, :photo_id
+  attributes :id, :text, :username, :avatar
+
+  def username
+    object.user.username
+  end
+
+  def avatar
+    object.user.avatar
+  end
+  
+  belongs_to :user
+  # belongs_to :photo
 end

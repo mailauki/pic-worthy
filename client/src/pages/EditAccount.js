@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useHistory } from "react-router";
-import { Link } from 'react-router-dom';
 import FormInput from '../components/FormInput';
-import { Button, TextField } from '@mui/material';
+import { Button } from '@mui/material';
 
 function EditAccount({ currentUser }) {
   const [formData, setFormData] = useState({username: currentUser.username, first_name: currentUser.first_name, avatar: currentUser.avatar})
@@ -23,14 +22,14 @@ function EditAccount({ currentUser }) {
         if (r.ok) {
           r.json().then((user) => history.push(`/users/${currentUser.id}`))
         } else {
-          r.json().then((err) => setErrors(err.errors))
+          r.json().then((err) => setErrors(err.errors.map((error) => error.toLowerCase())))
         }
       })
   }
 
   const formInfo = [
     {label: "Username", type: null, value: formData.username, name: "username"}, 
-    {label: "First Name", type: null, value: formData.first_name, name: "first_name"}, 
+    {label: "First Name", type: null, value: formData.first_name, name: "first name"}, 
     {label: "Avatar", type: "url", value: formData.avatar, name: "avatar"}
   ]
 
@@ -38,7 +37,7 @@ function EditAccount({ currentUser }) {
     <div className="EditAccount">
       <h1>Edit Account</h1>
       <div className="form">
-        {formInfo.map( item => <FormInput errors={errors.filter((err) => err.includes(item.label))} item={item} formData={formData} setFormData={setFormData} /> )}
+        {formInfo.map( item => <FormInput errors={errors.filter((err) => err.includes(item.name))} item={item} formData={formData} setFormData={setFormData} /> )}
         <Button 
           className="form-button" 
           variant="contained"

@@ -16,6 +16,7 @@ function EditPhoto({ currentUser }) {
   const [formData, setFormData] = useState({image: photo.image, description: photo.description})
   const [selectedTags, setSelectedTags] = useState(photo.tags)
   const [errors, setErrors] = useState([])
+  const [errorHelper, setErrorHelper] = useState("")
 
   useEffect(() => {
     dispatch(fetchTags())
@@ -49,9 +50,6 @@ function EditPhoto({ currentUser }) {
         r.json().then((photo) => {
           if(photo.tags.length > 0) {
             photo.tags.map((tag) => {
-              console.log(`remove ${tag.name}`)
-
-              // send photo.id to delete all photo_tags associated with that photo
               fetch(`/photo_tags/${photo.id}`, {
                 method: "DELETE",
                 headers: {
@@ -70,9 +68,6 @@ function EditPhoto({ currentUser }) {
 
           if(selectedTags.length > 0) {
             selectedTags.map((tag) => {
-              console.log(`add ${tag.name}`)
-
-              // add new photo_tag associations or readd any deleted ones upon update
               fetch("/photo_tags", {
                 method: "POST",
                 headers: {
@@ -93,7 +88,7 @@ function EditPhoto({ currentUser }) {
           history.push(`/users/${currentUser.id}`)
         })
       } else {
-        r.json().then((err) => setErrors(err.errors))
+        r.json().then((err) => setErrors(err.errors.map((error) => error.toLowerCase())))
       }
     })
   }
@@ -108,7 +103,7 @@ function EditPhoto({ currentUser }) {
       <h1>Edit Photo</h1>
       {formData.image !== "" && selectedTags ? (
         <div className="form">
-          {formInfo.map( item => <FormInput errors={errors.filter((err) => err.includes(item.label))} item={item} formData={formData} setFormData={setFormData} /> )}
+          {formInfo.map( item => <FormInput errors={errors.filter((err) => err.includes(item.name))} item={item} formData={formData} setFormData={setFormData} /> )}
           <Autocomplete
             multiple
             id="tags"
@@ -133,21 +128,30 @@ function EditPhoto({ currentUser }) {
                 .then((r) => {
                   if (r.ok) {
                     r.json().then((tag) => {
-                      console.log(tag)
                       dispatch(tagAdded(tag))
                     })
                   } else {
-                    r.json().then((err) => setErrors(err.errors))
+                    r.json().then((err) => setErrorHelper(err.errors[0].split(" ").slice(1).join(" ")))
                   }
                 })
               }
             }}
             renderInput={(params) => (
-              <TextField
-                {...params}
-                label="Tags"
-                placeholder="add tags"
-              />
+              errorHelper ? (
+                <TextField
+                  {...params}
+                  error
+                  label="Tags"
+                  placeholder="add tags"
+                  helperText={errorHelper}
+                />
+              ) : (
+                <TextField
+                  {...params}
+                  label="Tags"
+                  placeholder="add tags"
+                />
+              )
             )}
           />
           <Button 

@@ -45,6 +45,8 @@ a {
 
 .Home, .Login, .Signup, .Menu, .EditAccount, .UserProfile, .Follows, .AddPhoto, .EditPhoto, .PhotoProfile, .Search {
   width: 100%;
+  min-height: 100%;
+  margin-bottom: 20px;
 }
 
 .Login, .Signup, .Tags, .Tag, .Follows, .AddPhoto, .EditPhoto, .EditAccount {
