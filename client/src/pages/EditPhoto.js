@@ -100,7 +100,7 @@ function EditPhoto({ currentUser }) {
 
   return (
     <div className="EditPhoto">
-      <h1>Edit Photo</h1>
+      <img src={formData.image} height="150px" />
       {formData.image !== "" && selectedTags ? (
         <div className="form">
           {formInfo.map( item => <FormInput errors={errors.filter((err) => err.includes(item.name))} item={item} formData={formData} setFormData={setFormData} /> )}
@@ -160,7 +160,7 @@ function EditPhoto({ currentUser }) {
             variant="contained"
             onClick={handleSubmit}
           >
-            Submit
+            Edit Photo
           </Button>
         </div>
       ) : (

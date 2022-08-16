@@ -1,12 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from "react-router";
 import FormInput from '../components/FormInput';
-import { Button } from '@mui/material';
+import { Button, Avatar } from '@mui/material';
 
 function EditAccount({ currentUser }) {
-  const [formData, setFormData] = useState({username: currentUser.username, first_name: currentUser.first_name, avatar: currentUser.avatar})
+  const [formData, setFormData] = useState({username: "", first_name: "", avatar: ""})
   const [errors, setErrors] = useState([])
   const history = useHistory()
+
+  useEffect(() => {
+    setFormData(currentUser ? {username: currentUser.username, first_name: currentUser.first_name, avatar: currentUser.avatar} : {username: "", first_name: "", avatar: ""})
+  }, [currentUser])
 
   function handleSubmit(event) {
     event.preventDefault()
@@ -35,7 +39,20 @@ function EditAccount({ currentUser }) {
 
   return (
     <div className="EditAccount">
-      <h1>Edit Account</h1>
+      {formData ? (
+        <Avatar 
+          alt={formData.username} 
+          src={formData.avatar} 
+          sx={{ 
+            width: 80, 
+            height: 80
+          }}
+        >
+          {formData.username ? formData.username[0].toUpperCase() : ""}
+        </Avatar>
+      ) : (
+        <Avatar sx={{ width: 80, height: 80 }} />
+      )}
       <div className="form">
         {formInfo.map( item => <FormInput errors={errors.filter((err) => err.includes(item.name.split("_").join(" ")))} item={item} formData={formData} setFormData={setFormData} /> )}
         <Button 
@@ -43,7 +60,7 @@ function EditAccount({ currentUser }) {
           variant="contained"
           onClick={handleSubmit}
         >
-          Submit
+          Edit Account
         </Button>
       </div>
     </div>

@@ -73,7 +73,7 @@ function AddPhoto({ currentUser }) {
 
   return (
     <div className="AddPhoto">
-      <h1>Add Photo</h1>
+      <img src={formData.image} height="150px" />
       <div className="form">
         {formInfo.map( item => <FormInput errors={errors.filter((err) => err.includes(item.name))} item={item} formData={formData} setFormData={setFormData} /> )}
         <Autocomplete
@@ -145,7 +145,7 @@ function AddPhoto({ currentUser }) {
           variant="contained"
           onClick={handleSubmit}
         >
-          Submit
+          Add Photo
         </Button>
       </div>
       <Alert errors={alert} />
