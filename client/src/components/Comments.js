@@ -79,14 +79,18 @@ function Comments({ currentUser }) {
               </Avatar>
             </ListItemAvatar>
             <ListItemText primary={comment.text} secondary={`@${comment.username}`} />
-            <IconButton 
-              edge="end" 
-              aria-label="delete-comment"
-              sx={{ ml: "20px" }}
-              onClick={handleDeleteComment}
-            >
-              <DeleteIcon />
-            </IconButton>
+            {currentUser && comment.username === currentUser.username ? (
+              <IconButton 
+                edge="end" 
+                aria-label="delete-comment"
+                sx={{ ml: "20px" }}
+                onClick={handleDeleteComment}
+              >
+                <DeleteIcon />
+              </IconButton>
+            ) : (
+              <></>
+            )}
           </ListItem>
         ))
       ) : (

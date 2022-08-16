@@ -15,11 +15,26 @@ function FormInput({ errors, item, formData, setFormData }) {
       <TextField
         error
         label={item.label}
-        type={item.type} 
+        type={!showPassword ? item.type : "text"} 
         margin="normal"
         value={item.value}
         onChange={(event) => setFormData({...formData, [item.name]: event.target.value})}
         helperText={errors.filter((err) => err.includes(item.name.split("_").join(" ")))}
+        InputProps={{
+          endAdornment: item.type === "password" ? (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={handleShowPassword}
+                  edge="end"
+                >
+                  {!showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            ) : (
+              <></>
+            )
+        }}
         className="form-input"
         key={item.name}
       />
