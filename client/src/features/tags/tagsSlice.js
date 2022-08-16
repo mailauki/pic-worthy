@@ -15,14 +15,6 @@ const tagsSlice = createSlice({
   reducers: {
     tagAdded(state, action) {
       state.entities.push(action.payload)
-    },
-    tagUpdated(state, action) {
-      const tag = state.entities.find((tag) => tag.id === action.payload.id)
-      tag.url = action.payload.url
-    },
-    tagDeleted(state, action) {
-      const tag = state.entities.find((tag) => tag.id == action.payload.id)
-      tag.url = action.payload.url
     }
   },
   extraReducers: {
@@ -36,5 +28,5 @@ const tagsSlice = createSlice({
   }
 })
 
-export const { tagAdded, tagUpdated, tagDeleted } = tagsSlice.actions
+export const { tagAdded } = tagsSlice.actions
 export default tagsSlice.reducer

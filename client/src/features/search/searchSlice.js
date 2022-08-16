@@ -4,13 +4,6 @@ export const fetchSearch = createAsyncThunk("search/fetchSearch", ({tab: tab, ke
   return fetch(`/${tab}/search/${keyword}`)
     .then((r) => r.json())
     .then((data) => data)
-    // .then((r) => {
-    //   if (r.ok) {
-    //     r.json().then((data) => data)
-    //   } else {
-    //     r.json().then((err) => setErrors(err.errors))
-    //   }
-    // })
 })
 
 const searchSlice = createSlice({
@@ -20,17 +13,6 @@ const searchSlice = createSlice({
     status: "idle"
   },
   reducers: {
-    // tagAdded(state, action) {
-    //   state.entities.push(action.payload)
-    // },
-    // tagUpdated(state, action) {
-    //   const tag = state.entities.find((tag) => tag.id === action.payload.id)
-    //   tag.url = action.payload.url
-    // },
-    // tagDeleted(state, action) {
-    //   const tag = state.entities.find((tag) => tag.id == action.payload.id)
-    //   tag.url = action.payload.url
-    // }
   },
   extraReducers: {
     [fetchSearch.pending](state) {
@@ -43,5 +25,4 @@ const searchSlice = createSlice({
   }
 })
 
-// export const { tagAdded, tagUpdated, tagDeleted } = searchSlice.actions
 export default searchSlice.reducer

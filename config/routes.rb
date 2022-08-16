@@ -3,7 +3,7 @@ Rails.application.routes.draw do
   resources :friendships, only: [:create, :destroy]
   resources :likes, only: [:create, :destroy]
   resources :tags, only: [:index, :show, :create]
-  resources :comments, only: [:create]
+  resources :comments, only: [:create, :destroy]
   resources :photos
   resources :users do
     get '/followers', to: 'friendships#followers'

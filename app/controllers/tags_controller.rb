@@ -8,7 +8,7 @@ class TagsController < ApplicationController
 
   def search
     keyword = params[:keyword]
-    tags = Tag.where("name like ?", "%#{keyword}%")
+    tags = Tag.where("name like ?", "%#{keyword.downcase}%")
     render json: tags
   end
 

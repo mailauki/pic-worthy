@@ -19,17 +19,10 @@ const usersSlice = createSlice({
     status: "idle"
   },
   reducers: {
-    userAdded(state, action) {
-      state.entities.push(action.payload)
-    },
-    userUpdated(state, action) {
-      const user = state.entities.find((user) => user.id === action.payload.id)
-      user.url = action.payload.url
-    },
-    userDeleted(state, action) {
-      const user = state.entities.find((user) => user.id == action.payload.id)
-      user.url = action.payload.url
-    },
+    // userDeleted(state, action) {
+    //   const user = state.entities.find((user) => user.id == action.payload.id)
+    //   user.url = action.payload.url
+    // },
     followAdded(state, action) {
       const user = state.entities
       user.followers_total = user.followers_total + 1
@@ -40,13 +33,13 @@ const usersSlice = createSlice({
     }
   },
   extraReducers: {
-    [fetchUsers.pending](state) {
-      state.status = "loading"
-    },
-    [fetchUsers.fulfilled](state, action) {
-      state.entities = action.payload
-      state.status = "idle"
-    },
+    // [fetchUsers.pending](state) {
+    //   state.status = "loading"
+    // },
+    // [fetchUsers.fulfilled](state, action) {
+    //   state.entities = action.payload
+    //   state.status = "idle"
+    // },
     [fetchUser.pending](state) {
       state.status = "loading"
     },
@@ -57,5 +50,5 @@ const usersSlice = createSlice({
   }
 })
 
-export const { userAdded, userUpdated, userDeleted, followAdded, followDeleted } = usersSlice.actions
+export const { userDeleted, followAdded, followDeleted } = usersSlice.actions
 export default usersSlice.reducer

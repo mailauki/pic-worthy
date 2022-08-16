@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchTags, tagAdded } from '../features/tags/tagsSlice';
 import FormInput from '../components/FormInput';
 import Alert from '../components/Alert';
-import { Button, Autocomplete, Chip, TextField } from '@mui/material';
+import { Button, Autocomplete, Chip, TextField, Tooltip } from '@mui/material';
 
 function AddPhoto({ currentUser }) {
   const [formData, setFormData] = useState({image: "", description: ""})
@@ -68,7 +68,7 @@ function AddPhoto({ currentUser }) {
 
   const formInfo = [
     {label: "Image", type: "url", value: formData.image, name: "image", helper: "copy image address or url"}, 
-    {label: "Description", type: null, value: formData.description, name: "description", helper: " "}
+    {label: "Description (optional)", type: null, value: formData.description, name: "description", helper: " "}
   ]
 
   return (
@@ -126,15 +126,16 @@ function AddPhoto({ currentUser }) {
               <TextField
                 {...params}
                 error
-                label="Tags"
+                label="Tags (optional)"
                 placeholder="add tags"
                 helperText={errorHelper}
               />
             ) : (
               <TextField
                 {...params}
-                label="Tags"
+                label="Tags (optional)"
                 placeholder="add tags"
+                helperText="press enter to create new tag"
               />
             )
           )}

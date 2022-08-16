@@ -1,20 +1,18 @@
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchPhoto } from '../features/photos/photosSlice';
-import { IconButton, Skeleton, List, ListItem, ListItemAvatar, ListItemText, Avatar, Box, InputBase } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
+import { commentAdded, commentDeleted } from '../features/photos/photosSlice';
+import { IconButton, List, ListItem, ListItemAvatar, ListItemText, Avatar, Box, InputBase } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ArrowCircleUpIcon from '@mui/icons-material/ArrowCircleUp';
 
 function Comments({ currentUser }) {
   const photo = useSelector((state) => state.photos.entities)
+  const dispatch = useDispatch()
   const [comment, setComment] = useState("")
   const [errors, setErrors] = useState([])
   const commentData = currentUser ? {text: comment, user_id: currentUser.id, photo_id: photo.id} : {}
 
   function handleAddComment() {
-    // console.log({text: comment, user_id: currentUser.id, photo_id: photo.id})
-
     fetch("/comments", {
       method: "POST",
       headers: {
@@ -25,8 +23,8 @@ function Comments({ currentUser }) {
     .then((r) => {
       if (r.ok) {
         r.json().then((data) => {
-          console.log(data)
-          // dispatch(commentAdded(data))
+          dispatch(commentAdded(data))
+          setComment("")
         })
       } else {
         r.json().then((err) => {
@@ -34,8 +32,19 @@ function Comments({ currentUser }) {
         })
       }
     })
-    // add to comments list
-    // clear form
+  }
+
+  function handleDeleteComment(event) {
+    const comment_id = event.currentTarget.parentNode.id
+
+    fetch(`/comments/${comment_id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+    
+    dispatch(commentDeleted(comment_id))
   }
 
   return (
@@ -45,10 +54,7 @@ function Comments({ currentUser }) {
         flexDirection: 'column',
         width: '100%',
         justifyContent: 'center',
-        alignItems: 'center',
-        // position: 'relative',
-        // bottom: 0,
-        // mt: '100%'
+        alignItems: 'center'
       }}
     >
       <Box
@@ -57,6 +63,7 @@ function Comments({ currentUser }) {
       {photo.comments && photo.comments.length > 0 ? (
         photo.comments.map((comment) => (
           <ListItem
+            id={comment.id}
             sx={{
               width: '100%',
               pr: "10%",
@@ -72,6 +79,14 @@ function Comments({ currentUser }) {
               </Avatar>
             </ListItemAvatar>
             <ListItemText primary={comment.text} secondary={`@${comment.username}`} />
+            <IconButton 
+              edge="end" 
+              aria-label="delete-comment"
+              sx={{ ml: "20px" }}
+              onClick={handleDeleteComment}
+            >
+              <DeleteIcon />
+            </IconButton>
           </ListItem>
         ))
       ) : (
@@ -94,18 +109,21 @@ function Comments({ currentUser }) {
               {currentUser.username ? currentUser.username[0].toUpperCase() : ""}
             </Avatar>
           </ListItemAvatar>
-          <ListItemText primary={<InputBase
-            placeholder="add new comment..."
-            inputProps={{ 'aria-label': 'add-comment' }}
-            onChange={(event) => setComment(event.target.value)}
-            sx={{ 
-              ml: 1,
-              pl: 1, 
-              flex: 1, 
-              backgroundColor: 'primary.box'
-            }}
-            fullWidth
-          />} />
+          <ListItemText primary={
+            <InputBase
+              value={comment}
+              placeholder="add new comment..."
+              inputProps={{ 'aria-label': 'add-comment' }}
+              onChange={(event) => setComment(event.target.value)}
+              sx={{ 
+                ml: 1,
+                pl: 1, 
+                flex: 1, 
+                backgroundColor: 'primary.box'
+              }}
+              fullWidth
+            />
+          } />
           <IconButton 
             edge="end" 
             aria-label="submit-comment"

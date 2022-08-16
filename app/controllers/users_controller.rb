@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
   def search
     keyword = params[:keyword]
-    users = User.where("username like ?", "%#{keyword}%")
+    users = User.where("username like ?", "%#{keyword.downcase}%")
     render json: users
   end
 
