@@ -34,14 +34,14 @@ function Signup({ onLogin }) {
   const formInfo = [
     {label: "Username", type: null, value: formData.username, name: "username", helper: " "}, 
     {label: "Password", type: "password", value: formData.password, name: "password", helper: " "}, 
-    {label: "Password Confirmation", type: "password", value: formData.password_confirmation, name: "password confirmation", helper: " "}
+    {label: "Password Confirmation", type: "password", value: formData.password_confirmation, name: "password_confirmation", helper: " "}
   ]
 
   return (
     <div className="Signup">
       <h1>Signup</h1>
       <div className="form">
-        {formInfo.map( item => <FormInput errors={errors.filter((err) => err.includes(item.name))} item={item} formData={formData} setFormData={setFormData} /> )}
+        {formInfo.map( item => <FormInput errors={errors.filter((err) => err.includes(item.name.split("_").join(" ")))} item={item} formData={formData} setFormData={setFormData} /> )}
         <Button 
           className="form-button" 
           variant="contained"

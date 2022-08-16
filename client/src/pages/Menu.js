@@ -1,5 +1,6 @@
-import { useHistory } from "react-router";
-import { Button, Avatar, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Switch, Box, Typography } from '@mui/material';
+import { useState } from 'react';
+import { useHistory } from 'react-router';
+import { Button, Avatar, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Divider, Switch, Box, Typography, Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import PersonIcon from '@mui/icons-material/Person';
@@ -10,6 +11,7 @@ import NightlightIcon from '@mui/icons-material/Nightlight';
 
 function Menu({ currentUser, onLogout, checked, setChecked }) {
   const history = useHistory()
+  const [open, setOpen] = useState(false)
 
   function handleLogout() {
     fetch("/logout", {
@@ -44,9 +46,28 @@ function Menu({ currentUser, onLogout, checked, setChecked }) {
       case "edit-account":
         history.push("/edit-account")
         break
-      default:
-        console.log("clicked")
+      case "delete-account":
+        setOpen(true)
+        break
     }
+  }
+
+  function handleClose() {
+    setOpen(false)
+  }
+
+  function handleDelete() {
+    setOpen(false)
+
+    fetch(`/users/${currentUser.id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+
+    onLogout(null)
+    history.push("/")
   }
 
   return (
@@ -128,6 +149,7 @@ function Menu({ currentUser, onLogout, checked, setChecked }) {
               </Avatar>
             )}
           </Box>
+
           <Button 
             variant="contained" 
             startIcon={<LogoutIcon />}
@@ -136,6 +158,7 @@ function Menu({ currentUser, onLogout, checked, setChecked }) {
           >
             Logout
           </Button>
+
           <List>
             <ListItem disablePadding>
               <ListItemButton id="view-profile" onClick={handleClick}>
@@ -157,7 +180,7 @@ function Menu({ currentUser, onLogout, checked, setChecked }) {
           <Divider />
           <List>
             <ListItem disablePadding>
-              <ListItemButton disabled onClick={handleClick}>
+              <ListItemButton id="delete-account" onClick={handleClick}>
                 <ListItemIcon>
                   <PersonOffIcon />
                 </ListItemIcon>
@@ -181,6 +204,28 @@ function Menu({ currentUser, onLogout, checked, setChecked }) {
               }}
             />
           </ListItem>
+
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-delete-title"
+            aria-describedby="alert-delete-description"
+          >
+            <DialogTitle id="alert-delete-title">
+              {"Are you sure you want to delete your account?"}
+            </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-delete-description">
+                Deleting your account will permanently delete your profile and everything accociated with it, including all photos and comments.
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Disagree</Button>
+              <Button onClick={handleDelete} autoFocus color="error">
+                Agree
+              </Button>
+            </DialogActions>
+          </Dialog>
         </>
       )}
     </div>

@@ -29,7 +29,7 @@ function EditAccount({ currentUser }) {
 
   const formInfo = [
     {label: "Username", type: null, value: formData.username, name: "username"}, 
-    {label: "First Name", type: null, value: formData.first_name, name: "first name"}, 
+    {label: "First Name", type: null, value: formData.first_name, name: "first_name"}, 
     {label: "Avatar", type: "url", value: formData.avatar, name: "avatar"}
   ]
 
@@ -37,7 +37,7 @@ function EditAccount({ currentUser }) {
     <div className="EditAccount">
       <h1>Edit Account</h1>
       <div className="form">
-        {formInfo.map( item => <FormInput errors={errors.filter((err) => err.includes(item.name))} item={item} formData={formData} setFormData={setFormData} /> )}
+        {formInfo.map( item => <FormInput errors={errors.filter((err) => err.includes(item.name.split("_").join(" ")))} item={item} formData={formData} setFormData={setFormData} /> )}
         <Button 
           className="form-button" 
           variant="contained"

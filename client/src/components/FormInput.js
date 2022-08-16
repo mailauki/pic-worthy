@@ -10,7 +10,7 @@ function FormInput({ errors, item, formData, setFormData }) {
         margin="normal"
         value={item.value}
         onChange={(event) => setFormData({...formData, [item.name]: event.target.value})}
-        helperText={errors.filter((err) => err.includes(item.name))}
+        helperText={errors.filter((err) => err.includes(item.name.split("_").join(" ")))}
         className="form-input"
         key={item.name}
       />
