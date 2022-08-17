@@ -1,15 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUser } from '../features/users/usersSlice';
 import UserHeader from '../components/UserHeader';
+import TabsBar from '../components/TabsBar';
 import ViewMode from '../components/ViewMode';
 import ImageGrid from '../components/ImageGrid';
 import ImageQuilt from '../components/ImageQuilt';
 import ImageFeed from '../components/ImageFeed';
 import SkeletonGrid from '../components/SkeletonGrid';
-import { Tabs, Tab, Box } from '@mui/material';
+// import { Tabs, Tab, Box } from '@mui/material';
 
 function UserProfile({ currentUser }) {
   const { id } = useParams()
@@ -37,19 +37,10 @@ function UserProfile({ currentUser }) {
     <div className="UserProfile">
       <UserHeader user={user} currentUser={currentUser} />
 
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%', height: '48px' }}>
-        <Tabs 
-          value={tab} 
-          onChange={handleTabChange} 
-          aria-label="photos-tabs" 
-          variant="fullWidth" 
-        >
-          <Tab label="Photos" value="photos" />
-          <Tab label="Likes" value="likes" />
-        </Tabs>
-      </Box>
+      <TabsBar tab={tab} handleChange={handleTabChange} tabBarInfo={[{label: "Photos", value: "photos"}, {label: "Likes", value: "likes"}]} />
 
       <ViewMode active={activeViewMode} handleViewMode={handleViewMode} />
+
       {userStatus === "loading" ? (
         <SkeletonGrid />
       ) : (

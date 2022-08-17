@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchSearch } from '../features/search/searchSlice';
+import TabsBar from '../components/TabsBar';
 import Results from '../components/Results';
 import { Box, InputBase, Tabs, Tab } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
@@ -53,27 +54,7 @@ function Search() {
         </Box>
       </Box>
 
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%', height: '48px' }}>
-        <Tabs 
-          value={tab} 
-          onChange={handleTabChange} 
-          aria-label="search-tabs" 
-          variant="fullWidth" 
-        >
-          <Tab 
-            label="Users" 
-            value="users" 
-          />
-          <Tab 
-            label="Tags" 
-            value="tags" 
-          />
-          <Tab 
-            label="Description" 
-            value="description" 
-          />
-        </Tabs>
-      </Box>
+      <TabsBar tab={tab} handleChange={handleTabChange} tabBarInfo={[{label: "Users", value: "users"}, {label: "Tags", value: "tags"}, {label: "Description", value: "description"}]} />
 
       <Results tab={tab} results={results} searchStatus={searchStatus} />
     </div>

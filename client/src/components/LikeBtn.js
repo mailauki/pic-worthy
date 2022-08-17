@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Alert from './Alert';
+import LoginAlert from './LoginAlert';
 import { useSelector, useDispatch } from 'react-redux';
 import { likeAdded, likeDeleted } from '../features/photos/photosSlice';
 import { IconButton, Typography } from '@mui/material';
@@ -68,7 +68,8 @@ function LikeBtn({ currentUser }) {
           {liked ? <FavoriteIcon color="primary" /> : <FavoriteBorderIcon />}
         </IconButton>
       </div>
-      <Alert errors={errors} />
+      
+      <LoginAlert errors={errors} />
     </>
   )
 }

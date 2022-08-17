@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchTags, tagAdded } from '../features/tags/tagsSlice';
 import FormInput from '../components/FormInput';
-import Alert from '../components/Alert';
+import LoginAlert from '../components/LoginAlert';
 import { Button, Autocomplete, Chip, TextField, Tooltip } from '@mui/material';
 
 function AddPhoto({ currentUser }) {
@@ -148,7 +148,8 @@ function AddPhoto({ currentUser }) {
           Add Photo
         </Button>
       </div>
-      <Alert errors={alert} />
+      
+      <LoginAlert errors={alert} />
     </div>
   )
 }

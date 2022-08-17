@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import Alert from './Alert';
+import LoginAlert from './LoginAlert';
 import { useSelector, useDispatch } from 'react-redux';
 import { followAdded, followDeleted } from '../features/users/usersSlice';
 import { Button } from '@mui/material';
@@ -68,7 +68,8 @@ function FollowBtn({ currentUser }) {
       >
         {followed ? "Unfollow" : "Follow"}
       </Button>
-      <Alert errors={errors} />
+      
+      <LoginAlert errors={errors} />
     </>
   )
 }
