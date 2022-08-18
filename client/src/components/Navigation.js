@@ -75,9 +75,9 @@ function Navigation({ mobileView, pathname }) {
             zIndex: 1,
             borderRight: 1, 
             borderColor: "divider",
-            height: "calc(100vh - 66px)",
+            height: "calc(100vh - 64px)",
             position: "sticky",
-            top: "66px"
+            top: "64px"
           }}
         >
           <Tab 
