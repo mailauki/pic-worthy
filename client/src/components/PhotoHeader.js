@@ -43,7 +43,7 @@ function PhotoHeader({ currentUser }) {
           </>
         )}
 
-        <LikeBtn currentUser={currentUser} photo={photo} />
+        <LikeBtn currentUser={currentUser} />
       </ListItem>
     </List>
   )

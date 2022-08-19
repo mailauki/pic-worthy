@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import LoginAlert from './LoginAlert';
 import { useSelector, useDispatch } from 'react-redux';
 import { likeAdded, likeDeleted } from '../features/photos/photosSlice';
@@ -7,12 +8,12 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 
 function LikeBtn({ currentUser }) {
+  const { id } = useParams()
   const photo = useSelector((state) => state.photos.entities)
-  const { id, likes_total } = photo
   const dispatch = useDispatch()
   
-  const foundLike = currentUser && currentUser.liked_photos ? currentUser.liked_photos.find((likedPhoto) => likedPhoto.id === id) : null
-  const likeData = currentUser ? {user_id: currentUser.id, photo_id: id} : {}
+  const foundLike = currentUser && currentUser.liked_photos ? currentUser.liked_photos.find((likedPhoto) => likedPhoto.id === Number(id)) : null
+  const likeData = currentUser ? {user_id: currentUser.id, photo_id: Number(id)} : {}
 
   const [liked, setLiked] = useState(false)
   const [errors, setErrors] = useState(false)
@@ -41,21 +42,15 @@ function LikeBtn({ currentUser }) {
         }
       })
     ) : (
-      fetch(`/likes/${id}`, {
+      fetch(`/likes/${Number(id)}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         }
       })
-      .then((r) => {
-        if (r.ok) {
-          r.json().then((data) => {
-            dispatch(likeDeleted())
-            setLiked(false)
-          })
-        } else {
-          r.json().then((err) => setErrors(err.errors))
-        }
+      .then(() => {
+        dispatch(likeDeleted())
+        setLiked(false)
       })
     )
   }
@@ -63,7 +58,7 @@ function LikeBtn({ currentUser }) {
   return (
     <>
       <div style={{ display: "flex", alignItems: "center", width: "fit-content" }}>
-        <Typography variant="subtitle1" color={liked ? "primary" : "text.secondary"}>{likes_total}</Typography>
+        <Typography variant="subtitle1" color={liked ? "primary" : "text.secondary"}>{photo.likes_total}</Typography>
         <IconButton onClick={handleLike}>
           {liked ? <FavoriteIcon color="primary" /> : <FavoriteBorderIcon />}
         </IconButton>

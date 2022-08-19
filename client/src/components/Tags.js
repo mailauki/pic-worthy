@@ -6,6 +6,7 @@ function Tags({ tags }) {
     <>
       {tags.map((tag) => 
         <Chip 
+          key={tag.id}
           label={tag.name} 
           component={Link} to={`/tags/${tag.id}`} 
           sx={{cursor: "pointer", mr: 1}}

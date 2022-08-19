@@ -3,8 +3,7 @@ class PhotoSerializer < ActiveModel::Serializer
 
   belongs_to :user
 
-  # has_many :likes
+  has_many :likes
   has_many :comments
-  # has_many :photo_tags
   has_many :tags, through: :photo_tags
 end

@@ -21,7 +21,6 @@ Run the local server with `rails s` for Ruby, and `npm start --prefix client` fo
 
 ## Dependencies
 ### Created using: 
-
 Database:
 * ruby: 2.7.4
 * adapter: PostgreSQL
