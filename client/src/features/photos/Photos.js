@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchMostRecentPhotos } from './photosSlice';
 import Anchor from '../../components/Anchor';
-import { ImageList, ImageListItem, ImageListItemBar, IconButton, Chip, Skeleton } from '@mui/material';
+import { ImageList, ImageListItem, ImageListItemBar, IconButton, Chip, Skeleton, Typography } from '@mui/material';
 import InfoIcon from '@mui/icons-material/Info';
 
 function Photos() {
@@ -16,7 +16,9 @@ function Photos() {
 
   return (
     <>
-      <h3>Most Recent</h3>
+      <Typography variant="h6" sx={{ mt: 4 }}>
+        Most Recent
+      </Typography>
       {photos.length > 0 ? (
         <ImageList
           sx={{ width: 350 }}

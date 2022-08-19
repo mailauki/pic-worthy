@@ -8,7 +8,7 @@ class PhotosController < ApplicationController
 
   def search
     keyword = params[:keyword]
-    photos = Photo.where("description like ?", "%#{keyword.downcase}%")
+    photos = Photo.where("lower(description) like ?", "%#{keyword.downcase}%")
     render json: photos
   end
 

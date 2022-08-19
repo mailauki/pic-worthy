@@ -1,11 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-export const fetchPhotos = createAsyncThunk("photos/fetchPhotos", () => {
-  return fetch("/photos")
-    .then((r) => r.json())
-    .then((data) => data)
-})
-
 export const fetchMostRecentPhotos = createAsyncThunk("photos/fetchMostRecentPhotos", () => {
   return fetch("/most_recent")
     .then((r) => r.json())

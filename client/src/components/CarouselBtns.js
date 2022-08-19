@@ -1,9 +1,9 @@
-import { MobileStepper, ImageList, ImageListItem, ImageListItemBar, IconButton, Skeleton, Box } from '@mui/material';
+import { IconButton, Box } from '@mui/material';
 import KeyboardArrowLeft from '@mui/icons-material/KeyboardArrowLeft';
 import KeyboardArrowRight from '@mui/icons-material/KeyboardArrowRight';
 import { useSwiper } from "swiper/react";
 
-function CarouselBtns({ children }) {
+function CarouselBtns() {
   const swiper = useSwiper()
 
   function handleNext() {

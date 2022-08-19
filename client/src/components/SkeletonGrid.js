@@ -1,10 +1,10 @@
 import { useLocation } from 'react-router-dom';
-import { ImageList, ImageListItem, ImageListItemBar, Skeleton, Grid, Box } from '@mui/material';
+import { ImageList, ImageListItem, ImageListItemBar, Skeleton } from '@mui/material';
 
 function SkeletonGrid() {
   const pathname = useLocation().pathname
 
-  const SkeletonItems = Array.from({length: 9}, (_, index) => {
+  const SkeletonItems = Array.from({ length: 9 }).map((el, index) => {
     return (
       <ImageListItem key={index}>
         <Skeleton 

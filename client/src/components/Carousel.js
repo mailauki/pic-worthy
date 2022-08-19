@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchFeaturedPhotos } from '../features/photos/featuredPhotosSlice';
 import Anchor from './Anchor';
 import CarouselBtns from './CarouselBtns';
-import { MobileStepper, ImageList, ImageListItem, ImageListItemBar, Skeleton, Box } from '@mui/material';
+import { MobileStepper, ImageList, ImageListItem, ImageListItemBar, Skeleton } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 
@@ -34,16 +34,9 @@ function Carousel() {
         <>
           <Swiper 
             slidesPerView={"auto"}
-            // grabCursor={true}
             loop={true}
             pagination={{ clickable: true }}
             onSlideChange={(swiper) => setActiveStep(swiper.realIndex)}
-            // style={{
-            //   width: "100%",
-            //   // height: 350,
-            //   // position: "absolute",
-            //   // top: 0
-            // }}
           >
             <MobileStepper
               variant="dots"
@@ -53,7 +46,7 @@ function Carousel() {
               sx={{ 
                 backgroundColor: "rgba(0,0,0,0)",
                 mr: 1,
-                pb: 2.2,
+                pb: 2.35,
                 height: 350,
                 alignItems: "end",
                 position: "absolute",
@@ -69,7 +62,7 @@ function Carousel() {
             {featuredPhotos.map((photo) => {
               return (
                 <SwiperSlide>
-                  {/* <ImageList 
+                  <ImageList 
                     sx={{ 
                       width: "100%", 
                       height: "100%",
@@ -100,38 +93,10 @@ function Carousel() {
                         }}
                       />
                     </ImageListItem>
-                  </ImageList> */}
-                  <Link to={`/photos/${activePhoto.id}`}>
-                    <img  
-                      src={`${photo.image}?h=350&fit=crop&auto=format`} 
-                      alt={photo.description}
-                      style={{ width: "100%", height: 350, zIndex: 0 }} 
-                    />
-                  </Link>
-
-                  <Box
-                    sx={{
-                      width: "100%",
-                      height: "40px",
-                      display: "flex",
-                      alignItems: "center",
-                      position: "absolute",
-                      top: "310px",
-                      pl: "10px",
-                      color: "#fff",
-                      background:
-                        'linear-gradient(to top, rgba(0,0,0,0.7) 0%, ' +
-                        'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
-                      zIndex: 1
-                    }}
-                  >
-                    <Anchor name={`@${photo.user.username}`} to={`/users/${photo.user.id}`} />
-                  </Box>
-                  
+                  </ImageList>
                 </SwiperSlide>
               )
             })}
-
           </Swiper>
         </>
       ) : (

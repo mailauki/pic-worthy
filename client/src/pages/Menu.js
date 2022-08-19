@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useHistory } from 'react-router';
 import MenuHeader from '../components/MenuHeader';
-import MenuButtonsList from '../components/MenuButtonsList';
+import MenuList from '../components/MenuList';
 import DeleteAlert from '../components/DeleteAlert';
 import { Button, Box } from '@mui/material';
 import LoginIcon from '@mui/icons-material/Login';
@@ -70,7 +70,7 @@ function Menu({ currentUser, onLogout, checked, setChecked }) {
         <>
           <MenuHeader currentUser={currentUser} onLogout={onLogout} />
 
-          <MenuButtonsList handleClick={handleClick} checked={checked} setChecked={setChecked} />
+          <MenuList handleClick={handleClick} checked={checked} setChecked={setChecked} />
           
           <DeleteAlert open={open} handleClose={handleClose} handleDelete={handleDelete} />
         </>

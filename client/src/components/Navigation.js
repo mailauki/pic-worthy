@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { BottomNavigation, BottomNavigationAction, Tabs, Tab, Fab } from '@mui/material';
+import { BottomNavigation, BottomNavigationAction, Tabs, Tab, Fab, Tooltip } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
@@ -45,13 +45,15 @@ function Navigation({ mobileView, pathname }) {
             icon={<SearchIcon />}
           />
           <div style={{ margin: 10, width: 'fit-content' }}>
-            <AddButton
-              aria-label="add"
-              value="add" 
-              component={Link} to="/add-photo"
-            >
-              <AddIcon />
-            </AddButton>
+            <Tooltip title="Add Photo" arrow>
+              <AddButton
+                aria-label="add-photo"
+                value="add" 
+                component={Link} to="/add-photo"
+              >
+                <AddIcon />
+              </AddButton>
+            </Tooltip>
           </div>
           <BottomNavigationAction 
             label="Tags" 

@@ -51,7 +51,8 @@ function MenuHeader({ currentUser, onLogout }) {
               postition: "absolute", 
               top: 30, 
               right: 20,
-              zIndex: 1
+              zIndex: 1,
+              fontSize: 30
             }}
           >
             {currentUser.username ? currentUser.username[0].toUpperCase() : ""}

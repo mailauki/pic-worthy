@@ -52,7 +52,9 @@ function ImageQuilt({ user, photos }) {
           ))}
         </ImageList>
       ) : (
-        <Typography variant="h6">Nothing Here Yet</Typography>
+        <Typography variant="h6" className="nothing">
+          Nothing Here Yet
+        </Typography>
       )
     ) : (
       <SkeletonGrid />

@@ -58,11 +58,12 @@ function Comments({ currentUser }) {
       }}
     >
       <Box
-        sx={{ maxHeight: '75px', width: '100%', overflowY: 'scroll' }}
+        sx={{ width: '100%' }}
       >
       {photo.comments && photo.comments.length > 0 ? (
         photo.comments.map((comment) => (
           <ListItem
+            key={comment.id}
             id={comment.id}
             sx={{
               width: '100%',

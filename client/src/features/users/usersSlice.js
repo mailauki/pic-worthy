@@ -1,11 +1,5 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-export const fetchUsers = createAsyncThunk("users/fetchUsers", () => {
-  return fetch("/users")
-    .then((r) => r.json())
-    .then((data) => data)
-})
-
 export const fetchUser = createAsyncThunk("users/fetchUser", (id) => {
   return fetch(`/users/${id}`)
     .then((r) => r.json())
@@ -19,10 +13,6 @@ const usersSlice = createSlice({
     status: "idle"
   },
   reducers: {
-    // userDeleted(state, action) {
-    //   const user = state.entities.find((user) => user.id == action.payload.id)
-    //   user.url = action.payload.url
-    // },
     followAdded(state, action) {
       const user = state.entities
       user.followers_total = user.followers_total + 1
@@ -33,13 +23,6 @@ const usersSlice = createSlice({
     }
   },
   extraReducers: {
-    // [fetchUsers.pending](state) {
-    //   state.status = "loading"
-    // },
-    // [fetchUsers.fulfilled](state, action) {
-    //   state.entities = action.payload
-    //   state.status = "idle"
-    // },
     [fetchUser.pending](state) {
       state.status = "loading"
     },
@@ -50,5 +33,5 @@ const usersSlice = createSlice({
   }
 })
 
-export const { userDeleted, followAdded, followDeleted } = usersSlice.actions
+export const { followAdded, followDeleted } = usersSlice.actions
 export default usersSlice.reducer

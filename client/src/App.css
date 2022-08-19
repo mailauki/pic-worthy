@@ -35,7 +35,7 @@ a {
   margin-bottom: 40px;
 }
 
-.Login-Signup {
+.Login-Signup, .nothing {
   justify-content: center;
 }
 
@@ -53,11 +53,14 @@ a {
   margin-top: 30px;
 }
 
-.Login, .Signup, .AddPhoto, .EditPhoto, .EditAccount, .Home, .Tags, .Tag, .UserProfile, .form {
+.Login, .Signup, .AddPhoto, .EditPhoto, .EditAccount, .Home, .Tags, .Tag, .UserProfile, .form, .nothing {
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
+}
+
+.nothing {
+  height: 100%;
 }
 
 .form {
