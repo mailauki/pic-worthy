@@ -19,12 +19,15 @@ const photosSlice = createSlice({
     status: "idle"
   },
   reducers: {
-    likeAdded(state) {
+    likeAdded(state, action) {
       const photo = state.entities
+      photo.likes.push(action.payload)
       photo.likes_total = photo.likes_total + 1
     },
-    likeDeleted(state) {
+    likeDeleted(state, action) {
       const photo = state.entities
+      const index = photo.likes.findIndex((like) => like.id === action.payload)
+      photo.likes.splice(index, 1)
       photo.likes_total = photo.likes_total - 1
     },
     commentAdded(state, action) {
