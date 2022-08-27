@@ -18,7 +18,8 @@ function User({ user }) {
             {user.username ? user.username[0].toUpperCase() : ""}
           </Avatar>
         </ListItemAvatar>
-        <ListItemText primary={<Anchor name={`@${user.username}`} to={`/users/${user.id}`} />} />
+        {/* <ListItemText primary={<Anchor name={`@${user.username}`} to={`/users/${user.id}`} />} /> */}
+        <ListItemText primary={`@${user.username}`} />
       </>
     ) : (
       <>

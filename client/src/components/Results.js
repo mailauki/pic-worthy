@@ -1,9 +1,9 @@
 import { Link } from 'react-router-dom';
 import User from '../features/users/User';
-import Anchor from './Anchor';
+import ResultItem from './ResultItem';
 import { List, ListItem, ListItemButton, ListItemAvatar, ListItemText, Avatar } from '@mui/material';
 
-function Results({tab, results, searchStatus}) {
+function Results({ tab, results, searchStatus }) {
   return (
     <List sx={{width: "100%"}}>
       {searchStatus === "loading" ? (
@@ -21,54 +21,33 @@ function Results({tab, results, searchStatus}) {
             (() => {
               switch(tab) {
                 case "description": 
-                  return (
-                    <ListItem disablePadding>
-                      <ListItemButton
-                        component={Link} to={`/photos/${result.id}`}
-                      >
-                        <ListItemAvatar>
-                          <Avatar 
-                            alt={result.description} 
-                            src={result.image} 
-                            sx={{ 
-                              width: 60, 
-                              height: 60, 
-                              mr: 2
-                            }} 
-                            variant="square"
-                          />
-                        </ListItemAvatar>
-                        <ListItemText primary={<Anchor name={result.description} to={`/photos/${result.id}`} />} />
-                      </ListItemButton>
-                    </ListItem>
-                  )
+                return (
+                  <ResultItem 
+                    id={result.id} 
+                    image={result.image} 
+                    text={result.description} 
+                  />
+                )
                 case "tags":
                   return (
-                    <ListItem disablePadding>
-                      <ListItemButton
-                        component={Link} to={`/tags/${result.id}`}
-                      >
-                        <ListItemAvatar>
-                          <Avatar 
-                            alt={result.name} 
-                            src={result.photos && result.photos.at(-1) ? result.photos.at(-1).image : ""} 
-                            sx={{ 
-                              width: 60, 
-                              height: 60, 
-                              mr: 2
-                            }} 
-                            variant="square"
-                          />
-                        </ListItemAvatar>
-                        <ListItemText primary={<Anchor name={`# ${result.name}`} to={`/tags/${result.id}`} />} />
-                      </ListItemButton>
-                    </ListItem>
+                    <ResultItem 
+                      id={result.id} 
+                      image={result.photos && result.photos.at(-1) ? result.photos.at(-1).image : ""} 
+                      text={`# ${result.name}`} 
+                    />
                   )
                   case "users":
                     return (
-                      <ListItem disablePadding>
+                      <ListItem disablePadding key={result.id}>
                         <ListItemButton
                           component={Link} to={`/users/${result.id}`}
+                          sx={{
+                            '&:hover': {
+                              div: {
+                                color: 'primary.main'
+                              }
+                            }
+                          }}
                         >
                           <User user={result} />
                         </ListItemButton>

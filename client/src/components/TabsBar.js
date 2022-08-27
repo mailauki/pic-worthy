@@ -9,7 +9,7 @@ function TabsBar({ tabBarInfo, tab, handleChange }) {
         onChange={handleChange} 
         variant="fullWidth" 
       >
-        {tabBarInfo.map((info) => <Tab label={info.label} value={info.value} />)}
+        {tabBarInfo.map((info) => <Tab key={info.value} label={info.label} value={info.value} />)}
       </Tabs>
     </Box>
   )

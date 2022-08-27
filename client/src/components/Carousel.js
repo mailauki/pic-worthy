@@ -79,7 +79,7 @@ function Carousel() {
                         srcSet={`${photo.image}?h=350&fit=crop&auto=format&dpr=2 2x`}
                         alt={photo.description}
                         loading="lazy"
-                        style={{ width: "100%", height: "100%" }}
+                        style={{ width: "100%", height: "100%", cursor: "pointer" }}
                         onClick={() => history.push(`/photos/${activePhoto.id}`)}
                       />
                       <ImageListItemBar

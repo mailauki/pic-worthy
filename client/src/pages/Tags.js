@@ -2,7 +2,6 @@ import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchTags } from '../features/tags/tagsSlice';
-import Anchor from '../components/Anchor';
 import SkeletonGrid from '../components/SkeletonGrid';
 import { ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
 
@@ -10,8 +9,6 @@ function Tags() {
   const tags = useSelector((state) => state.tags.entities)
   const tagsStatus = useSelector((state) => state.tags.status)
   const dispatch = useDispatch()
-
-  console.log(tagsStatus)
 
   useEffect(() => {
     dispatch(fetchTags())
@@ -57,7 +54,6 @@ function Tags() {
               <ImageListItemBar 
                 position="below"
                 sx={{ color: "text.secondary", textAlign: "center" }}
-                // title={<Anchor name={`# ${tag.name}`} to={`/tags/${tag.id}`} />} 
                 title={`# ${tag.name}`}
               />
             </ImageListItem>
