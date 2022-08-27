@@ -51,7 +51,7 @@ function Results({tab, results, searchStatus}) {
                         <ListItemAvatar>
                           <Avatar 
                             alt={result.name} 
-                            src={result.photos ? result.photos.at(-1).image : ""} 
+                            src={result.photos && result.photos.at(-1) ? result.photos.at(-1).image : ""} 
                             sx={{ 
                               width: 60, 
                               height: 60, 

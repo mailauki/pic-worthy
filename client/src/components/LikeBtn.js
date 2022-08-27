@@ -16,6 +16,7 @@ function LikeBtn({ currentUser }) {
   const likeData = currentUser ? {user_id: currentUser.id, photo_id: Number(id)} : {}
 
   const [liked, setLiked] = useState(false)
+  const [findLike, setFindLike] = useState(null)
   const [errors, setErrors] = useState(false)
 
   useEffect(() => {

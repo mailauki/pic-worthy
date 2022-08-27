@@ -1,5 +1,5 @@
 import { React, useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { useHistory } from "react-router";
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchFeaturedPhotos } from '../features/photos/featuredPhotosSlice';
 import Anchor from './Anchor';
@@ -12,6 +12,7 @@ function Carousel() {
   const featuredPhotos = useSelector((state) => state.featuredPhotos.entities)
   const featuredStatus = useSelector((state) => state.featuredPhotos.status)
   const dispatch = useDispatch()
+  const history = useHistory()
 
   const [activeStep, setActiveStep] = useState(0)
   const maxSteps = featuredPhotos.length
@@ -35,7 +36,6 @@ function Carousel() {
           <Swiper 
             slidesPerView={"auto"}
             loop={true}
-            pagination={{ clickable: true }}
             onSlideChange={(swiper) => setActiveStep(swiper.realIndex)}
           >
             <MobileStepper
@@ -61,7 +61,7 @@ function Carousel() {
 
             {featuredPhotos.map((photo) => {
               return (
-                <SwiperSlide>
+                <SwiperSlide key={photo.id}>
                   <ImageList 
                     sx={{ 
                       width: "100%", 
@@ -72,9 +72,7 @@ function Carousel() {
                     rowHeight={350}
                   >
                     <ImageListItem 
-                      key={photo.id}
                       sx={{ width: "100%", height: "100%" }} 
-                      component={Link} to={`/photos/${activePhoto.id}`}
                     >
                       <img
                         src={`${photo.image}?h=350&fit=crop&auto=format`}
@@ -82,6 +80,7 @@ function Carousel() {
                         alt={photo.description}
                         loading="lazy"
                         style={{ width: "100%", height: "100%" }}
+                        onClick={() => history.push(`/photos/${activePhoto.id}`)}
                       />
                       <ImageListItemBar
                         title={<Anchor name={`@${photo.user.username}`} to={`/users/${photo.user.id}`} />}

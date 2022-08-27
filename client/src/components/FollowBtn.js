@@ -51,7 +51,7 @@ function FollowBtn({ currentUser }) {
           "Content-Type": "application/json",
         }
       })
-      .then((r) => {
+      .then(() => {
         dispatch(followDeleted())
         setFollowed(false)
       })

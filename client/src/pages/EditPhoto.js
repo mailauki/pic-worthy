@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchTags, tagAdded } from '../features/tags/tagsSlice';
 import { fetchPhoto } from '../features/photos/photosSlice';
 import FormInput from '../components/FormInput';
-import { Button, Autocomplete, TextField, Tooltip } from '@mui/material';
+import { Button, Autocomplete, TextField } from '@mui/material';
 
 function EditPhoto({ currentUser }) {
   const { id } = useParams()

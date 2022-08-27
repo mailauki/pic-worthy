@@ -1,7 +1,7 @@
 import { useHistory } from "react-router";
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import Tags from '../components/Tags';
+import TagsList from '../components/TagsList';
 import { useSelector } from 'react-redux';
 import { IconButton } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
@@ -34,7 +34,7 @@ function PhotoInfo({ currentUser }) {
     >
       <div>
         {photo.description ? <p>{photo.description}</p> : <></>}
-        {photo.tags ? <Tags tags={photo.tags} /> : <></>}
+        {photo.tags ? <TagsList tags={photo.tags} /> : <></>}
       </div>
       {currentUser && photo.user && currentUser.id === photo.user.id ? (
         <div>

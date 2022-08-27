@@ -37,6 +37,7 @@ function Photos() {
                 title={<Anchor name={`@${photo.user.username}`} to={`/users/${photo.user.id}`} />}
                 subtitle={photo.tags.map((tag) => 
                   <Chip 
+                    key={tag.id}
                     label={tag.name} 
                     component={Link} to={`/tags/${tag.id}`}
                     sx={{

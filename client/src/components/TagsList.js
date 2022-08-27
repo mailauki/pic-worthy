@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { Chip } from '@mui/material';
 
-function Tags({ tags }) {
+function TagsList({ tags }) {
   return (
     <>
       {tags.map((tag) => 
@@ -16,4 +16,4 @@ function Tags({ tags }) {
   )
 }
 
-export default Tags;
+export default TagsList;
