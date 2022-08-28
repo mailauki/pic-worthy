@@ -15,10 +15,13 @@ const usersSlice = createSlice({
   reducers: {
     followAdded(state, action) {
       const user = state.entities
+      user.followers.push(action.payload)
       user.followers_total = user.followers_total + 1
     },
     followDeleted(state, action) {
       const user = state.entities
+      const index = user.followers.findIndex((follower) => follower.id === action.payload)
+      user.followers.splice(index, 1)
       user.followers_total = user.followers_total - 1
     }
   },

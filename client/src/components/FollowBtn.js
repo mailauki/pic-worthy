@@ -8,18 +8,15 @@ function FollowBtn({ currentUser }) {
   const user = useSelector((state) => state.users.entities)
   const dispatch = useDispatch()
 
-  const [foundFollow, setFoundFollow] = useState(null)
-  const [followData, setFollowData] = useState({})
+  const foundFollow = currentUser && user.followers ? user.followers.find((follow) => follow.id === currentUser.id) : null
+  const followData = currentUser ? {followee_id: user.id, follower_id: currentUser.id} : {}
+  
   const [followed, setFollowed] = useState(false)
   const [errors, setErrors] = useState([])
 
   useEffect(() => {
-    currentUser && currentUser.followees ? setFoundFollow(currentUser.followees.find(followee => followee.id === user.id)) : setFoundFollow(null)
-
-    foundFollow ? setFollowed(true) : setFollowed(false)
-
-    currentUser ? setFollowData({followee_id: user.id, follower_id: currentUser.id}) : setFollowData({})
-  }, [currentUser, foundFollow])
+    setFollowed(foundFollow ? true : false)
+  }, [foundFollow])
 
   function handleFollow() {
     setErrors([])
@@ -35,7 +32,7 @@ function FollowBtn({ currentUser }) {
       .then((r) => {
         if (r.ok) {
           r.json().then((data) => {
-            dispatch(followAdded())
+            dispatch(followAdded(currentUser))
             setFollowed(true)
           })
         } else {
@@ -52,7 +49,7 @@ function FollowBtn({ currentUser }) {
         }
       })
       .then(() => {
-        dispatch(followDeleted())
+        dispatch(followDeleted(currentUser.id))
         setFollowed(false)
       })
     )

@@ -59,7 +59,7 @@ Photos gathered from but not limited to https://unsplash.com.
 
 * Add Swiper to tabs switch pages.
 
-* Add a way to delete used tags.
+* Add a way to delete unused tags.
 
 * Add ascending/descending or shuffle sort option to photos on the user's profile.
 
