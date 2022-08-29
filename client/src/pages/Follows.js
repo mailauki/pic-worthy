@@ -1,98 +1,91 @@
 import { useState, useEffect } from 'react';
+import { useHistory } from "react-router";
 import { useParams, Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { fetchUser } from '../features/users/usersSlice';
 import User from '../features/users/User';
-import { Tabs, Tab, Box, List, ListItem, ListItemButton, ListItemAvatar, ListItemText, Avatar } from '@mui/material';
+import Slide from '../components/Slide';
+import { List, ListItem, ListItemButton, ListItemAvatar, ListItemText, Avatar } from '@mui/material';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 
 function Follows({ pathname }) {
   const { id } = useParams()
-  const [tab, setTab] = useState("following")
   const user = useSelector((state) => state.users.entities)
+  const dispatch = useDispatch()
+  const history = useHistory()
 
   useEffect(() => {
-    pathname ? setTab(pathname.split("/")[3]) : setTab("followees")
-  }, [pathname])
+    dispatch(fetchUser(id))
+  }, [dispatch])
 
-  function handleTabChange(event, newValue) {
-    setTab(newValue)
-  }
+  const [activeStep, setActiveStep] = useState(pathname.split("/")[3] === "followees" ? 0 : 1)
+
+  const followLists = [
+    { name: "followees", item: <List sx={{width: "100%"}}>
+      {user.followees && user.followees.length > 0  ? (
+        user.followees.map((follow) => (
+          <ListItem disablePadding>
+            <ListItemButton  
+              component={Link} to={`/users/${follow.id}`}
+            >
+              <User user={follow} />
+            </ListItemButton>
+          </ListItem>
+        )) 
+      ) : (
+        <ListItem disablePadding>
+          <ListItemButton disabled>
+            <ListItemAvatar>
+              <Avatar sx={{ width: 60, height: 60, mr: 2 }} />
+            </ListItemAvatar>
+            <ListItemText primary="Nothing Here Yet" />
+          </ListItemButton>
+        </ListItem>
+      )}
+    </List> },
+    { name: "followers", item: <List sx={{width: "100%"}}>
+      {user.followers && user.followers.length > 0  ? (
+        user.followers.map((follow) => (
+          <ListItem disablePadding>
+            <ListItemButton 
+              component={Link} to={`/users/${follow.id}`}
+            >
+              <User user={follow} />
+            </ListItemButton>
+          </ListItem>
+        )) 
+      ) : (
+        <ListItem disablePadding>
+          <ListItemButton disabled>
+            <ListItemAvatar>
+              <Avatar sx={{ width: 60, height: 60, mr: 2 }} />
+            </ListItemAvatar>
+            <ListItemText primary="Nothing Here Yet" />
+          </ListItemButton>
+        </ListItem>
+      )}
+    </List> }
+  ]
 
   return (
     <div className="Follows">
-      <Box sx={{ borderBottom: 1, borderColor: 'divider', width: '100%', height: '48px' }}>
-        <Tabs 
-          value={tab} 
-          onChange={handleTabChange} 
-          aria-label="following-tabs" 
-          variant="fullWidth" 
-        >
-          <Tab 
-            label="Following" 
-            value="followees" 
-            component={Link} to={`/users/${id}/followees`} 
-          />
-          <Tab 
-            label="Followers" 
-            value="followers" 
-            component={Link} to={`/users/${id}/followers`} 
-          />
-        </Tabs>
-      </Box>
+      <Swiper 
+        slidesPerView={"auto"}
+        onSlideChange={(swiper) => {
+          history.push(`/users/${id}/${swiper.slides[swiper.activeIndex].id}`)
+          setActiveStep(swiper.activeIndex)
+        }}
+        initialSlide={activeStep} 
+      >
+        <Slide pathname={pathname} />
 
-      {(() => {
-          switch(pathname.split("/")[3]) {
-            case "followees": 
-              return (
-                <List sx={{width: "100%"}}>
-                  {user.followees && user.followees.length > 0  ? (
-                    user.followees.map((follow) => (
-                      <ListItem disablePadding>
-                        <ListItemButton  
-                          component={Link} to={`/users/${follow.id}`}
-                        >
-                          <User user={follow} />
-                        </ListItemButton>
-                      </ListItem>
-                    )) 
-                  ) : (
-                    <ListItem disablePadding>
-                      <ListItemButton disabled>
-                        <ListItemAvatar>
-                          <Avatar sx={{ width: 60, height: 60, mr: 2 }} />
-                        </ListItemAvatar>
-                        <ListItemText primary="Nothing Here Yet" />
-                      </ListItemButton>
-                    </ListItem>
-                  )}
-                </List>
-              )
-            case "followers":
-              return (
-                <List sx={{width: "100%"}}>
-                  {user.followers && user.followers.length > 0  ? (
-                    user.followers.map((follow) => (
-                      <ListItem disablePadding>
-                        <ListItemButton 
-                          component={Link} to={`/users/${follow.id}`}
-                        >
-                          <User user={follow} />
-                        </ListItemButton>
-                      </ListItem>
-                    )) 
-                  ) : (
-                    <ListItem disablePadding>
-                      <ListItemButton disabled>
-                        <ListItemAvatar>
-                          <Avatar sx={{ width: 60, height: 60, mr: 2 }} />
-                        </ListItemAvatar>
-                        <ListItemText primary="Nothing Here Yet" />
-                      </ListItemButton>
-                    </ListItem>
-                  )}
-                </List>
-              )
-          }
-        })()}
+        {followLists.map((list) => (
+          <SwiperSlide key={list.name} id={list.name} style={{ paddingTop: '48px'}}>
+            {list.item}
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
   )
 }

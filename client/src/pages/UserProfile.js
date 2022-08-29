@@ -9,7 +9,6 @@ import ImageGrid from '../components/ImageGrid';
 import ImageQuilt from '../components/ImageQuilt';
 import ImageFeed from '../components/ImageFeed';
 import SkeletonGrid from '../components/SkeletonGrid';
-// import { Tabs, Tab, Box } from '@mui/material';
 
 function UserProfile({ currentUser }) {
   const { id } = useParams()
