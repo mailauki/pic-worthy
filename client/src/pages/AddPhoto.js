@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchTags, tagAdded } from '../features/tags/tagsSlice';
 import FormInput from '../components/FormInput';
 import LoginAlert from '../components/LoginAlert';
-import { Button, Autocomplete, Chip, TextField, Tooltip } from '@mui/material';
+import { Button, Autocomplete, Chip, TextField } from '@mui/material';
 
 function AddPhoto({ currentUser }) {
   const [formData, setFormData] = useState({image: "", description: ""})

@@ -4,7 +4,7 @@ import { useParams, Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { fetchUser } from '../features/users/usersSlice';
 import User from '../features/users/User';
-import Slide from '../components/Slide';
+import SliderTabs from '../components/SliderTabs';
 import { List, ListItem, ListItemButton, ListItemAvatar, ListItemText, Avatar } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
@@ -78,10 +78,17 @@ function Follows({ pathname }) {
         }}
         initialSlide={activeStep} 
       >
-        <Slide pathname={pathname} />
+        <SliderTabs pathname={pathname} />
 
         {followLists.map((list) => (
-          <SwiperSlide key={list.name} id={list.name} style={{ paddingTop: '48px'}}>
+          <SwiperSlide 
+            key={list.name} 
+            id={list.name} 
+            style={{ 
+              paddingTop: '48px', 
+              minHeight: 'calc(100vh - 202px)'
+            }}
+          >
             {list.item}
           </SwiperSlide>
         ))}

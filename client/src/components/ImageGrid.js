@@ -7,7 +7,7 @@ function ImageGrid({ user, photos }) {
     photos ? (
       photos.length > 0 ? (
         <ImageList
-          sx={{ width: 350 }}
+          sx={{ width: 350, mr: 'auto', ml: 'auto' }}
           cols={3}
           rowHeight={(350 / 3)}
         >

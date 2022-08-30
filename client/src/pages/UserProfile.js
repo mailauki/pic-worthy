@@ -9,8 +9,10 @@ import ImageGrid from '../components/ImageGrid';
 import ImageQuilt from '../components/ImageQuilt';
 import ImageFeed from '../components/ImageFeed';
 import SkeletonGrid from '../components/SkeletonGrid';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 
-function UserProfile({ currentUser }) {
+function UserProfile({ currentUser, mobileView }) {
   const { id } = useParams()
   const user = useSelector((state) => state.users.entities)
   const userStatus = useSelector((state) => state.users.status)
@@ -22,7 +24,6 @@ function UserProfile({ currentUser }) {
 
   const [activeViewMode, setActiveViewMode] = useState("grid")
   const [tab, setTab] = useState("photos")
-  const tabPhotos = tab === "likes" ? user.liked_photos : user.photos
 
   function handleViewMode(event, newValue) {
     setActiveViewMode(newValue)
@@ -35,27 +36,60 @@ function UserProfile({ currentUser }) {
   return (
     <div className="UserProfile">
       <UserHeader user={user} currentUser={currentUser} />
+        {userStatus === "loading" ? (
+          <>
+            <TabsBar tab={tab} handleChange={handleTabChange} tabBarInfo={[{label: "Photos", value: "photos"}, {label: "Likes", value: "likes"}]} />
+              
+            <ViewMode active={activeViewMode} handleViewMode={handleViewMode} />
 
-      <TabsBar tab={tab} handleChange={handleTabChange} tabBarInfo={[{label: "Photos", value: "photos"}, {label: "Likes", value: "likes"}]} />
+            <SkeletonGrid />
+          </>
+        ) : (
+          <Swiper 
+            slidesPerView={1}
+            onSlideChange={(swiper) => {
+            }}
+            style={{ 
+              width: mobileView ? '100%' : 'calc(100vw - 142px)', 
+              zIndex: 0 
+            }}
+          >
+            <div
+              style={{
+                width: '100%',
+                position: 'absolute', 
+                top: 0, 
+                zIndex: 2
+              }}
+            >
+              <TabsBar tab={tab} handleChange={handleTabChange} tabBarInfo={[{label: "Photos", value: "photos"}, {label: "Likes", value: "likes"}]} />
+              
+              <ViewMode active={activeViewMode} handleViewMode={handleViewMode} />
+            </div>
 
-      <ViewMode active={activeViewMode} handleViewMode={handleViewMode} />
-
-      {userStatus === "loading" ? (
-        <SkeletonGrid />
-      ) : (
-        (() => {
-          switch(activeViewMode) {
-            case "grid": 
-              return <ImageGrid user={user} photos={tabPhotos} />
-            case "quilt":
-              return <ImageQuilt user={user} photos={tabPhotos} />
-              case "list":
-                return <ImageFeed user={user} photos={tabPhotos} />
-            default:
-              return <SkeletonGrid />
-          }
-        })()
-      )}
+            {[{tabPhotos: user.photos}, {tabPhotos: user.liked_photos}].map((item)=> (
+              <SwiperSlide 
+                style={{ 
+                  paddingTop: '108px', 
+                  minHeight: 'calc(100vh - 396px)'
+                }}
+              >
+                {(() => {
+                  switch(activeViewMode) {
+                    case "grid": 
+                      return <ImageGrid user={user} photos={item.tabPhotos} />
+                    case "quilt":
+                      return <ImageQuilt user={user} photos={item.tabPhotos} />
+                      case "list":
+                        return <ImageFeed user={user} photos={item.tabPhotos} />
+                    default:
+                      return <SkeletonGrid />
+                  }
+                })()}
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        )}
     </div>
   )
 }

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Tabs, Tab, Box } from '@mui/material';
 import { useSwiper } from 'swiper/react';
 
-function SlideTitle({ pathname }) {
+function SliderTabs({ pathname }) {
   const swiper = useSwiper()
 
   const [tab, setTab] = useState("following")
@@ -38,4 +38,4 @@ function SlideTitle({ pathname }) {
   )
 }
 
-export default SlideTitle;
+export default SliderTabs;

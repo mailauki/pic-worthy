@@ -122,8 +122,8 @@ function App() {
               </Route>
               <Route path="/users/:id">
                 <UserProfile 
-                  pathname={pathname} 
                   currentUser={currentUser} 
+                  mobileView={mobileView}
                 />
               </Route>
               <Route path="/photos/:id/edit">

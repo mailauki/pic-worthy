@@ -10,6 +10,7 @@ function ViewMode({ active, handleViewMode }) {
       onChange={handleViewMode}
       sx={{
         width: "100%",
+        height: '60px'
       }}
     >
       <BottomNavigationAction 
