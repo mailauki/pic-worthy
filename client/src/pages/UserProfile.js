@@ -48,9 +48,10 @@ function UserProfile({ currentUser, mobileView }) {
           <Swiper 
             slidesPerView={1}
             onSlideChange={(swiper) => {
+              setTab(swiper.activeIndex === 0 ? "photos" : "likes")
             }}
             style={{ 
-              width: mobileView ? '100%' : 'calc(100vw - 142px)', 
+              width: mobileView ? '100%' : 'calc(100vw - 126px)', 
               zIndex: 0 
             }}
           >

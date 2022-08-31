@@ -3,10 +3,12 @@ import { useSelector, useDispatch } from 'react-redux';
 import { fetchSearch } from '../features/search/searchSlice';
 import TabsBar from '../components/TabsBar';
 import Results from '../components/Results';
-import { Box, InputBase, Tabs, Tab } from '@mui/material';
+import { Box, InputBase } from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/css';
 
-function Search() {
+function Search({ mobileView }) {
   const [tab, setTab] = useState("users")
   const [keyword, setKeyword] = useState("")
   const results = useSelector((state) => state.results.entities)
@@ -20,6 +22,7 @@ function Search() {
   useEffect(() => {
     dispatch(fetchSearch({tab: tab, keyword: keyword}))
   }, [dispatch, keyword, tab])
+
 
   return (
     <div className="Search">
@@ -54,9 +57,53 @@ function Search() {
         </Box>
       </Box>
 
-      <TabsBar tab={tab} handleChange={handleTabChange} tabBarInfo={[{label: "Users", value: "users"}, {label: "Tags", value: "tags"}, {label: "Description", value: "description"}]} />
+      <Swiper 
+        slidesPerView={1}
+        onSlideChange={(swiper) => {
+          (() => {
+            switch(swiper.activeIndex) {
+              case 0: 
+                setTab("users")
+                break
+              case 1:
+                setTab("tags")
+                break
+              case 2:
+                setTab("description")
+                break
+              default:
+                setTab("users")
+            }
+          })()
+        }}
+        style={{ 
+          width: mobileView ? '100%' : 'calc(100vw - 126px)', 
+          zIndex: 0 
+        }}
+      >
+        <div
+          style={{
+            width: '100%',
+            position: 'absolute', 
+            top: 0, 
+            zIndex: 2
+          }}
+        >
+          <TabsBar tab={tab} handleChange={handleTabChange} tabBarInfo={[{label: "Users", value: "users"}, {label: "Tags", value: "tags"}, {label: "Description", value: "description"}]} />
+        </div>
 
-      <Results tab={tab} results={results} searchStatus={searchStatus} />
+        {Array.from({ length: 3 }, (_, index) => (
+          <SwiperSlide 
+            key={index}
+            style={{ 
+              paddingTop: '48px', 
+              minHeight: 'calc(100vh - 396px)'
+            }}
+          >
+            <Results tab={tab} results={results} searchStatus={searchStatus} />
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </div>
   )
 }

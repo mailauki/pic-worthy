@@ -136,7 +136,7 @@ function App() {
                 <AddPhoto currentUser={currentUser} />
               </Route>
               <Route path="/search">
-                <Search />
+                <Search mobileView={mobileView} />
               </Route>
               <Route path="/tags/:id">
                 <Tag />

@@ -23,7 +23,7 @@ function TabsBar({ tabBarInfo, tab, handleChange }) {
             key={info.value} 
             label={info.label} 
             value={info.value} 
-            onClick={() => index > 0 ? swiper.slideNext() : swiper.slidePrev()}
+            onClick={() => swiper.slideTo(index)}
           />
         ))}
       </Tabs>
