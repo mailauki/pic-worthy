@@ -10,5 +10,4 @@ class CommentSerializer < ActiveModel::Serializer
   end
   
   belongs_to :user
-  # belongs_to :photo
 end

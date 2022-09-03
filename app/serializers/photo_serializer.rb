@@ -4,5 +4,6 @@ class PhotoSerializer < ActiveModel::Serializer
   belongs_to :user
 
   has_many :comments
+  has_many :likes
   has_many :tags, through: :photo_tags
 end
